@@ -1,0 +1,193 @@
+fileFormatVersion: 2
+guid: 883d1b1a72496d145a27aa1ef4cb6e7a
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: ISOTITAHAND
+    100002: L_index_a
+    100004: L_index_b
+    100006: L_index_c
+    100008: L_index_end
+    100010: L_index_meta
+    100012: L_middle_a
+    100014: L_middle_b
+    100016: L_middle_c
+    100018: L_middle_end
+    100020: L_middle_meta
+    100022: L_Palm
+    100024: L_pinky_a
+    100026: L_pinky_b
+    100028: L_pinky_c
+    100030: L_pinky_end
+    100032: L_pinky_meta
+    100034: L_ring_a
+    100036: L_ring_b
+    100038: L_ring_c
+    100040: L_ring_end
+    100042: L_ring_meta
+    100044: L_thumb_a
+    100046: L_thumb_b
+    100048: L_thumb_end
+    100050: L_thumb_meta
+    100052: L_Wrist
+    100054: //RootNode
+    100056: LeftHandOnly:Index
+    100058: LeftHandOnly:Middle
+    100060: LeftHandOnly:nurbsCircle2
+    100062: LeftHandOnly:nurbsCircle2 1
+    100064: LeftHandOnly:nurbsCircle2 2
+    100066: LeftHandOnly:nurbsCircle2 3
+    100068: LeftHandOnly:nurbsCircle2 4
+    100070: LeftHandOnly:nurbsCircle3
+    100072: LeftHandOnly:nurbsCircle3 1
+    100074: LeftHandOnly:nurbsCircle3 2
+    100076: LeftHandOnly:nurbsCircle3 3
+    100078: LeftHandOnly:nurbsCircle3 4
+    100080: LeftHandOnly:nurbsCircle4
+    100082: LeftHandOnly:nurbsCircle4 1
+    100084: LeftHandOnly:nurbsCircle4 2
+    100086: LeftHandOnly:nurbsCircle4 3
+    100088: LeftHandOnly:pinky
+    100090: LeftHandOnly:ring
+    100092: LeftHandOnly:thumb
+    400000: ISOTITAHAND
+    400002: L_index_a
+    400004: L_index_b
+    400006: L_index_c
+    400008: L_index_end
+    400010: L_index_meta
+    400012: L_middle_a
+    400014: L_middle_b
+    400016: L_middle_c
+    400018: L_middle_end
+    400020: L_middle_meta
+    400022: L_Palm
+    400024: L_pinky_a
+    400026: L_pinky_b
+    400028: L_pinky_c
+    400030: L_pinky_end
+    400032: L_pinky_meta
+    400034: L_ring_a
+    400036: L_ring_b
+    400038: L_ring_c
+    400040: L_ring_end
+    400042: L_ring_meta
+    400044: L_thumb_a
+    400046: L_thumb_b
+    400048: L_thumb_end
+    400050: L_thumb_meta
+    400052: L_Wrist
+    400054: //RootNode
+    400056: LeftHandOnly:Index
+    400058: LeftHandOnly:Middle
+    400060: LeftHandOnly:nurbsCircle2
+    400062: LeftHandOnly:nurbsCircle2 1
+    400064: LeftHandOnly:nurbsCircle2 2
+    400066: LeftHandOnly:nurbsCircle2 3
+    400068: LeftHandOnly:nurbsCircle2 4
+    400070: LeftHandOnly:nurbsCircle3
+    400072: LeftHandOnly:nurbsCircle3 1
+    400074: LeftHandOnly:nurbsCircle3 2
+    400076: LeftHandOnly:nurbsCircle3 3
+    400078: LeftHandOnly:nurbsCircle3 4
+    400080: LeftHandOnly:nurbsCircle4
+    400082: LeftHandOnly:nurbsCircle4 1
+    400084: LeftHandOnly:nurbsCircle4 2
+    400086: LeftHandOnly:nurbsCircle4 3
+    400088: LeftHandOnly:pinky
+    400090: LeftHandOnly:ring
+    400092: LeftHandOnly:thumb
+    2100000: Glove
+    2100002: Skin
+    2100004: ShiningL
+    2100006: grayDets
+    4300000: ISOTITAHAND
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: ISOTITAHAND
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
