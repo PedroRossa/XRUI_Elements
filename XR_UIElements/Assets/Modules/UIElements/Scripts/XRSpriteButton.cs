@@ -1,24 +1,24 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
-public class XRIconButton : XRButton
+public class XRSpriteButton : XRButton
 {
-    [Header("Icon Properties")]
+    [Header("Sprite Properties")]
     [ShowAssetPreview(32, 32)]
-    public Sprite icon;
-    public Color iconColor = Color.white;
+    public Sprite sprite;
+    public Color spriteColor = Color.white;
 
     //Runs only in editor
     private void OnValidate()
     {
         BaseOnValidate();
         
-        if (icon != null)
+        if (sprite != null)
         {
             //Get the spriterenderer on child to set the new sprite when changed
             SpriteRenderer buttonIcon = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
-            buttonIcon.sprite = icon;
-            buttonIcon.color = iconColor;
+            buttonIcon.sprite = sprite;
+            buttonIcon.color = spriteColor;
         }
     }
 }

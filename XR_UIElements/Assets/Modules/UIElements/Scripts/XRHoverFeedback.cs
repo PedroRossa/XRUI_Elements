@@ -11,9 +11,9 @@ public class XRHoverFeedback : MonoBehaviour
     private string lastColliderType;
 
     [Dropdown("ColliderTypes")]
-    public string colliderType;
+    public string colliderType = "Box Collider";
     [Dropdown("ElementTypes")]
-    public string elementType;
+    public string elementType = "Mesh Renderer";
 
     [ShowIf("IsMeshRenderer")]
     public MeshRenderer meshHoverFeedback;
@@ -65,6 +65,18 @@ public class XRHoverFeedback : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        if (string.IsNullOrEmpty(lastColliderType))
+            lastColliderType = colliderType;
+
+        if (!lastColliderType.Equals(colliderType))
+        {
+            lastColliderType = colliderType;
+            ClearColliders();
+            AddColliderBySelectedType();
+        }
+    }
 
     private void SetMeshFeedbackToHover()
     {
@@ -128,19 +140,6 @@ public class XRHoverFeedback : MonoBehaviour
             SetMeshFeedbackToOriginal();
         else if (elementType.Equals("Sprite Renderer"))
             SetSpriteFeedbackToOriginal();
-    }
-
-    private void OnValidate()
-    {
-        if (string.IsNullOrEmpty(lastColliderType))
-            return;
-
-        if (!lastColliderType.Equals(colliderType))
-        {
-            lastColliderType = colliderType;
-            ClearColliders();
-            AddColliderBySelectedType();
-        }
     }
 
     private void OnTriggerEnter(Collider other)

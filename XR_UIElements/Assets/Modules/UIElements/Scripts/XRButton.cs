@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class XRButton : MonoBehaviour
 {
-    protected XRButtonHover xrButtonHover;
+    private XRHoverFeedback xrHoverFeedback;
 
     [Header("Internal Properties")]
     public SpriteRenderer frontPanel;
@@ -19,7 +19,6 @@ public class XRButton : MonoBehaviour
 
     [Header("Color Event Properties")]
     public Color normalColor = Color.white;
-    public Color hoverColor = new Color(0.25f, 0.25f, 0.25f);
     public Color clickColor = Color.green;
 
     [Header("States")]
@@ -30,8 +29,6 @@ public class XRButton : MonoBehaviour
 
     [Header("Events")]
 
-    public UnityEvent onHoverEnter;
-    public UnityEvent onHoverExit;
     public UnityEvent onClickDown;
     public UnityEvent onClickPress;
     public UnityEvent onClickUp;
@@ -42,14 +39,6 @@ public class XRButton : MonoBehaviour
     //This function need's to be called on child classes
     protected void BaseOnValidate()
     {
-        if (xrButtonHover == null)
-        {
-            xrButtonHover = GetComponentInChildren<XRButtonHover>();
-            xrButtonHover.xrButton = this;
-        }
-
-        xrButtonHover.SetHoverDistanceCollider();
-
         frontPanel.color = normalColor;
 
         wireframeMesh.sharedMaterial = new Material(Shader.Find("Unlit/Vizlab/Wireframe"));
@@ -58,19 +47,8 @@ public class XRButton : MonoBehaviour
         wireframeMesh.sharedMaterial.SetColor("_Color", lineBoxColor);
     }
 
-    private void Awake()
-    {
-        if (xrButtonHover == null)
-            xrButtonHover = GetComponentInChildren<XRButtonHover>();
-
-        xrButtonHover.xrButton = this;
-        xrButtonHover.SetHoverDistanceCollider();
-    }
-
     void Start()
     {
-        onHoverEnter.AddListener(OnHoverEnterFuncion);
-        onHoverExit.AddListener(OnHoverExitFuncion);
         onClickDown.AddListener(OnClickDownFucntion);
         onClickPress.AddListener(OnClickPressFunction);
         onClickUp.AddListener(OnClickUpFucntion);
@@ -78,8 +56,15 @@ public class XRButton : MonoBehaviour
         initialPos = frontPanel.transform.localPosition.z;
 
         wireframeMesh.sharedMaterial.color = Color.clear;
-    }
 
+        xrHoverFeedback = GetComponentInChildren<XRHoverFeedback>();
+
+        if (xrHoverFeedback != null)
+        {
+            xrHoverFeedback.onHoverEnter.AddListener(OnHoverEnterFuncion);
+            xrHoverFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
+        }
+    }
     void Update()
     {
         distance = frontPanel.transform.localPosition.z;
@@ -130,8 +115,6 @@ public class XRButton : MonoBehaviour
     private void OnHoverEnterFuncion()
     {
         Debug.Log("Hover Enter");
-        frontPanel.color = hoverColor;
-
         float normalizedDistance = 1 / initialPos * distance;
         Color c = lineBoxColor;
         c.a = (1 - normalizedDistance) + 0.5f;
@@ -141,7 +124,6 @@ public class XRButton : MonoBehaviour
     private void OnHoverExitFuncion()
     {
         Debug.Log("Hover Exit");
-        frontPanel.color = normalColor;
         wireframeMesh.sharedMaterial.color = Color.clear;
     }
 }
