@@ -3,22 +3,37 @@ using UnityEngine;
 
 public class XRTextButton : XRButton
 {
-    TextMeshProUGUI tmpField;
+    private TextMeshPro tmpField;
 
     [Header("Properties")]
-    string txtValue;    
+    public string txtValue;
+    public int fontSize = 20;
 
     //Runs only in editor
     private void OnValidate()
     {
-        if(tmpField != null)
+        BaseOnValidate();
+
+        if (tmpField == null)
+            tmpField = GetComponentInChildren<TextMeshPro>();
+
+        if (tmpField != null)
         {
-            tmpField = GetComponentInChildren<TextMeshProUGUI>();
+            tmpField = GetComponentInChildren<TextMeshPro>();
             tmpField.text = txtValue;
+            tmpField.fontSize = fontSize;
+
+            Vector4 margins = tmpField.margin;
         }
         else
         {
             Debug.LogError("This script need to be applied in a XRTextButton Prefab.");
         }
+    }
+
+    private void Awake()
+    {
+        if (tmpField == null)
+            tmpField = GetComponentInChildren<TextMeshPro>();
     }
 }
