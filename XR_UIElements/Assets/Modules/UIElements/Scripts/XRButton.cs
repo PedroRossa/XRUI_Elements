@@ -4,15 +4,15 @@ using UnityEngine.Events;
 
 public class XRButton : MonoBehaviour
 {
-    private XRHoverFeedback xrHoverFeedback;
+    private XRFeedback xrFeedback;
+    private AudioSource audioSource;
 
     [Header("Internal Properties")]
     public SpriteRenderer frontPanel;
     public MeshRenderer wireframeMesh;
+    public AudioClip clickSound;
 
     [Header("Properties")]
-    [Range(0.0f, 1.0f)]
-    public float hoverDistance = 0.1f;
     [Range(0.0f, 1.0f)]
     public float lineBoxWidth = 0.013f;
     public Color lineBoxColor = Color.white;
@@ -23,12 +23,9 @@ public class XRButton : MonoBehaviour
 
     [Header("States")]
     [ReadOnly]
-    public bool isHover;
-    [ReadOnly]
     public bool isPressed;
 
     [Header("Events")]
-
     public UnityEvent onClickDown;
     public UnityEvent onClickPress;
     public UnityEvent onClickUp;
@@ -57,14 +54,17 @@ public class XRButton : MonoBehaviour
 
         wireframeMesh.sharedMaterial.color = Color.clear;
 
-        xrHoverFeedback = GetComponentInChildren<XRHoverFeedback>();
+        ConfigureAudioSource();
 
-        if (xrHoverFeedback != null)
+        xrFeedback = GetComponentInChildren<XRFeedback>();
+
+        if (xrFeedback != null)
         {
-            xrHoverFeedback.onHoverEnter.AddListener(OnHoverEnterFuncion);
-            xrHoverFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
+            xrFeedback.onHoverStay.AddListener(OnHoverStayFunction);
+            xrFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
         }
     }
+
     void Update()
     {
         distance = frontPanel.transform.localPosition.z;
@@ -93,37 +93,56 @@ public class XRButton : MonoBehaviour
         }
     }
 
+    private void ConfigureAudioSource()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            return;
+
+        audioSource.playOnAwake = false;
+
+        if (clickSound != null)
+            audioSource.clip = clickSound;
+    }
+
     private void OnClickDownFucntion()
     {
-        Debug.Log("Start Click");
         isPressed = true;
         frontPanel.color = clickColor;
+
+        if (audioSource != null)
+            audioSource.Play();
+
+        xrFeedback.gameObject.SetActive(false);
     }
 
     private void OnClickPressFunction()
     {
-        Debug.Log("Clicking");
     }
 
     private void OnClickUpFucntion()
     {
-        Debug.Log("Stop Clicking");
         isPressed = false;
         frontPanel.color = normalColor;
+
+        xrFeedback.gameObject.SetActive(true);
     }
 
-    private void OnHoverEnterFuncion()
+    private void OnHoverStayFunction()
     {
-        Debug.Log("Hover Enter");
+        if (distance <= 0)
+            return;
+
+        Color alphaColor = lineBoxColor;
         float normalizedDistance = 1 / initialPos * distance;
-        Color c = lineBoxColor;
-        c.a = (1 - normalizedDistance) + 0.5f;
-        wireframeMesh.sharedMaterial.color = c;
+
+        alphaColor.a = 1 - normalizedDistance;
+        wireframeMesh.sharedMaterial.color = alphaColor;
     }
 
     private void OnHoverExitFuncion()
     {
-        Debug.Log("Hover Exit");
         wireframeMesh.sharedMaterial.color = Color.clear;
     }
 }

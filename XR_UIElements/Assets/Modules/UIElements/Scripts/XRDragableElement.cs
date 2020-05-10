@@ -1,47 +1,54 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
+[RequireComponent(typeof(MeshRenderer), typeof(Collider))]
 public class XRDragableElement : MonoBehaviour
 {
-    public Vector3 dragColliderSize = Vector3.one;
     public Transform parentToDrag;
+    public bool isScalableElement = false;
 
+    [Header("State")]
     [ReadOnly]
-    public bool isAttached = false;
+    public bool isDrag = false;
 
+    private MeshRenderer meshRenderer;
+    private Collider collider;
     private Vector3 parentOffset;
+
+    public UnityEvent onDragEnter;
+    public UnityEvent onDragStay;
+    public UnityEvent onDragExit;
 
     private void Awake()
     {
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
+       
+        if (collider == null)
+            collider = GetComponent<Collider>();
+
+        collider.isTrigger = true;
+
+        //If don't set a parent to drag, drag itself
+        if (parentToDrag == null)
+            parentToDrag = transform;
+
         parentOffset = parentToDrag.position - transform.position;
     }
 
     //Runs only in editor
     private void OnValidate()
     {
-        BoxCollider bxCollider = gameObject.GetComponent<BoxCollider>();
-        bxCollider.size = dragColliderSize;
-    }
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
 
-    private void OnDrawGizmos()
-    {
-        //DragAreaGizmos();
-    }
+        if(collider == null)
+            collider = GetComponent<Collider>();
 
-    //TODO: ver pra alinhar com a box do collider
-    private void DragAreaGizmos()
-    {
-        Vector3 scaledSize = new Vector3
-        (
-            dragColliderSize.x * transform.localScale.x,
-            dragColliderSize.y * transform.localScale.y,
-            dragColliderSize.z * transform.localScale.z
-         );
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, scaledSize);
+        collider.isTrigger = true;
     }
 
     private void DragByController(Collider collider)
@@ -68,15 +75,17 @@ public class XRDragableElement : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
-            isAttached = true;
+            isDrag = true;
+            onDragEnter?.Invoke();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (isAttached)
+        if (isDrag)
         {
             DragByController(other);
+            onDragStay?.Invoke();
         }
     }
 
@@ -84,7 +93,8 @@ public class XRDragableElement : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
-            isAttached = false;
+            isDrag = false;
+            onDragExit?.Invoke();
         }
     }
 }

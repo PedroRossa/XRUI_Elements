@@ -1,28 +1,93 @@
-﻿using UnityEngine;
+﻿using NaughtyAttributes;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.XR;
 
 public class XRScalablePanel : MonoBehaviour
 {
-    [Header("Internal Properties")]
-    public XRDragableElement[] dragElements;
-    public XRScalableElement[] scalableElements;
+    private XRDragableElement[] dragElements;
 
-    ////Runs only in editor
-    //private void OnValidate()
-    //{
-    //    foreach (Transform item in dragElements)
-    //    {
-    //        item.GetComponent<XRDragableElement>();
+    public Material dragElementsMaterial;
+    public bool showDragableByProximity = true;
 
-    //        Vector3 scale = item.localScale;
+    [ReadOnly]
+    public bool scalling = false;
 
-    //        BoxCollider bxCollider = item.GetComponent<BoxCollider>();
-    //        bxCollider.size = new Vector3(scale.x + dragAreaSize, dragAreaSize, dragAreaSize);
-    //    }
-    //}
+    [ReadOnly]
+    public XRDragableElement firstDargElement;
+    [ReadOnly]
+    public XRDragableElement secondDragElement;
+
+    public UnityEvent onScaleBegin;
+    public UnityEvent onScale;
+    public UnityEvent onScaleEnd;
 
     private void Awake()
     {
+
+    }
+
+    private void Update()
+    {
+        if(firstDargElement != null)
+        {
+            if (!firstDargElement.isDrag)
+                firstDargElement = null;
+        }
+        if(secondDragElement != null)
+        {
+            if (!secondDragElement.isDrag)
+                secondDragElement = null;
+        }
+
+
+        foreach (XRDragableElement item in dragElements)
+        {
+            if (firstDargElement == null)
+            {
+                if (item.isScalableElement && item.isDrag)
+                    firstDargElement = item;
+            }
+            else if (secondDragElement == null)
+            {
+                if (item.isScalableElement && item.isDrag)
+                    secondDragElement = item;
+            }
+            else
+                continue;
+        }
+
+        ScalePanel();
+    }
+
+    private void OnValidate()
+    {
+        SetDragableElementsState();
+    }
+
+    private void SetDragableElementsState()
+    {
         dragElements = GetComponentsInChildren<XRDragableElement>();
-        scalableElements = GetComponentsInChildren<XRScalableElement>();
+
+        if (dragElementsMaterial == null)
+        {
+            dragElementsMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+            dragElementsMaterial.color = Color.magenta;
+        }
+        foreach (XRDragableElement item in dragElements)
+        {
+            item.GetComponent<MeshRenderer>().sharedMaterial = dragElementsMaterial;
+            item.GetComponentInChildren<XRFeedback>().alphaByDistance = showDragableByProximity;
+        }
+    }
+
+
+    private void ScalePanel()
+    {
+        if (firstDargElement != null && secondDragElement != null)
+        {
+            Debug.Log(Vector3.Distance(firstDargElement.transform.position, secondDragElement.transform.position));
+        }
     }
 }
