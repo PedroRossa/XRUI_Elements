@@ -1165,6 +1165,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3708855556048962375, guid: 4e2f535eb595f4c41a1d4c425ed0a2d8, type: 3}
+--- !u!21 &725786333
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 0.511683, b: 1, a: 1}
 --- !u!1 &788489241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2771427859727389226, guid: 4e5370b0c0751a24298dab7cf9d80d20,
@@ -1184,6 +1210,32 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!21 &816795202
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &820234546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,8 +1365,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
+  meshColor: {r: 0, g: 1, b: 0, a: 1}
   isScalableElement: 1
-  isDrag: 0
+  isDragging: 0
   onDragEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -1784,6 +1837,32 @@ MonoBehaviour:
   m_AnimateModel: 0
   m_ModelSelectTransition: 
   m_ModelDeSelectTransition: 
+--- !u!21 &1087407664
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1188902233
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,8 +2603,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
+  meshColor: {r: 0, g: 1, b: 0, a: 1}
   isScalableElement: 1
-  isDrag: 0
+  isDragging: 0
   onDragEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -2548,6 +2628,58 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!21 &1541439361
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 0.511683, b: 1, a: 1}
+--- !u!21 &1570078344
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 0.511683, b: 1, a: 1}
 --- !u!1 &1571234210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1233086009658283385, guid: 94d6bd47033a3424697930de1c3fa275,
@@ -2579,8 +2711,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
+  meshColor: {r: 0, g: 1, b: 0, a: 1}
   isScalableElement: 1
-  isDrag: 0
+  isDragging: 0
   onDragEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -2634,8 +2767,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
+  meshColor: {r: 0, g: 1, b: 0, a: 1}
   isScalableElement: 1
-  isDrag: 0
+  isDragging: 0
   onDragEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -2658,6 +2792,32 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!21 &1681202857
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 0.511683, b: 1, a: 1}
 --- !u!1 &1693676276
 GameObject:
   m_ObjectHideFlags: 0
@@ -3501,6 +3661,32 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 0
+--- !u!21 &2065315398
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2083446785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5912294613314595516, guid: 596de90f3b56c1d4b822ecd5cd042af5,
@@ -3513,6 +3699,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1874098392}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &2096074945
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/TransparentColor
+  m_Shader: {fileID: 4800000, guid: e0160920ba2808942b6eefaa5e748158, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2131618104 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2771427859727389226, guid: 4e5370b0c0751a24298dab7cf9d80d20,
@@ -4058,6 +4270,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4116807345408747685, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2065315398}
     - target: {fileID: 4965766010807300804, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: m_Name
@@ -4121,12 +4338,237 @@ PrefabInstance:
     - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: showDragableByProximity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scallingColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scallingColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scallingColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scallingColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementsColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementsColor.g
+      value: 0.3537736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementsColor.b
+      value: 0.3537736
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementsColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementColor.r
+      value: 0.05724919
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: dragElementColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scaleElementColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scaleElementColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scaleElementColor.b
+      value: 0.1463232
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766010807300923, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: scaleElementColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168074, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1570078344}
+    - target: {fileID: 4965766011050168075, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.g
+      value: 0.511683
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766012237744394, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880646, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 725786333}
+    - target: {fileID: 5507298124344880647, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.g
+      value: 0.511683
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.g
+      value: 0.511683
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004090, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004091, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1681202857}
+    - target: {fileID: 5507298125432966730, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125432966731, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1541439361}
+    - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: meshColor.g
+      value: 0.511683
       objectReference: {fileID: 0}
     - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: alphaByDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.r
+      value: 0.5803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.g
+      value: 0.8602489
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: detectTouch
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7366611388072055347, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
@@ -4137,21 +4579,91 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4d012b5cfd974184592e78e2cebb91a8, type: 2}
+      objectReference: {fileID: 816795202}
     - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: alphaByDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.r
+      value: 0.5803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.g
+      value: 0.8602489
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: detectTouch
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: alphaByDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.r
+      value: 0.5803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.g
+      value: 0.8602489
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: detectTouch
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: alphaByDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.r
+      value: 0.5803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.g
+      value: 0.8602489
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hoverColor.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: detectTouch
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7802314599714941420, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2096074945}
+    - target: {fileID: 7859061546419962787, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1087407664}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94d6bd47033a3424697930de1c3fa275, type: 3}

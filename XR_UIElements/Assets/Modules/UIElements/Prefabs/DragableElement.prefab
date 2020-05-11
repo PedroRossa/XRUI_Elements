@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d012b5cfd974184592e78e2cebb91a8, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 0}
-  isAttached: 0
+  meshColor: {r: 0, g: 0, b: 0, a: 0}
+  isScalableElement: 0
+  isDragging: 0
+  onDragEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onDragExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &116250420674178512
 SphereCollider:
   m_ObjectHideFlags: 0

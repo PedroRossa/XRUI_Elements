@@ -46,12 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c3a87bfb27ab664086aa8f5fd70cf49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragElementsMaterial: {fileID: 2100000, guid: 4d012b5cfd974184592e78e2cebb91a8,
-    type: 2}
+  scallingColor: {r: 0, g: 0, b: 0, a: 0}
   showDragableByProximity: 0
-  scalling: 0
-  firstDargElement: {fileID: 0}
-  secondDragElement: {fileID: 0}
+  isScalling: 0
+  firstScaleElement: {fileID: 0}
+  secondScaleElement: {fileID: 0}
   onScaleBegin:
     m_PersistentCalls:
       m_Calls: []

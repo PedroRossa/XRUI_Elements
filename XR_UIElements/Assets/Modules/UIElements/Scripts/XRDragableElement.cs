@@ -8,11 +8,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XRDragableElement : MonoBehaviour
 {
     public Transform parentToDrag;
+    public Color meshColor = Color.magenta;
     public bool isScalableElement = false;
 
     [Header("State")]
     [ReadOnly]
-    public bool isDrag = false;
+    public bool isDragging = false;
 
     private MeshRenderer meshRenderer;
     private Collider collider;
@@ -26,7 +27,7 @@ public class XRDragableElement : MonoBehaviour
     {
         if (meshRenderer == null)
             meshRenderer = GetComponent<MeshRenderer>();
-       
+
         if (collider == null)
             collider = GetComponent<Collider>();
 
@@ -45,7 +46,12 @@ public class XRDragableElement : MonoBehaviour
         if (meshRenderer == null)
             meshRenderer = GetComponent<MeshRenderer>();
 
-        if(collider == null)
+        if (meshRenderer.sharedMaterial == null)
+            meshRenderer.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+
+        meshRenderer.sharedMaterial.color = meshColor;
+
+        if (collider == null)
             collider = GetComponent<Collider>();
 
         collider.isTrigger = true;
@@ -71,18 +77,31 @@ public class XRDragableElement : MonoBehaviour
         }
     }
 
+    public void SetColor(Color color)
+    {
+        meshRenderer.sharedMaterial.color = color;
+    }
+
+    public Color GetColor()
+    {
+        if (meshRenderer.sharedMaterial == null)
+            return Color.white;
+
+        return meshRenderer.sharedMaterial.color;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("interactable"))
         {
-            isDrag = true;
+            isDragging = true;
             onDragEnter?.Invoke();
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (isDrag)
+        if (isDragging)
         {
             DragByController(other);
             onDragStay?.Invoke();
@@ -93,7 +112,7 @@ public class XRDragableElement : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
-            isDrag = false;
+            isDragging = false;
             onDragExit?.Invoke();
         }
     }
