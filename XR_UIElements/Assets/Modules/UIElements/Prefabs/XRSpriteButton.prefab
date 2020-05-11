@@ -630,6 +630,21 @@ PrefabInstance:
       propertyPath: spriteHoverFeedback
       value: 
       objectReference: {fileID: 2310897902144382779}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: elementType
+      value: Sprite Renderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: spriteFeedback
+      value: 
+      objectReference: {fileID: 2310897902144382779}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: alphaByDistance
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
 --- !u!4 &4433385915536380395 stripped

@@ -62,6 +62,8 @@ public class XRButton : MonoBehaviour
         {
             xrFeedback.onHoverStay.AddListener(OnHoverStayFunction);
             xrFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
+
+            xrFeedback.onTouchStay.AddListener(OnTouchStayFunction);
         }
     }
 
@@ -131,18 +133,27 @@ public class XRButton : MonoBehaviour
 
     private void OnHoverStayFunction()
     {
-        if (distance <= 0)
-            return;
-
         Color alphaColor = lineBoxColor;
-        float normalizedDistance = 1 / initialPos * distance;
 
-        alphaColor.a = 1 - normalizedDistance;
+        alphaColor.a = 0.15f;
         wireframeMesh.sharedMaterial.color = alphaColor;
     }
 
     private void OnHoverExitFuncion()
     {
         wireframeMesh.sharedMaterial.color = Color.clear;
+    }
+
+    private void OnTouchStayFunction()
+    {
+        if (distance <= 0)
+            return;
+
+        Color alphaColor = lineBoxColor;
+        float normalizedDistance = 1 / initialPos * distance;
+
+        alphaColor.a = (1 - normalizedDistance) + 0.15f;
+        wireframeMesh.sharedMaterial.color = alphaColor;
+
     }
 }

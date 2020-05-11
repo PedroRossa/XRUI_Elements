@@ -49,7 +49,7 @@ public class XRFeedback : MonoBehaviour
     [ShowIf("detectTouch")]
     public float touchScaleMultiplier = 1;
     [ShowIf("detectTouch")]
-    public float isTouchOffset = 0.025f;
+    public float isTouchOffset = 0.015f;
     [ShowIf("detectTouch")]
     [ReadOnly]
     public bool isTouch;

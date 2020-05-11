@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using Boo.Lang;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
@@ -10,35 +11,21 @@ public class XRDragableElement : MonoBehaviour
     public Transform parentToDrag;
     public Color meshColor = Color.magenta;
     public bool isScalableElement = false;
+    public bool isRotationElement = false;
 
     [Header("State")]
     [ReadOnly]
     public bool isDragging = false;
 
+    private bool isTouching = false;
+    private XRController xrController;
+
     private MeshRenderer meshRenderer;
-    private Collider collider;
-    private Vector3 parentOffset;
+    private Collider elementCollider;
 
     public UnityEvent onDragEnter;
     public UnityEvent onDragStay;
     public UnityEvent onDragExit;
-
-    private void Awake()
-    {
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
-
-        if (collider == null)
-            collider = GetComponent<Collider>();
-
-        collider.isTrigger = true;
-
-        //If don't set a parent to drag, drag itself
-        if (parentToDrag == null)
-            parentToDrag = transform;
-
-        parentOffset = parentToDrag.position - transform.position;
-    }
 
     //Runs only in editor
     private void OnValidate()
@@ -51,30 +38,31 @@ public class XRDragableElement : MonoBehaviour
 
         meshRenderer.sharedMaterial.color = meshColor;
 
-        if (collider == null)
-            collider = GetComponent<Collider>();
+        if (elementCollider == null)
+            elementCollider = GetComponent<Collider>();
 
-        collider.isTrigger = true;
+        elementCollider.isTrigger = true;
     }
 
-    private void DragByController(Collider collider)
+    private void Awake()
     {
-        XRController xrController = collider.GetComponentInChildren<XRController>();
-        if (xrController == null)
-        {
-            xrController = collider.GetComponentInParent<XRController>();
-            if (xrController == null)
-                return;
-        }
+        if (meshRenderer == null)
+            meshRenderer = GetComponent<MeshRenderer>();
 
-        if (xrController.inputDevice != null)
-        {
-            bool isPressed;
-            if (xrController.inputDevice.TryGetFeatureValue(CommonUsages.triggerButton, out isPressed) && isPressed)
-            {
-                parentToDrag.position = collider.transform.position + parentOffset;
-            }
-        }
+        if (elementCollider == null)
+            elementCollider = GetComponent<Collider>();
+
+        elementCollider.isTrigger = true;
+
+        //If don't set a parent to drag, drag itself
+        if (parentToDrag == null)
+            parentToDrag = transform;
+    }
+
+    private void FixedUpdate()
+    {
+        if(isTouching)
+            DragByController();
     }
 
     public void SetColor(Color color)
@@ -90,21 +78,72 @@ public class XRDragableElement : MonoBehaviour
         return meshRenderer.sharedMaterial.color;
     }
 
+    public XRController GetDraggingXRController()
+    {
+        return xrController;
+    }
+
+    private XRController GetXRControllerByCollider(Collider collider)
+    {
+        XRController xrController = collider.GetComponentInChildren<XRController>();
+        if (xrController == null)
+        {
+            xrController = collider.GetComponentInParent<XRController>();
+            if (xrController == null)
+                return null;
+        }
+        return xrController;
+    }
+
+    private void DragByController()
+    {
+        if (xrController == null || xrController.inputDevice == null)
+        {
+            isDragging = false;
+            return;
+        }
+
+        bool isPressed;
+        if (xrController.inputDevice.TryGetFeatureValue(CommonUsages.triggerButton, out isPressed) && isPressed)
+        {
+            if (!isDragging)
+            {
+                isDragging = true;
+                onDragEnter?.Invoke();
+            }
+            else
+            {
+                MoveElement();
+                onDragStay?.Invoke();
+            }
+        }
+
+        if ((!isPressed && isDragging) || !isDragging)
+        {
+            isDragging = false;
+            onDragExit?.Invoke();
+        }
+    }
+
+    private void MoveElement()
+    {
+        Vector3 parentOffset = parentToDrag.position - transform.position;
+        parentToDrag.position = xrController.GetComponentInChildren<Collider>().transform.position + parentOffset;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("interactable"))
         {
-            isDragging = true;
-            onDragEnter?.Invoke();
+            isTouching = true;
+            xrController = GetXRControllerByCollider(other);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (isDragging)
+        if (other.tag.Equals("interactable"))
         {
-            DragByController(other);
-            onDragStay?.Invoke();
         }
     }
 
@@ -112,8 +151,9 @@ public class XRDragableElement : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
+            xrController = null;
+            isTouching = false;
             isDragging = false;
-            onDragExit?.Invoke();
         }
     }
 }

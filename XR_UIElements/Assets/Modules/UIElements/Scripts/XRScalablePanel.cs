@@ -2,111 +2,215 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Security;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
 
 public class XRScalablePanel : MonoBehaviour
 {
-    private List<XRDragableElement> dragElements = new List<XRDragableElement>();
-    private List<XRDragableElement> scaleElements = new List<XRDragableElement>();
+    private List<XRDragableElement> dragableElements = new List<XRDragableElement>();
 
-    private Color originalColor;
-    public Color scallingColor = Color.yellow;
+    public bool feedbackByProximity = true;
 
-    public bool showDragableByProximity = true;
-
+    [Header("Scalling Properties")]
+    public float minScaleFactor = 0.1f;
+    public float maxScaleFactor = 100f;
     [ReadOnly]
     public bool isScalling = false;
 
-    public XRDragableElement firstScaleElement;
-    public XRDragableElement secondScaleElement;
+
+    [Header("Scalling Properties")]
+    [ReadOnly]
+    public bool isRotating = false;
+
+    public XRDragableElement firstSelectedElement;
+    public XRDragableElement secondSelectedElement;
 
     public UnityEvent onScaleBegin;
     public UnityEvent onScale;
     public UnityEvent onScaleEnd;
 
+    public UnityEvent onRotationBegin;
+    public UnityEvent onRotation;
+    public UnityEvent onRotationEnd;
+
+    private Vector3 firstOriginalPos;
+    private Vector3 secondOriginalPos;
+    private Quaternion originalRotation;
+
+    [ReadOnly]
+    public bool holdWithTwoHands = false;
+
     private void OnValidate()
     {
         foreach (XRDragableElement item in GetComponentsInChildren<XRDragableElement>())
-            item.GetComponentInChildren<XRFeedback>().alphaByDistance = showDragableByProximity;
+            item.GetComponentInChildren<XRFeedback>().alphaByDistance = feedbackByProximity;
     }
 
     private void Awake()
     {
-        ConfigureDragables();
-    }
+        dragableElements = GetComponentsInChildren<XRDragableElement>().ToList();
 
-    private void ConfigureDragables()
-    {
-        scaleElements = new List<XRDragableElement>();
-        dragElements = new List<XRDragableElement>();
-
-        foreach (XRDragableElement item in GetComponentsInChildren<XRDragableElement>())
+        foreach (XRDragableElement item in dragableElements)
         {
-            if (item.isScalableElement)
-                scaleElements.Add(item);
-            else
-                dragElements.Add(item);
+            XRDragableElement curr = item;
+            item.onDragEnter.AddListener(() => { OnDragElementEnter(curr); });
+            item.onDragExit.AddListener(() => { OnDragElementExit(curr); });
         }
-        originalColor = scaleElements[0].GetColor();
     }
 
-
-    private void Update()
+    private void FixedUpdate()
     {
-        firstScaleElement = null;
-        secondScaleElement = null;
-
-        foreach (XRDragableElement item in scaleElements)
+        UpdateSelectedElements();
+        if (holdWithTwoHands)
         {
-            if (item.isDragging)
-            {
-                if (firstScaleElement == null)
-                {
-                    firstScaleElement = item;
-                    continue;
-                }
-                else if (secondScaleElement == null)
-                {
-                    secondScaleElement = item;
-                    continue;
-                }
-            }
-        }
-
-        ScalePanel();
-    }
-
-    private void ScalePanel()
-    {
-        if (firstScaleElement != null && secondScaleElement != null)
-        {
-            firstScaleElement.SetColor(scallingColor);
-            secondScaleElement.SetColor(scallingColor);
-            isScalling = true;
-
-            Vector3 fPos = firstScaleElement.transform.position;
-            Vector3 sPos = secondScaleElement.transform.position;
-
-            Vector3 centerPos = new Vector3(fPos.x + sPos.x, fPos.y + sPos.y, fPos.z + sPos.z) / 2;
-
-            float scaleX = Mathf.Abs(fPos.x - sPos.x);
-            float scaleY = Mathf.Abs(fPos.y - sPos.y);
-            float scaleZ = Mathf.Abs(fPos.z - sPos.z);
-
-            centerPos.x -= 0.5f;
-            centerPos.y += 0.5f;
-
-            Debug.Log(centerPos + " - " + new Vector3(scaleX, scaleY, scaleZ));
-            //transform.position = centerPos;
-            //transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
-
+            ScaleEvents();
+            RotationEvents();
         }
         else
         {
-            isScalling = false;
+            if (isScalling)
+            {
+                isScalling = false;
+                onScaleEnd?.Invoke();
+            }
+            if (isRotating)
+            {
+                isRotating = false;
+                onRotationEnd?.Invoke();
+            }
         }
     }
 
+    private void UpdateSelectedElements()
+    {
+        holdWithTwoHands = false;
+
+        if (firstSelectedElement != null && !firstSelectedElement.isDragging)
+            firstSelectedElement = null;
+        if (secondSelectedElement != null && !secondSelectedElement.isDragging)
+            secondSelectedElement = null;
+
+        if (firstSelectedElement != null && secondSelectedElement != null)
+        {
+            if (firstSelectedElement.GetDraggingXRController() != null && secondSelectedElement.GetDraggingXRController() != null)
+                holdWithTwoHands = true;
+        }
+
+        SetNonSelectedDragableElements(!holdWithTwoHands);
+    }
+
+    private void OnPanelManipulationBegin()
+    {
+        firstOriginalPos = firstSelectedElement.GetDraggingXRController().transform.position;
+        secondOriginalPos = secondSelectedElement.GetDraggingXRController().transform.position;
+
+        originalRotation = transform.rotation;
+    }
+
+    private void OnScaleFunction()
+    {
+        Vector3 fPos = firstSelectedElement.GetDraggingXRController().transform.position;
+        Vector3 sPos = secondSelectedElement.GetDraggingXRController().transform.position;
+
+        //------------------------------------
+        float distance = (fPos - sPos).magnitude;
+        float norm = (distance - minScaleFactor) / (maxScaleFactor - minScaleFactor);
+        norm = Mathf.Clamp01(norm);
+
+        var minScale = Vector3.one * maxScaleFactor;
+        var maxScale = Vector3.one * minScaleFactor;
+        //transform.position = (fPos - sPos) / 2;
+
+
+        transform.localScale = Vector3.Lerp(maxScale, minScale, norm);
+        //------------------------------------
+    }
+    
+    private void OnRotationFunction()
+    {
+        Vector3 originalDir = (firstOriginalPos - secondOriginalPos).normalized;
+
+        Vector3 fPos = firstSelectedElement.GetDraggingXRController().transform.position;
+        Vector3 sPos = secondSelectedElement.GetDraggingXRController().transform.position;
+
+        Vector3 currentDir = (fPos - sPos).normalized;
+        // Difference rot
+        Quaternion diffDir = Quaternion.FromToRotation(originalDir, currentDir);
+
+        // Apply
+        transform.rotation = diffDir * originalRotation;
+
+        Debug.DrawLine(firstOriginalPos, fPos, Color.magenta);
+        Debug.DrawLine(secondOriginalPos, sPos, Color.magenta);
+    }
+
+
+    private void ScaleEvents()
+    {
+        if (firstSelectedElement.isScalableElement && secondSelectedElement.isScalableElement)
+        {
+            if (!isScalling)
+            {
+                isScalling = true;
+                OnPanelManipulationBegin();
+                onScaleBegin?.Invoke();
+            }
+            else
+            {
+                OnScaleFunction();
+                onScale?.Invoke();
+            }
+        }
+    }
+
+    private void RotationEvents()
+    {
+        if (firstSelectedElement.isRotationElement && secondSelectedElement.isRotationElement)
+        {
+            if (!isRotating)
+            {
+                isRotating = true;
+                OnPanelManipulationBegin();
+                onRotationBegin?.Invoke();
+            }
+            else
+            {
+                OnRotationFunction();
+                onRotation?.Invoke();
+            }
+        }
+    }
+
+
+    private void OnDragElementEnter(XRDragableElement element)
+    {
+        if (firstSelectedElement == null)
+            firstSelectedElement = element;
+        else if (secondSelectedElement == null)
+            secondSelectedElement = element;
+
+        return;
+    }
+
+    private void OnDragElementExit(XRDragableElement element)
+    {
+        if (firstSelectedElement != null && firstSelectedElement.Equals(element))
+            firstSelectedElement = null;
+        else if (secondSelectedElement != null && secondSelectedElement.Equals(element))
+            secondSelectedElement = null;
+    }
+
+
+    private void SetNonSelectedDragableElements(bool state)
+    {
+        foreach (var item in dragableElements)
+        {
+            if (item.Equals(firstSelectedElement) || item.Equals(secondSelectedElement))
+                continue;
+
+            item.gameObject.SetActive(state);
+        }
+    }
 }
