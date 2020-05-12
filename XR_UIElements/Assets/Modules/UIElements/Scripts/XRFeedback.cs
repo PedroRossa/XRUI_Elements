@@ -1,8 +1,6 @@
 ﻿using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
@@ -12,6 +10,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XRFeedback : MonoBehaviour
 {
     private List<string> ElementTypes { get { return new List<string>() { "Mesh Renderer", "Sprite Renderer" }; } }
+    private AudioSource audioSource;
 
     [Dropdown("ElementTypes")]
     public string elementType = "Mesh Renderer";
@@ -32,6 +31,7 @@ public class XRFeedback : MonoBehaviour
     public bool detectHover = true;
     public bool detectTouch = true;
     public bool useHapticFeedback = true;
+    public bool playSound = true;
 
     [Header("Hover Properties")]
     [ShowIf("detectHover")]
@@ -40,6 +40,9 @@ public class XRFeedback : MonoBehaviour
     public float hoverScaleMultiplier = 1;
     [ShowIf("detectHover")]
     public Collider hoverCollider;
+    [ShowIf(EConditionOperator.And, "playSound", "detectHover")]
+    public AudioClip hoverSound;
+    [ShowIf("detectHover")]
     [ReadOnly]
     public bool isHover;
 
@@ -50,6 +53,8 @@ public class XRFeedback : MonoBehaviour
     public float touchScaleMultiplier = 1;
     [ShowIf("detectTouch")]
     public float isTouchOffset = 0.015f;
+    [ShowIf(EConditionOperator.And, "playSound", "detectTouch")]
+    public AudioClip touchSound;
     [ShowIf("detectTouch")]
     [ReadOnly]
     public bool isTouch;
@@ -116,6 +121,19 @@ public class XRFeedback : MonoBehaviour
             originalScale = spriteFeedback.transform.localScale;
             elementCollider = spriteFeedback.GetComponent<Collider>();
         }
+
+        if(playSound)
+            ConfigureAudioSource();
+    }
+
+    private void ConfigureAudioSource()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            return;
+
+        audioSource.playOnAwake = false;
     }
 
     private void SetFeedback(Color color, float scaleMultiplier)
@@ -203,6 +221,13 @@ public class XRFeedback : MonoBehaviour
     {
         SetFeedback(hoverColor, hoverScaleMultiplier);
 
+        if (playSound && hoverSound != null)
+        {
+            audioSource.Stop();
+            audioSource.clip = hoverSound;
+            audioSource.Play();
+        }
+
         if (useHapticFeedback)
             HapticFeedback(interactable, hapticAmplitude, hapticHoverFrequence);
     }
@@ -263,6 +288,13 @@ public class XRFeedback : MonoBehaviour
     private void OnTouchEnterFunction(Transform interactable)
     {
         SetFeedback(touchColor, touchScaleMultiplier);
+
+        if (playSound && touchSound != null)
+        {
+            audioSource.Stop();
+            audioSource.clip = touchSound;
+            audioSource.Play();
+        }
 
         if (useHapticFeedback)
             HapticFeedback(interactable, hapticAmplitude, hapticTouchFrequence);
