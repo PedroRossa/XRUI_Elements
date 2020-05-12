@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class XR2DlePanel : MonoBehaviour
+public class XR2DManipulableContent : MonoBehaviour
 {
     private List<XRDraggableElement> dragableElements = new List<XRDraggableElement>();
 
@@ -12,6 +12,15 @@ public class XR2DlePanel : MonoBehaviour
     public bool feedbackByProximity = true;
     public bool soundFeedback = true;
     public bool hapticsFeedback = true;
+    public bool showOutFrame = false;
+
+    [ShowIf("showOutFrame")]
+    public MeshRenderer outFrame;
+    [ShowIf("showOutFrame")]
+    [Range(0.001f, 0.1f)]
+    public float frameSize = 0.01f;
+    [ShowIf("showOutFrame")]
+    public Color frameColor = Color.white;
 
     [Header("State")]
     [ReadOnly]
@@ -49,10 +58,21 @@ public class XR2DlePanel : MonoBehaviour
             currFeedback.playSound = soundFeedback;
             currFeedback.useHapticFeedback = hapticsFeedback;
         }
+
+        if (outFrame != null)
+        {
+            outFrame.sharedMaterial = new Material(Shader.Find("Unlit/Wireframe"));
+            outFrame.sharedMaterial.SetFloat("_WireframeVal", frameSize);
+            outFrame.sharedMaterial.SetColor("_Color", frameColor);
+            outFrame.gameObject.SetActive(showOutFrame);
+        }
     }
 
     private void Awake()
     {
+        if (outFrame != null)
+            outFrame.gameObject.SetActive(showOutFrame);
+
         dragableElements = GetComponentsInChildren<XRDraggableElement>().ToList();
 
         foreach (XRDraggableElement item in dragableElements)

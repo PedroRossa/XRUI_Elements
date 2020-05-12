@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 0}
-  meshColor: {r: 0, g: 0, b: 0, a: 0}
+  meshColor: {r: 1, g: 1, b: 1, a: 1}
   isScalableElement: 0
   isRotationElement: 0
   isDragging: 0

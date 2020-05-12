@@ -105,6 +105,12 @@ public class XRFeedback : MonoBehaviour
     {
         if (meshFeedback != null)
         {
+            if (meshFeedback.sharedMaterial == null)
+            {
+                meshFeedback.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+                meshFeedback.sharedMaterial.color = Color.magenta;
+            }
+
             if (alphaByDistance)
                 meshFeedback.sharedMaterial.color = Color.clear;
 
