@@ -6,6 +6,7 @@ using System.Security;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRScalablePanel : MonoBehaviour
 {
@@ -63,6 +64,7 @@ public class XRScalablePanel : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateSelectedElements();
+
         if (holdWithTwoHands)
         {
             ScaleEvents();
@@ -87,63 +89,59 @@ public class XRScalablePanel : MonoBehaviour
     {
         holdWithTwoHands = false;
 
-        if (firstSelectedElement != null && !firstSelectedElement.isDragging)
-            firstSelectedElement = null;
-        if (secondSelectedElement != null && !secondSelectedElement.isDragging)
-            secondSelectedElement = null;
-
         if (firstSelectedElement != null && secondSelectedElement != null)
         {
-            if (firstSelectedElement.GetDraggingXRController() != null && secondSelectedElement.GetDraggingXRController() != null)
+            Collider firstCollider = firstSelectedElement.InteractableCollider();
+            Collider secondCollider = secondSelectedElement.InteractableCollider();
+
+            if (firstCollider == null)
+                firstSelectedElement = null;
+
+            if (secondCollider == null)
+                secondSelectedElement = null;
+
+            if (firstCollider != null && secondCollider != null)
                 holdWithTwoHands = true;
         }
-
         SetNonSelectedDragableElements(!holdWithTwoHands);
     }
 
+
     private void OnPanelManipulationBegin()
     {
-        firstOriginalPos = firstSelectedElement.GetDraggingXRController().transform.position;
-        secondOriginalPos = secondSelectedElement.GetDraggingXRController().transform.position;
+        firstOriginalPos = firstSelectedElement.InteractableCollider().transform.position;
+        secondOriginalPos = secondSelectedElement.InteractableCollider().transform.position;
 
         originalRotation = transform.rotation;
     }
 
     private void OnScaleFunction()
     {
-        Vector3 fPos = firstSelectedElement.GetDraggingXRController().transform.position;
-        Vector3 sPos = secondSelectedElement.GetDraggingXRController().transform.position;
+        Vector3 fPos = firstSelectedElement.InteractableCollider().transform.position;
+        Vector3 sPos = secondSelectedElement.InteractableCollider().transform.position;
 
-        //------------------------------------
         float distance = (fPos - sPos).magnitude;
         float norm = (distance - minScaleFactor) / (maxScaleFactor - minScaleFactor);
         norm = Mathf.Clamp01(norm);
 
         var minScale = Vector3.one * maxScaleFactor;
         var maxScale = Vector3.one * minScaleFactor;
-        //transform.position = (fPos - sPos) / 2;
-
 
         transform.localScale = Vector3.Lerp(maxScale, minScale, norm);
-        //------------------------------------
     }
-    
+
     private void OnRotationFunction()
     {
         Vector3 originalDir = (firstOriginalPos - secondOriginalPos).normalized;
 
-        Vector3 fPos = firstSelectedElement.GetDraggingXRController().transform.position;
-        Vector3 sPos = secondSelectedElement.GetDraggingXRController().transform.position;
+        Vector3 fPos = firstSelectedElement.InteractableCollider().transform.position;
+        Vector3 sPos = secondSelectedElement.InteractableCollider().transform.position;
 
         Vector3 currentDir = (fPos - sPos).normalized;
-        // Difference rot
+
         Quaternion diffDir = Quaternion.FromToRotation(originalDir, currentDir);
 
-        // Apply
         transform.rotation = diffDir * originalRotation;
-
-        Debug.DrawLine(firstOriginalPos, fPos, Color.magenta);
-        Debug.DrawLine(secondOriginalPos, sPos, Color.magenta);
     }
 
 

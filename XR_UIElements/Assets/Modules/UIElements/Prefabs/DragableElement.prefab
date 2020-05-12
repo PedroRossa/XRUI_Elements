@@ -110,6 +110,7 @@ MonoBehaviour:
   parentToDrag: {fileID: 0}
   meshColor: {r: 0, g: 0, b: 0, a: 0}
   isScalableElement: 0
+  isRotationElement: 0
   isDragging: 0
   onDragEnter:
     m_PersistentCalls:

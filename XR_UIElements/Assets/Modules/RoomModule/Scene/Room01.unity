@@ -281,7 +281,7 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
@@ -296,7 +296,32 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: alphaByDistance
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.17762761
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.07725169
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
@@ -808,7 +833,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 819043352}
+      objectReference: {fileID: 1949550912}
     - target: {fileID: 2310897901683300063, guid: 91d93cebd34f2cc4f8d31101952ffa59,
         type: 3}
       propertyPath: m_Sprite
@@ -1048,7 +1073,7 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
@@ -1063,7 +1088,32 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: alphaByDistance
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.17762761
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.07725169
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
@@ -1115,30 +1165,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4343260571268369252}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &530331396
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/Vizlab/Wireframe
-  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
-  m_ShaderKeywords: _REMOVEDIAG_ON
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Floats:
-    - _RemoveDiag: 1
-    - _WireframeVal: 0.013
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &554987604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1209,7 +1235,7 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
@@ -1224,7 +1250,32 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: alphaByDistance
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.17762761
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.07725169
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
@@ -1492,7 +1543,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 530331396}
+      objectReference: {fileID: 1047395875}
     - target: {fileID: 1754541259807530009, guid: ee46f7c0c71563743860bf721f4d7194,
         type: 3}
       propertyPath: m_Name
@@ -1602,32 +1653,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
---- !u!21 &793014639
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/Vizlab/Wireframe
-  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
-  m_ShaderKeywords: _REMOVEDIAG_ON
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Floats:
-    - _RemoveDiag: 1
-    - _WireframeVal: 0.013
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!21 &816795202
 Material:
   serializedVersion: 6
@@ -1654,30 +1681,6 @@ Material:
     m_Floats: []
     m_Colors:
     - _Color: {r: 0, g: 1, b: 0, a: 1}
---- !u!21 &819043352
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/Vizlab/Wireframe
-  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
-  m_ShaderKeywords: _REMOVEDIAG_ON
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Floats:
-    - _RemoveDiag: 1
-    - _WireframeVal: 0.013
-    m_Colors:
-    - _Color: {r: 1, g: 0.7202713, b: 0, a: 1}
 --- !u!1 &820234546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,7 +1811,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
-  isScalableElement: 0
+  isScalableElement: 1
+  isRotationElement: 0
   isDragging: 0
   onDragEnter:
     m_PersistentCalls:
@@ -1921,7 +1925,7 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
@@ -1936,7 +1940,32 @@ PrefabInstance:
     - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
         type: 3}
       propertyPath: alphaByDistance
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.17762761
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.5283019
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.07725169
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
@@ -2285,6 +2314,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2108647457}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1047395875
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/Vizlab/Wireframe
+  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
+  m_ShaderKeywords: _REMOVEDIAG_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _RemoveDiag: 1
+    - _WireframeVal: 0.013
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!21 &1087407664
 Material:
   serializedVersion: 6
@@ -2603,6 +2656,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1437616852
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/Vizlab/Wireframe
+  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
+  m_ShaderKeywords: _REMOVEDIAG_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _RemoveDiag: 1
+    - _WireframeVal: 0.013
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1467478857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,7 +3128,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1530938858 stripped
 GameObject:
@@ -3085,7 +3162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
-  isScalableElement: 0
+  isScalableElement: 1
+  isRotationElement: 0
   isDragging: 0
   onDragEnter:
     m_PersistentCalls:
@@ -3193,7 +3271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
-  isScalableElement: 0
+  isScalableElement: 1
+  isRotationElement: 0
   isDragging: 0
   onDragEnter:
     m_PersistentCalls:
@@ -3249,7 +3328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 602492673}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
-  isScalableElement: 0
+  isScalableElement: 1
+  isRotationElement: 0
   isDragging: 0
   onDragEnter:
     m_PersistentCalls:
@@ -3808,7 +3888,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1802700165
 GameObject:
@@ -4125,6 +4205,30 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882662917}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!21 &1949550912
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/Vizlab/Wireframe
+  m_Shader: {fileID: 4800000, guid: 396bcfcc25304544e8754e58bcc3672d, type: 3}
+  m_ShaderKeywords: _REMOVEDIAG_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _RemoveDiag: 1
+    - _WireframeVal: 0.013
+    m_Colors:
+    - _Color: {r: 1, g: 0.7202713, b: 0, a: 1}
 --- !u!1 &2018752943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4302,7 +4406,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 793014639}
+      objectReference: {fileID: 1437616852}
     - target: {fileID: 2310897902124987892, guid: 91d93cebd34f2cc4f8d31101952ffa59,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4382,7 +4486,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2144860528
 GameObject:
@@ -5113,6 +5217,11 @@ PrefabInstance:
     - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: isScalableElement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965766011050168084, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: isRotationElement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4965766011656168971, guid: 94d6bd47033a3424697930de1c3fa275,
@@ -5168,6 +5277,11 @@ PrefabInstance:
     - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: isScalableElement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298124344880664, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: isRotationElement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
@@ -5193,6 +5307,11 @@ PrefabInstance:
     - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: isScalableElement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125242004069, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: isRotationElement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5507298125242004090, guid: 94d6bd47033a3424697930de1c3fa275,
@@ -5238,6 +5357,11 @@ PrefabInstance:
     - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: isScalableElement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507298125432966741, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: isRotationElement
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
@@ -5263,7 +5387,32 @@ PrefabInstance:
     - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.11506823
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.046724807
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106652812579537929, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7366611388072055347, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
@@ -5298,7 +5447,32 @@ PrefabInstance:
     - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.11506823
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.046724807
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929655677969669, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
@@ -5323,7 +5497,32 @@ PrefabInstance:
     - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.11506823
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.046724807
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656724912504, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
@@ -5348,7 +5547,32 @@ PrefabInstance:
     - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}
       propertyPath: detectTouch
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.r
+      value: 0.11506823
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.g
+      value: 0.046724807
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchColor.b
+      value: 0.6603774
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: touchScaleMultiplier
+      value: 1.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7645929656798168392, guid: 94d6bd47033a3424697930de1c3fa275,
+        type: 3}
+      propertyPath: hapticTouchFrequence
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7802314599714941420, guid: 94d6bd47033a3424697930de1c3fa275,
         type: 3}

@@ -69,13 +69,10 @@ public class SmartTable : MonoBehaviour
 
     void RightTriggerDown()
     {
-        Debug.Log("Right Trigger Down!");
     }
 
     void RightTriggerUp()
     {
-        Debug.Log("Right Trigger Up!");
-
         if (isCalibrationStarted)
         {
             if (!isDownLeftCornerSet)
