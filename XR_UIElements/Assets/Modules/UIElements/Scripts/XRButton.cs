@@ -6,6 +6,7 @@ public class XRButton : MonoBehaviour
 {
     private XRFeedback xrFeedback;
     private AudioSource audioSource;
+    private Rigidbody frontPanelRigidBody;
 
     [Header("Internal Properties")]
     public SpriteRenderer frontPanel;
@@ -66,12 +67,18 @@ public class XRButton : MonoBehaviour
         {
             xrFeedback.onHoverStay.AddListener(OnHoverStayFunction);
             xrFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
-
             xrFeedback.onTouchStay.AddListener(OnTouchStayFunction);
         }
+
+        frontPanelRigidBody = frontPanel.GetComponent<Rigidbody>();
     }
 
     void Update()
+    {
+        ButtonLoop();
+    }
+
+    private void ButtonLoop()
     {
         distance = frontPanel.transform.localPosition.z;
 
@@ -91,12 +98,32 @@ public class XRButton : MonoBehaviour
         }
         else
         {
+            if (distance > initialPos)
+            {
+                frontPanel.transform.localPosition = new Vector3(0, 0, initialPos);
+            }
+
             if (isPressed)
             {
                 isPressed = false;
                 onClickUp?.Invoke();
             }
         }
+
+    }
+
+    private void ConstraintLocally()
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(frontPanelRigidBody.velocity);
+        localVelocity.x = 0;
+        localVelocity.y = 0;
+
+        Vector3 localPosition = transform.InverseTransformPoint(frontPanelRigidBody.position);
+        localPosition.x = 0;
+        localPosition.y = 0;
+
+        frontPanelRigidBody.velocity = transform.TransformDirection(localVelocity);
+        frontPanelRigidBody.position = transform.TransformPoint(localPosition);
     }
 
     private void ConfigureAudioSource()
@@ -111,6 +138,7 @@ public class XRButton : MonoBehaviour
         if (clickSound != null)
             audioSource.clip = clickSound;
     }
+
 
     private void OnClickDownFucntion()
     {
@@ -129,14 +157,19 @@ public class XRButton : MonoBehaviour
 
     private void OnClickUpFucntion()
     {
+        xrFeedback.gameObject.SetActive(true);
+
         isPressed = false;
         frontPanel.color = normalColor;
 
-        xrFeedback.gameObject.SetActive(true);
+        ConstraintLocally();
     }
+
 
     private void OnHoverStayFunction()
     {
+        ConstraintLocally();
+
         if (wireframeMesh == null)
             return;
 
@@ -165,5 +198,15 @@ public class XRButton : MonoBehaviour
         alphaColor.a = (1 - normalizedDistance) + 0.15f;
         wireframeMesh.sharedMaterial.color = alphaColor;
 
+    }
+
+    public void SetNormalColor(Color color)
+    {
+        normalColor = color;
+    }
+
+    public void SetClickColor(Color color)
+    {
+        clickColor = color;
     }
 }

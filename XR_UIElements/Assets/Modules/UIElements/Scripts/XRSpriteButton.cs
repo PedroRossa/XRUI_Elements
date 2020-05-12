@@ -8,17 +8,34 @@ public class XRSpriteButton : XRButton
     public Sprite sprite;
     public Color spriteColor = Color.white;
 
+    private SpriteRenderer buttonSpriteRenderer;
+
     //Runs only in editor
     private void OnValidate()
     {
         BaseOnValidate();
-        
+
         if (sprite != null)
         {
             //Get the spriterenderer on child to set the new sprite when changed
-            SpriteRenderer buttonIcon = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
-            buttonIcon.sprite = sprite;
-            buttonIcon.color = spriteColor;
+            if (buttonSpriteRenderer == null)
+            {
+                buttonSpriteRenderer = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
+                buttonSpriteRenderer.sprite = sprite;
+                buttonSpriteRenderer.color = spriteColor;
+            }
         }
+    }
+
+    private void Awake()
+    {
+        if (buttonSpriteRenderer == null)
+            buttonSpriteRenderer = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        if (buttonSpriteRenderer != null)
+            buttonSpriteRenderer.sprite = sprite;
     }
 }

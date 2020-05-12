@@ -9,6 +9,7 @@ public class XRDraggableElement : MonoBehaviour
 {
     public Transform parentToDrag;
     public Color meshColor = Color.magenta;
+    public Color dragColor = Color.cyan;
     public bool isScalableElement = false;
     public bool isRotationElement = false;
 
@@ -41,6 +42,7 @@ public class XRDraggableElement : MonoBehaviour
             elementCollider = GetComponent<Collider>();
 
         elementCollider.isTrigger = true;
+
     }
 
     private void Awake()
@@ -60,11 +62,11 @@ public class XRDraggableElement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isTouching)
+        if (isTouching)
         {
             XRController xrController = interactableCollider.GetComponentInParent<XRController>();
 
-            if(xrController == null)
+            if (xrController == null)
                 xrController = interactableCollider.GetComponentInChildren<XRController>();
 
             if (xrController != null)
@@ -96,6 +98,7 @@ public class XRDraggableElement : MonoBehaviour
     {
         if (xrController == null || xrController.inputDevice == null)
         {
+            SetColor(meshColor);
             isDragging = false;
             return;
         }
@@ -110,6 +113,7 @@ public class XRDraggableElement : MonoBehaviour
             }
             else
             {
+                SetColor(dragColor);
                 MoveElement(xrController.GetComponentInChildren<Collider>().transform.position);
                 onDragStay?.Invoke();
             }
@@ -117,6 +121,7 @@ public class XRDraggableElement : MonoBehaviour
 
         if ((!isPressed && isDragging) || !isDragging)
         {
+            SetColor(meshColor);
             isDragging = false;
             onDragExit?.Invoke();
         }

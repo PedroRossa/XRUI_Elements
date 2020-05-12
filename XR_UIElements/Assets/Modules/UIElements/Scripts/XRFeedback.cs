@@ -85,7 +85,6 @@ public class XRFeedback : MonoBehaviour
     [ShowIf("detectTouch")]
     public UnityEvent onTouchExit;
 
-
     private Color originalColor;
     private Vector3 originalScale;
     private Vector3 onHoverEnterPos;
@@ -105,30 +104,21 @@ public class XRFeedback : MonoBehaviour
     {
         if (meshFeedback != null)
         {
-            if (meshFeedback.sharedMaterial == null)
-            {
-                meshFeedback.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
-                meshFeedback.sharedMaterial.color = Color.magenta;
-            }
-
-            if (alphaByDistance)
-                meshFeedback.sharedMaterial.color = Color.clear;
-
             originalColor = meshFeedback.sharedMaterial.color;
             originalScale = meshFeedback.transform.localScale;
             elementCollider = meshFeedback.GetComponent<Collider>();
         }
         else if (spriteFeedback != null)
         {
-            if (alphaByDistance)
-                spriteFeedback.color = Color.clear;
-
             originalColor = spriteFeedback.color;
             originalScale = spriteFeedback.transform.localScale;
             elementCollider = spriteFeedback.GetComponent<Collider>();
         }
 
-        if(playSound)
+        if(alphaByDistance)
+            SetFeedback(Color.clear, 1);
+
+        if (playSound)
             ConfigureAudioSource();
     }
 
@@ -246,7 +236,10 @@ public class XRFeedback : MonoBehaviour
 
     private void OnHoverExitFunction(Transform interactable)
     {
-        SetFeedback(originalColor, 1);
+        if (alphaByDistance)
+            SetFeedback(Color.clear, 1);
+        else
+            SetFeedback(originalColor, 1);
 
         if (useHapticFeedback)
             HapticFeedbackStop(interactable);
@@ -361,5 +354,4 @@ public class XRFeedback : MonoBehaviour
             }
         }
     }
-
 }

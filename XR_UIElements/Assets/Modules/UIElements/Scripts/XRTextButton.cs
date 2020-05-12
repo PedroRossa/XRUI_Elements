@@ -19,11 +19,8 @@ public class XRTextButton : XRButton
 
         if (tmpField != null)
         {
-            tmpField = GetComponentInChildren<TextMeshPro>();
             tmpField.text = txtValue;
             tmpField.fontSize = fontSize;
-
-            Vector4 margins = tmpField.margin;
         }
         else
         {
@@ -35,5 +32,8 @@ public class XRTextButton : XRButton
     {
         if (tmpField == null)
             tmpField = GetComponentInChildren<TextMeshPro>();
+
+        tmpField.text = txtValue;
+        tmpField.fontSize = fontSize;
     }
 }

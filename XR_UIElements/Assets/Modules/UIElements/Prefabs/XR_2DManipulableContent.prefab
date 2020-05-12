@@ -322,7 +322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751719826616933054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.902614, y: -7.033091, z: 16.790886}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 1751719825838399223}
@@ -344,6 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackByProximity: 0
+  manipulationIsActive: 1
   soundFeedback: 0
   hapticsFeedback: 1
   showOutFrame: 1
@@ -751,6 +752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 1751719826616933184}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
+  dragColor: {r: 0, g: 1, b: 1, a: 1}
   isScalableElement: 1
   isRotationElement: 0
   isDragging: 0
@@ -875,6 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 1751719826616933184}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
+  dragColor: {r: 0, g: 1, b: 1, a: 1}
   isScalableElement: 1
   isRotationElement: 0
   isDragging: 0
@@ -914,6 +917,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 1751719826616933184}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
+  dragColor: {r: 0, g: 1, b: 1, a: 1}
   isScalableElement: 1
   isRotationElement: 0
   isDragging: 0
@@ -953,6 +957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 1751719826616933184}
   meshColor: {r: 0, g: 1, b: 0, a: 1}
+  dragColor: {r: 0, g: 1, b: 1, a: 1}
   isScalableElement: 1
   isRotationElement: 0
   isDragging: 0

@@ -10,6 +10,9 @@ public class XR2DManipulableContent : MonoBehaviour
 
     [Header("General Properties")]
     public bool feedbackByProximity = true;
+
+    public bool manipulationIsActive = true;
+
     public bool soundFeedback = true;
     public bool hapticsFeedback = true;
     public bool showOutFrame = false;
@@ -33,7 +36,7 @@ public class XR2DManipulableContent : MonoBehaviour
     [Header("Scalling Properties")]
     public float minScaleFactor = 0.1f;
     public float maxScaleFactor = 100f;
-    
+
     public UnityEvent onScaleBegin;
     public UnityEvent onScale;
     public UnityEvent onScaleEnd;
@@ -49,22 +52,25 @@ public class XR2DManipulableContent : MonoBehaviour
     private Vector3 secondOriginalPos;
     private Quaternion originalRotation;
 
-    private void OnValidate()
+    [Button]
+    public void UpdateVisual()
     {
-        foreach (XRDraggableElement item in GetComponentsInChildren<XRDraggableElement>())
-        {
-            XRFeedback currFeedback = item.GetComponentInChildren<XRFeedback>();
-            currFeedback.alphaByDistance = feedbackByProximity;
-            currFeedback.playSound = soundFeedback;
-            currFeedback.useHapticFeedback = hapticsFeedback;
-        }
-
         if (outFrame != null)
         {
             outFrame.sharedMaterial = new Material(Shader.Find("Unlit/Wireframe"));
             outFrame.sharedMaterial.SetFloat("_WireframeVal", frameSize);
             outFrame.sharedMaterial.SetColor("_Color", frameColor);
             outFrame.gameObject.SetActive(showOutFrame);
+        }
+
+        foreach (XRDraggableElement item in GetComponentsInChildren<XRDraggableElement>(true))
+        {
+            XRFeedback currFeedback = item.GetComponentInChildren<XRFeedback>();
+            currFeedback.alphaByDistance = feedbackByProximity;
+            currFeedback.playSound = soundFeedback;
+            currFeedback.useHapticFeedback = hapticsFeedback;
+
+            item.gameObject.SetActive(manipulationIsActive);
         }
     }
 
@@ -80,6 +86,8 @@ public class XR2DManipulableContent : MonoBehaviour
             XRDraggableElement curr = item;
             item.onDragEnter.AddListener(() => { OnDragElementEnter(curr); });
             item.onDragExit.AddListener(() => { OnDragElementExit(curr); });
+
+            item.gameObject.SetActive(manipulationIsActive);
         }
     }
 
@@ -125,7 +133,7 @@ public class XR2DManipulableContent : MonoBehaviour
             if (firstCollider != null && secondCollider != null)
                 holdWithTwoHands = true;
         }
-        SetNonSelectedDragableElements(!holdWithTwoHands);
+        SetDragableElementsVisibility(!holdWithTwoHands);
     }
 
 
@@ -223,13 +231,15 @@ public class XR2DManipulableContent : MonoBehaviour
     }
 
 
-    private void SetNonSelectedDragableElements(bool state)
+    public void SetDragableElementsVisibility(bool state, bool considerateSelectedElements = false)
     {
         foreach (var item in dragableElements)
         {
-            if (item.Equals(firstSelectedElement) || item.Equals(secondSelectedElement))
-                continue;
-
+            if (!considerateSelectedElements)
+            {
+                if (item.Equals(firstSelectedElement) || item.Equals(secondSelectedElement))
+                    continue;
+            }
             item.gameObject.SetActive(state);
         }
     }
