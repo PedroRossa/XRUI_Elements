@@ -38,7 +38,10 @@ public class XRButton : MonoBehaviour
     {
         frontPanel.color = normalColor;
 
-        wireframeMesh.sharedMaterial = new Material(Shader.Find("Unlit/Vizlab/Wireframe"));
+        if (wireframeMesh == null)
+            return;
+
+        wireframeMesh.sharedMaterial = new Material(Shader.Find("Unlit/Wireframe"));
 
         wireframeMesh.sharedMaterial.SetFloat("_WireframeVal", lineBoxWidth);
         wireframeMesh.sharedMaterial.SetColor("_Color", lineBoxColor);
@@ -52,7 +55,8 @@ public class XRButton : MonoBehaviour
 
         initialPos = frontPanel.transform.localPosition.z;
 
-        wireframeMesh.sharedMaterial.color = Color.clear;
+        if (wireframeMesh != null)
+            wireframeMesh.sharedMaterial.color = Color.clear;
 
         ConfigureAudioSource();
 
@@ -133,6 +137,9 @@ public class XRButton : MonoBehaviour
 
     private void OnHoverStayFunction()
     {
+        if (wireframeMesh == null)
+            return;
+
         Color alphaColor = lineBoxColor;
 
         alphaColor.a = 0.15f;
@@ -141,12 +148,15 @@ public class XRButton : MonoBehaviour
 
     private void OnHoverExitFuncion()
     {
+        if (wireframeMesh == null)
+            return;
+
         wireframeMesh.sharedMaterial.color = Color.clear;
     }
 
     private void OnTouchStayFunction()
     {
-        if (distance <= 0)
+        if (distance <= 0 || wireframeMesh == null)
             return;
 
         Color alphaColor = lineBoxColor;

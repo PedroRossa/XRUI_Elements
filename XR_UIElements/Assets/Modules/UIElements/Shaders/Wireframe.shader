@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Vizlab/Wireframe"
+﻿Shader "Unlit/Wireframe"
 {
 	Properties
 	{
