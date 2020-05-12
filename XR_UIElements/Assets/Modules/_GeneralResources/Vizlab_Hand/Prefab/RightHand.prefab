@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 26933682}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_pinky_c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 29730948}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_pinky_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 32596099}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_index_meta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 48405357}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_index_c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 161373192}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle4 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 210591400}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 229870975}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_middle_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 267611112}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_ring_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 278506728}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303363025}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_middle_meta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 343591192}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_index_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 346311989}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 374476900}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_thumb_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 398359796}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_Wrist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 425695011}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:Index
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 426147790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_ring_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 460011000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_pinky_meta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 562370251}
   - component: {fileID: 562370252}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightHand_Unlit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 600069504}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -622,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 675961151}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:pinky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 685663376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 725235318}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle3 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 774413596}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_ring_meta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +746,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 938290944}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_ring_c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 956155037}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_middle_c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,7 +808,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 963951329}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +839,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 988484087}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_thumb_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 998527899}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_index_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1017470696}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_ring_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -929,7 +929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1031704959}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle3 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -960,7 +960,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1047501838}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle2 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,7 +991,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1066440298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_pinky_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1022,7 +1022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1154758594}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_middle_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1052,7 +1052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1290798117}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1082,7 +1082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1379293504}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_pinky_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1112,7 +1112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1437275385}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle2 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1144,7 +1144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1463684871}
   - component: {fileID: 1463684872}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ISOTITAHAND
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1254,7 +1254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1545490987}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle3 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1284,7 +1284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1584769253}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_index_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1315,7 +1315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1604748028}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle4 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1345,7 +1345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1619046984}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:thumb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1376,7 +1376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1747566403}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_thumb_meta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1407,7 +1407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1763763762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_Palm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1442,7 +1442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797713887}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle2 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1473,7 +1473,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1852333573}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_thumb_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1504,7 +1504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1861858354}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftHandOnly:nurbsCircle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1535,7 +1535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2104803453}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_middle_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1568,7 +1568,7 @@ GameObject:
   - component: {fileID: 6740743713094205505}
   - component: {fileID: 4669230681904893815}
   - component: {fileID: 4708679548213636299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: IndexCollider
   m_TagString: interactable
   m_Icon: {fileID: 0}
@@ -1628,7 +1628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5130372374487172575}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

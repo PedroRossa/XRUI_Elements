@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1306640934352848695}
   - component: {fileID: 2559666419473206496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: controller
   m_TagString: interactable
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 8344996962695277796}
   - component: {fileID: 3190665940219338050}
   - component: {fileID: 6681864472371505638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7567424807152353748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pDisc1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 1848765027741141891}
   - component: {fileID: 7240680133510941581}
   - component: {fileID: 2015494493864104044}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 7019551104157351595}
   - component: {fileID: 6284710057567706848}
   - component: {fileID: 2041682521695266817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: pSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

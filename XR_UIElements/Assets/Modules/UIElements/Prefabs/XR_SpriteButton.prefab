@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2310897900546579373}
   - component: {fileID: 2310897900546579363}
   - component: {fileID: 2310897900546579362}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wireframe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2310897901607425661}
   - component: {fileID: 2310897901607425651}
   - component: {fileID: 2310897901607425648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BackPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2310897901683300057}
   - component: {fileID: 2310897901683300063}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 2310897902124987892}
   - component: {fileID: 8871175845980948470}
   - component: {fileID: 4794229270303976326}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_SpriteButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 2310897902144382757}
   - component: {fileID: 2310897902144382776}
   - component: {fileID: 2310897902144382778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

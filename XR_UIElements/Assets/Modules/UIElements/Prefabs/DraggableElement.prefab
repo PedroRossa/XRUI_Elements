@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 613663379311906187}
   - component: {fileID: 613663379311906186}
   - component: {fileID: 613663379311906197}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DraggableElement
   m_TagString: XRDragElement
   m_Icon: {fileID: 0}

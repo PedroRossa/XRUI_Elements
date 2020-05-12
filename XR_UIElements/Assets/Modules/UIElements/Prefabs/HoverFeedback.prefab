@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2771427859727389231}
   - component: {fileID: 2714854458474664673}
   - component: {fileID: 4951520746486133666}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HoverFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}

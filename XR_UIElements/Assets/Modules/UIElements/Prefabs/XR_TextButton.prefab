@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1754541259235832387}
   - component: {fileID: 1754541259235832397}
   - component: {fileID: 1754541259235832396}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wireframe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 6942481825609605318}
   - component: {fileID: 7631571738684928786}
   - component: {fileID: 6333548643840396632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_TextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 1754541259818536651}
   - component: {fileID: 1754541259818536662}
   - component: {fileID: 1754541259818536660}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrontPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 1754541260355633043}
   - component: {fileID: 1754541260355633053}
   - component: {fileID: 1754541260355633054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BackPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 275945467357128424}
   - component: {fileID: 3553125780208578941}
   - component: {fileID: 2209743395943144511}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1751719825652243554}
   - component: {fileID: 1751719825652243555}
   - component: {fileID: 1751719825652243552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1751719825720938101}
   - component: {fileID: 1751719825720938098}
   - component: {fileID: 1751719825720938099}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751719825795125292}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dragables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1751719825838399223}
   - component: {fileID: 1751719825838399224}
   - component: {fileID: 1751719825838399225}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1751719826616933184}
   - component: {fileID: 1751719826616933185}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_2DPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1751719826680656917}
   - component: {fileID: 1751719826680656919}
   - component: {fileID: 1751719826680656916}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751719827209594074}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751719827250209139}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DragElements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 1751719827369409607}
   - component: {fileID: 1751719827369409609}
   - component: {fileID: 1751719827369409606}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 1751719827719139569}
   - component: {fileID: 1751719827719139566}
   - component: {fileID: 1751719827719139567}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751719827725015625}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Corners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2183,6 +2183,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BottomLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 2417159838375451628, guid: d820e8c3224699d40b1070aa2ec98404,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3437010303653109594, guid: d820e8c3224699d40b1070aa2ec98404,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2274,6 +2279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TopLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 2417159838375451628, guid: d820e8c3224699d40b1070aa2ec98404,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3437010303653109594, guid: d820e8c3224699d40b1070aa2ec98404,
         type: 3}
@@ -2372,6 +2382,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TopRight
       objectReference: {fileID: 0}
+    - target: {fileID: 2417159838375451628, guid: d820e8c3224699d40b1070aa2ec98404,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3437010303653109594, guid: d820e8c3224699d40b1070aa2ec98404,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2463,6 +2478,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BottomRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2417159838375451628, guid: d820e8c3224699d40b1070aa2ec98404,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3437010303653109594, guid: d820e8c3224699d40b1070aa2ec98404,
         type: 3}
