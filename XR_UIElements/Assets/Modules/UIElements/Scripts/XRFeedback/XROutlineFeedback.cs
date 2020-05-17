@@ -16,7 +16,7 @@ public class XROutlineFeedback : XRBaseFeedback
         onProximityAreaExit.AddListener(() => outline.enabled = false);
     }
 
-    protected override void SetColor(Color color)
+    public override void SetColor(Color color)
     {
         outline.OutlineColor = color;
     }

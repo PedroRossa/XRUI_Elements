@@ -1,10 +1,4 @@
-﻿using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class XRSpriteFeedback : XRBaseFeedback
@@ -20,7 +14,7 @@ public class XRSpriteFeedback : XRBaseFeedback
     }
 
 
-    protected override void SetColor(Color color)
+    public override void SetColor(Color color)
     {
         elementSprite.color = color;
     }

@@ -1,158 +1,204 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRManipulable2D: MonoBehaviour
+public class XRManipulable2D : MonoBehaviour
 {
+    internal class InteractionElement
+    {
+        private Vector3 initialElementPosition;
+
+        private Vector3 initialInteractablePosition;
+        private Quaternion initialInteractableRotation;
+        private Vector3 initialInteractableScale;
+
+        public XRBaseInteractor Interactor { get; set; }
+        public XRManipulableGrabInteractable Interactable { get; private set; }
+        public Vector3 InitialElementPosition { get => initialElementPosition; }
+        public Vector3 InitialInteractablePosition { get => initialInteractablePosition; }
+        public Quaternion InitialInteractableRotation { get => initialInteractableRotation; }
+        public Vector3 InitialInteractableScale { get => initialInteractableScale; }
+        public bool IsToResetInteractable { get; set; }
+
+        public InteractionElement()
+        {
+            ClearElement();
+        }
+
+        public InteractionElement(XRBaseInteractor interactor)
+        {
+            Interactor = interactor;
+            if (interactor != null)
+            {
+                Interactable = (XRManipulableGrabInteractable)interactor.selectTarget;
+                initialElementPosition = Interactable.transform.position;
+                initialInteractablePosition = Interactable.transform.localPosition;
+                initialInteractableRotation = Interactable.transform.localRotation;
+                initialInteractableScale = Interactable.transform.localScale;
+            }
+            else
+            {
+                ClearElement();
+            }
+        }
+
+        private void ClearElement()
+        {
+            Interactor = null;
+            Interactable = null;
+            initialElementPosition = initialInteractablePosition = Vector3.zero;
+            initialInteractableRotation = Quaternion.identity;
+            initialInteractableScale = Vector3.one;
+        }
+
+        public void SetInteractableToInitialState()
+        {
+            if (Interactable != null)
+            {
+                IsToResetInteractable = false;
+                Interactable.transform.localPosition = initialInteractablePosition;
+                Interactable.transform.localRotation = initialInteractableRotation;
+                Interactable.transform.localScale = initialInteractableScale;
+
+                ClearElement();
+            }
+        }
+    }
+
     public bool showByProximity = false;
 
-    private XRBaseInteractor interactorA;
-    private XRBaseInteractor interactorB;
-   
-    private XRManipulableGrabInteractable interactableA;
-    private XRManipulableGrabInteractable interactableB;
+    [MinMaxSlider(0.05f, 100.0f)]
+    public Vector2 minMaxScale;
 
+    [ReadOnly]
+    public bool isTwoHandsGrabing = false;
+
+    public UnityEvent onTwoHandsGrabingStart;
+    public UnityEvent onTwoHandsGrabingStay;
+    public UnityEvent onTwoHandsGrabingEnd;
+
+
+    private InteractionElement interactionA;
+    private InteractionElement interactionB;
     private List<XRManipulableGrabInteractable> interactables = new List<XRManipulableGrabInteractable>();
-    private Vector3 interactableAOriginalLocalPos;
-    private Vector3 interactableBOriginalLocalPos;
-
-    private Vector3 firstOriginalPos;
-    private Vector3 secondOriginalPos;
     private Quaternion originalRotation;
 
-    private bool resetPosition = false;
-
-    private void Awake()
+    private void Start()
     {
         interactables = GetComponentsInChildren<XRManipulableGrabInteractable>().ToList();
         SetInteractableEvents();
-        //interactorA.onSelectEnter.AddListener(InteractorASelect);
-        //interactorA.onSelectExit.AddListener(InteractorASelectExit);
-        //interactorA.onHoverEnter.AddListener(ChangeColor);
-        //interactorA.onHoverExit.AddListener(BackColor);
-        //
-        //interactorB.onSelectEnter.AddListener(InteractorBSelect);
-        //interactorB.onSelectExit.AddListener(InteractorBSelectExit);
-        //interactorB.onHoverEnter.AddListener(ChangeColor);
-        //interactorB.onHoverExit.AddListener(BackColor);
+
+        interactionA = new InteractionElement();
+        interactionB = new InteractionElement();
     }
 
     private void SetInteractableEvents()
     {
-        foreach (var item in interactables)
+        foreach (XRBaseInteractable item in interactables)
         {
+            item.GetComponent<XRBaseFeedback>().alphaColorByDistance = showByProximity;
+            if (showByProximity)
+                item.GetComponent<XRBaseFeedback>().SetColor(Color.clear);
+
             item.onSelectEnter.AddListener(OnInteractableSelectEnter);
+            item.onSelectExit.AddListener(OnInteractableSelectExit);
         }
-    }
-
-    private void OnInteractableSelectEnter(XRBaseInteractor interactor)
-    {
-        if (interactorA == null)
-            interactorA = interactor;
-        else
-            interactorB = interactor;
-        
-        firstOriginalPos = interactorA.transform.position;
-        interactableAOriginalLocalPos = interactorA.transform.localPosition;
-
-        if (interactorB != null)
-            originalRotation = transform.rotation;
     }
 
     private void Update()
     {
-        //if (interactorA.isSelectActive && interactorB.isSelectActive)
-        //{
-        //    resetPosition = true;
-         
-        //    if (interactableA.isRotationElement && interactableB.isRotationElement)
-        //        OnRotationFunction();
-        //    if (interactableA.isScaleElement && interactableB.isScaleElement)
-        //        OnScaleFunction();
-        //}
-        //else if((!interactorA.isSelectActive && !interactorB.isSelectActive) && resetPosition)
-        //{
-        //    resetPosition = false;
+        if (interactionA.Interactable != null && interactionB.Interactable != null)
+        {
+            if (!isTwoHandsGrabing)
+            {
+                isTwoHandsGrabing = true;
+                SetInteractablesVisibility(false);
+                onTwoHandsGrabingStart?.Invoke();
+            }
+            else
+            {
+                if (interactionB.Interactable.isScaleElement && interactionA.Interactable.isScaleElement)
+                    ScaleContent();
+                if (interactionB.Interactable.isRotationElement && interactionA.Interactable.isRotationElement)
+                    RotateContent();
+                onTwoHandsGrabingStay?.Invoke();
+            }
+        }
+        else
+        {
+            if (isTwoHandsGrabing)
+            {
+                isTwoHandsGrabing = false;
+                SetInteractablesVisibility(true);
+                onTwoHandsGrabingEnd?.Invoke();
+            }
+        }
 
-        //    interactableA.transform.localPosition = interactableAOriginalLocalPos;
-        //    interactableB.transform.localPosition = interactableBOriginalLocalPos;
-
-        //    interactableA = null;
-        //    interactableB = null;
-        //}
+        if (interactionA.IsToResetInteractable)
+            interactionA.SetInteractableToInitialState();
+        if (interactionB.IsToResetInteractable)
+            interactionB.SetInteractableToInitialState();
     }
 
-    private void ChangeColor(XRBaseInteractable interactable)
+
+    private void OnInteractableSelectEnter(XRBaseInteractor interactor)
     {
-        MeshRenderer m = interactable.GetComponent<MeshRenderer>();
-        m.sharedMaterial = new Material(m.sharedMaterial);
+        if (interactionA.Interactor == null)
+            interactionA = new InteractionElement(interactor);
+        else
+            interactionB = new InteractionElement(interactor);
 
-        m.sharedMaterial.color = Color.red;
-    }
-
-    private void BackColor(XRBaseInteractable interactable)
-    {
-        MeshRenderer m = interactable.GetComponent<MeshRenderer>();
-        m.sharedMaterial = new Material(m.sharedMaterial);
-
-        m.sharedMaterial.color = Color.white;
-    }
-
-    private void InteractorASelect(XRBaseInteractable interactable)
-    {
-        interactableA = (XRManipulableGrabInteractable)interactable;
-        firstOriginalPos = interactable.transform.position;
-        interactableAOriginalLocalPos = interactable.transform.localPosition;
-
-        if (interactorB.isSelectActive)
+        if (interactionA.Interactor != null && interactionB.Interactor != null)
             originalRotation = transform.rotation;
     }
 
-    private void InteractorBSelect(XRBaseInteractable interactable)
+    private void OnInteractableSelectExit(XRBaseInteractor interactor)
     {
-        interactableB = (XRManipulableGrabInteractable)interactable;
-        secondOriginalPos = interactable.transform.position;
-        interactableBOriginalLocalPos = interactable.transform.localPosition;
+        if (interactor.Equals(interactionA.Interactor))
+            interactionA.IsToResetInteractable = true;
 
-        if (interactorA.isSelectActive)
-            originalRotation = transform.rotation;
+        if (interactor.Equals(interactionB.Interactor))
+            interactionB.IsToResetInteractable = true;
     }
 
 
-    private void InteractorASelectExit(XRBaseInteractable interactable)
+    private void SetInteractablesVisibility(bool value)
     {
-        interactable.transform.position = firstOriginalPos;
-    }
+        foreach (XRBaseInteractable item in interactables)
+            item.gameObject.SetActive(value);
 
-    private void InteractorBSelectExit(XRBaseInteractable interactable)
-    {
-        interactable.transform.position = secondOriginalPos;
-    }
-
-    private void OnScaleFunction()
-    {
-        Vector3 fPos = interactorA.transform.position;
-        Vector3 sPos = interactorB.transform.position;
-
-        float distance = (fPos - sPos).magnitude;
-        float norm = (distance - 0.01f) / (10f - 0.01f);
-        norm = Mathf.Clamp01(norm);
-
-        var minScale = Vector3.one * 10.0f;
-        var maxScale = Vector3.one * 0.01f;
-
-        transform.localScale = Vector3.Lerp(maxScale, minScale, norm);
+        if (!value)//make selected elements aways enabled
+        {
+            if (interactionA.Interactable != null)
+                interactionA.Interactable.gameObject.SetActive(true);
+            if (interactionB.Interactable != null)
+                interactionB.Interactable.gameObject.SetActive(true);
+        }
     }
 
 
-    private void OnRotationFunction()
+    private void ScaleContent()
     {
-        Vector3 originalDir = (firstOriginalPos - secondOriginalPos).normalized;
+        Vector3 fPos = interactionA.Interactable.transform.position;
+        Vector3 sPos = interactionB.Interactable.transform.position;
 
-        Vector3 fPos = interactorA.transform.position;
-        Vector3 sPos = interactorB.transform.position;
+        float sqrMagnitude = (fPos - sPos).sqrMagnitude;
+        float clampedValue = Mathf.Clamp(sqrMagnitude, minMaxScale.x, minMaxScale.y);
+
+        transform.localScale = Vector3.one * clampedValue;
+    }
+
+    private void RotateContent()
+    {
+        Vector3 originalDir = (interactionA.InitialElementPosition - interactionB.InitialElementPosition).normalized;
+
+        Vector3 fPos = interactionA.Interactable.transform.position;
+        Vector3 sPos = interactionB.Interactable.transform.position;
 
         Vector3 currentDir = (fPos - sPos).normalized;
 
@@ -160,5 +206,4 @@ public class XRManipulable2D: MonoBehaviour
 
         transform.rotation = diffDir * originalRotation;
     }
-
 }

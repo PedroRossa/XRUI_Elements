@@ -65,23 +65,23 @@ public abstract class XRBaseFeedback : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
-    protected abstract void SetColor(Color color);
+    public abstract void SetColor(Color color);
 
     protected virtual void UpdateColorByDistance()
     {
         Color alphaColor = originalColor;
-        float maxDistance = Vector3.Distance(onProximityEnterPos, transform.position);
-        float distance = Vector3.Distance(onProximityStayPos, transform.position);
+        float distance = Vector3.Distance(onProximityStayPos, proximityCollider.bounds.center);
+        float totalDistance = Vector3.Distance(Vector3.zero, proximityCollider.bounds.size);
 
-        float normalizedDistance = (1 / maxDistance * distance);
-        alphaColor.a = 1 - normalizedDistance;
+        float normalizedDistance = 1.0f - Mathf.Clamp01(distance / totalDistance);
+        alphaColor.a = normalizedDistance;
 
         SetColor(alphaColor);
     }
 
     private void OnProximityAreaEnterFunction()
     {
-        onProximityEnterPos = interactor.transform.position;
+        onProximityEnterPos = interactor.GetComponent<Collider>().transform.position;
 
         if (!alphaColorByDistance)
             SetColor(proximityColor);
@@ -96,9 +96,11 @@ public abstract class XRBaseFeedback : MonoBehaviour
 
     private void OnProximityAreaStayFunction()
     {
-        onProximityStayPos = interactor.transform.position;
         if (alphaColorByDistance)
+        {
+            onProximityStayPos = interactor.GetComponent<Collider>().transform.position;
             UpdateColorByDistance();
+        }
     }
 
     private void OnProximityAreaExitFunction()
