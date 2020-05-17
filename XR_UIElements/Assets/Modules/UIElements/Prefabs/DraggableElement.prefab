@@ -108,11 +108,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToDrag: {fileID: 0}
-  meshColor: {r: 1, g: 1, b: 1, a: 1}
+  changeColorOnDrag: 1
   dragColor: {r: 0, g: 1, b: 1, a: 1}
   isScalableElement: 0
   isRotationElement: 0
   isDragging: 0
+  isTouching: 0
   onDragEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -292,6 +293,11 @@ PrefabInstance:
       propertyPath: elementCollider
       value: 
       objectReference: {fileID: 613663379311906186}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: proximityCollider
+      value: 
+      objectReference: {fileID: 116250420674178512}
     m_RemovedComponents:
     - {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}

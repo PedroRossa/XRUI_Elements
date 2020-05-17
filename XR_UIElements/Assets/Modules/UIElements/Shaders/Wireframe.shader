@@ -12,6 +12,9 @@
 			Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
 			Blend SrcAlpha OneMinusSrcAlpha
 			Cull Off
+			ZWrite Off
+			Lighting Off
+			Fog { Mode Off }
 			LOD 200
 			Pass
 			{

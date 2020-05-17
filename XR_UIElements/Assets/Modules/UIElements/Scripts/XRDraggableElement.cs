@@ -1,4 +1,7 @@
 ﻿using NaughtyAttributes;
+using System;
+using System.CodeDom;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR;
@@ -8,19 +11,25 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XRDraggableElement : MonoBehaviour
 {
     public Transform parentToDrag;
-    public Color meshColor = Color.magenta;
+
+    public bool changeColorOnDrag = true;
+
+    [ShowIf("changeColorOnDrag")] 
     public Color dragColor = Color.cyan;
+
     public bool isScalableElement = false;
     public bool isRotationElement = false;
 
     [Header("State")]
     [ReadOnly]
     public bool isDragging = false;
+    [ReadOnly]
+    public bool isTouching = false;
 
-    private bool isTouching = false;
-
+    private Color meshColor;
     private MeshRenderer meshRenderer;
     private Collider elementCollider;
+
     private Collider interactableCollider;
 
     public UnityEvent onDragEnter;
@@ -30,29 +39,25 @@ public class XRDraggableElement : MonoBehaviour
     //Runs only in editor
     private void OnValidate()
     {
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        elementCollider = GetComponent<Collider>();
+        elementCollider.isTrigger = true;
 
+        //make a copy of mesh material to can be changed without change other objetct with the same material
         if (meshRenderer.sharedMaterial == null)
             meshRenderer.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
-
-        meshRenderer.sharedMaterial.color = meshColor;
-
-        if (elementCollider == null)
-            elementCollider = GetComponent<Collider>();
-
-        elementCollider.isTrigger = true;
+        else
+            meshRenderer.sharedMaterial = new Material(meshRenderer.sharedMaterial);
+        
+        //Save the original color
+        meshColor = meshRenderer.sharedMaterial.color;
 
     }
 
     private void Awake()
     {
-        if (meshRenderer == null)
-            meshRenderer = GetComponent<MeshRenderer>();
-
-        if (elementCollider == null)
-            elementCollider = GetComponent<Collider>();
-
+        meshRenderer = GetComponent<MeshRenderer>();
+        elementCollider = GetComponent<Collider>();
         elementCollider.isTrigger = true;
 
         //If don't set a parent to drag, drag itself
@@ -64,13 +69,7 @@ public class XRDraggableElement : MonoBehaviour
     {
         if (isTouching)
         {
-            XRController xrController = interactableCollider.GetComponentInParent<XRController>();
-
-            if (xrController == null)
-                xrController = interactableCollider.GetComponentInChildren<XRController>();
-
-            if (xrController != null)
-                DragByController(xrController);
+            DragByController();
 
             //TODO: Here can be implemented other type of drag action
         }
@@ -78,13 +77,16 @@ public class XRDraggableElement : MonoBehaviour
 
     public void SetColor(Color color)
     {
+        if (meshRenderer.sharedMaterial == null)
+            throw new Exception("This object doesn't have a material.");
+
         meshRenderer.sharedMaterial.color = color;
     }
 
     public Color GetColor()
     {
         if (meshRenderer.sharedMaterial == null)
-            return Color.white;
+            throw new Exception("This object doesn't have a material.");
 
         return meshRenderer.sharedMaterial.color;
     }
@@ -94,8 +96,20 @@ public class XRDraggableElement : MonoBehaviour
         return interactableCollider;
     }
 
-    private void DragByController(XRController xrController)
+    private XRController GetXRControllerFromCollider(Collider collider)
     {
+        XRController xrController = collider.GetComponentInParent<XRController>();
+
+        if (xrController == null)
+            xrController = collider.GetComponentInChildren<XRController>();
+
+        return xrController;
+    }
+
+    private void DragByController()
+    {
+        XRController xrController = GetXRControllerFromCollider(interactableCollider);
+
         if (xrController == null || xrController.inputDevice == null)
         {
             SetColor(meshColor);

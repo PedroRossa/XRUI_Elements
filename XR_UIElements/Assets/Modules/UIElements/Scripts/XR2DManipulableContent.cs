@@ -17,6 +17,9 @@ public class XR2DManipulableContent : MonoBehaviour
     public bool hapticsFeedback = true;
     public bool showOutFrame = false;
 
+    public bool activeScale = true;
+    public bool activeRotation = true;
+
     [ShowIf("showOutFrame")]
     public MeshRenderer outFrame;
     [ShowIf("showOutFrame")]
@@ -37,12 +40,20 @@ public class XR2DManipulableContent : MonoBehaviour
     public float minScaleFactor = 0.1f;
     public float maxScaleFactor = 100f;
 
+
+    [ShowIf("activeScale")]
     public UnityEvent onScaleBegin;
+    [ShowIf("activeScale")]
     public UnityEvent onScale;
+    [ShowIf("activeScale")]
     public UnityEvent onScaleEnd;
 
+
+    [ShowIf("activeRotation")]
     public UnityEvent onRotationBegin;
+    [ShowIf("activeRotation")]
     public UnityEvent onRotation;
+    [ShowIf("activeRotation")]
     public UnityEvent onRotationEnd;
 
     private XRDraggableElement firstSelectedElement;
@@ -70,6 +81,17 @@ public class XR2DManipulableContent : MonoBehaviour
             currFeedback.playSound = soundFeedback;
             currFeedback.useHapticFeedback = hapticsFeedback;
 
+            if (!activeScale && item.isScalableElement)
+            {
+                item.gameObject.SetActive(false);
+                continue;
+            }
+            if (!activeRotation && item.isRotationElement)
+            {
+                item.gameObject.SetActive(false);
+                continue;
+            }
+
             item.gameObject.SetActive(manipulationIsActive);
         }
     }
@@ -86,6 +108,17 @@ public class XR2DManipulableContent : MonoBehaviour
             XRDraggableElement curr = item;
             item.onDragEnter.AddListener(() => { OnDragElementEnter(curr); });
             item.onDragExit.AddListener(() => { OnDragElementExit(curr); });
+            
+            if (!activeScale && item.isScalableElement)
+            {
+                item.gameObject.SetActive(false);
+                continue;
+            }
+            if (!activeRotation && item.isRotationElement)
+            {
+                item.gameObject.SetActive(false);
+                continue;
+            }
 
             item.gameObject.SetActive(manipulationIsActive);
         }
@@ -97,8 +130,11 @@ public class XR2DManipulableContent : MonoBehaviour
 
         if (holdWithTwoHands)
         {
-            ScaleEvents();
-            RotationEvents();
+            if(activeScale)
+                ScaleEvents();
+            
+            if(activeRotation)
+                RotationEvents();
         }
         else
         {

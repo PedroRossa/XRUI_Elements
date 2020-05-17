@@ -28,36 +28,22 @@ public class XRFeedback : MonoBehaviour
 
     [Header("Feedback Properties")]
     public bool alphaByDistance = true;
-    public bool detectHover = true;
-    public bool detectTouch = true;
+    public bool detectProximity = true;
     public bool useHapticFeedback = true;
     public bool playSound = true;
 
-    [Header("Hover Properties")]
-    [ShowIf("detectHover")]
-    public Color hoverColor = new Color(0.75f, 1.0f, 0.75f, 1.0f);
-    [ShowIf("detectHover")]
-    public float hoverScaleMultiplier = 1;
-    [ShowIf("detectHover")]
-    public Collider hoverCollider;
-    [ShowIf(EConditionOperator.And, "playSound", "detectHover")]
-    public AudioClip hoverSound;
-    [ShowIf("detectHover")]
+    [Header("Proximity Properties")]
+    [ShowIf("detectProximity")]
+    public Color proximityColor = new Color(0.75f, 1.0f, 0.75f, 1.0f);
+    [ShowIf("detectProximity")]
+    public float proximityScaleMultiplier = 1;
+    [ShowIf("detectProximity")]
+    public Collider proximityCollider;
+    [ShowIf(EConditionOperator.And, "playSound", "detectProximity")]
+    public AudioClip proximitySound;
+    [ShowIf("detectProximity")]
     [ReadOnly]
-    public bool isHover;
-
-    [Header("Touch Properties")]
-    [ShowIf("detectTouch")]
-    public Color touchColor = new Color(0.85f, 0.85f, 0.5f, 1.0f);
-    [ShowIf("detectTouch")]
-    public float touchScaleMultiplier = 1;
-    [ShowIf("detectTouch")]
-    public float isTouchOffset = 0.015f;
-    [ShowIf(EConditionOperator.And, "playSound", "detectTouch")]
-    public AudioClip touchSound;
-    [ShowIf("detectTouch")]
-    [ReadOnly]
-    public bool isTouch;
+    public bool isInProximityArea;
 
     [Header("Haptic Properties")]
     [ShowIf("useHapticFeedback")]
@@ -71,42 +57,28 @@ public class XRFeedback : MonoBehaviour
     public float hapticTouchFrequence = 0.25f;
 
 
-    [ShowIf("detectHover")]
-    public UnityEvent onHoverEnter;
-    [ShowIf("detectHover")] 
-    public UnityEvent onHoverStay;
-    [ShowIf("detectHover")] 
-    public UnityEvent onHoverExit;
-
-    [ShowIf("detectTouch")]
-    public UnityEvent onTouchEnter;
-    [ShowIf("detectTouch")]
-    public UnityEvent onTouchStay;
-    [ShowIf("detectTouch")]
-    public UnityEvent onTouchExit;
+    [ShowIf("detectProximity")]
+    public UnityEvent onProximityAreaEnter;
+    [ShowIf("detectProximity")]
+    public UnityEvent onProximityAreaStay;
+    [ShowIf("detectProximity")]
+    public UnityEvent onProximityAreaExit;
 
     private Color originalColor;
     private Vector3 originalScale;
     private Vector3 onHoverEnterPos;
 
-    private void OnValidate()
-    {
-        if (detectHover)
-        {
-            if (hoverCollider == null)
-                hoverCollider = gameObject.GetComponent<Collider>();
-
-            hoverCollider.isTrigger = true;
-        }
-    }
-
     private void Awake()
     {
         if (meshFeedback != null)
         {
+            if (meshFeedback.sharedMaterial == null)
+                meshFeedback.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+
             originalColor = meshFeedback.sharedMaterial.color;
             originalScale = meshFeedback.transform.localScale;
             elementCollider = meshFeedback.GetComponent<Collider>();
+            meshFeedback.sharedMaterial = new Material(meshFeedback.sharedMaterial);
         }
         else if (spriteFeedback != null)
         {
@@ -115,8 +87,13 @@ public class XRFeedback : MonoBehaviour
             elementCollider = spriteFeedback.GetComponent<Collider>();
         }
 
-        if(alphaByDistance)
+        if (alphaByDistance)
+        {
+            if (meshFeedback != null)
+                meshFeedback.sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+
             SetFeedback(Color.clear, 1);
+        }
 
         if (playSound)
             ConfigureAudioSource();
@@ -127,7 +104,10 @@ public class XRFeedback : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
+        {
+            playSound = false;
             return;
+        }
 
         audioSource.playOnAwake = false;
     }
@@ -152,16 +132,16 @@ public class XRFeedback : MonoBehaviour
         }
     }
 
-    private void HoverUpdateByDistance(Transform interactable)
+    private void ProximityUpdateByDistance(Transform interactable)
     {
-        Color alphaColor = hoverColor;
+        Color alphaColor = proximityColor;
         float maxDistance = Vector3.Distance(onHoverEnterPos, transform.position);
         float distance = Vector3.Distance(interactable.position, transform.position);
 
-        float normalizedDistance =  (1 / maxDistance * distance);
+        float normalizedDistance = (1 / maxDistance * distance);
         alphaColor.a = 1 - normalizedDistance;
 
-        SetFeedback(alphaColor, hoverScaleMultiplier);
+        SetFeedback(alphaColor, proximityScaleMultiplier);
     }
 
 
@@ -198,7 +178,7 @@ public class XRFeedback : MonoBehaviour
 
     IEnumerator HapticCoroutine(InputDevice inputDevice, float amplitude, float repeatIn)
     {
-        while (isHover || isTouch)
+        while (isInProximityArea)
         {
             HapticCapabilities capabilities;
             if (inputDevice.TryGetHapticCapabilities(out capabilities))
@@ -213,14 +193,14 @@ public class XRFeedback : MonoBehaviour
     }
 
 
-    private void OnHoverEnterFunction(Transform interactable)
+    private void OnProximityAreaEnterFunction(Transform interactable)
     {
-        SetFeedback(hoverColor, hoverScaleMultiplier);
+        SetFeedback(proximityColor, proximityScaleMultiplier);
 
-        if (playSound && hoverSound != null)
+        if (playSound && proximitySound != null)
         {
             audioSource.Stop();
-            audioSource.clip = hoverSound;
+            audioSource.clip = proximitySound;
             audioSource.Play();
         }
 
@@ -228,13 +208,13 @@ public class XRFeedback : MonoBehaviour
             HapticFeedback(interactable, hapticAmplitude, hapticHoverFrequence);
     }
 
-    private void OnHoverStayFunction(Transform interactable)
+    private void OnProximityAreaStayFunction(Transform interactable)
     {
         if (alphaByDistance)
-            HoverUpdateByDistance(interactable);
+            ProximityUpdateByDistance(interactable);
     }
 
-    private void OnHoverExitFunction(Transform interactable)
+    private void OnProximityAreaExitFunction(Transform interactable)
     {
         if (alphaByDistance)
             SetFeedback(Color.clear, 1);
@@ -245,80 +225,17 @@ public class XRFeedback : MonoBehaviour
             HapticFeedbackStop(interactable);
     }
 
-
-
-    private void CheckTouchState(Transform interactable)
-    {
-        Bounds elementBounds = elementCollider.bounds;
-        Bounds elementBoundsrWithOffset = new Bounds(elementBounds.center, elementBounds.size * (1 + isTouchOffset));
-
-        if (elementBoundsrWithOffset.Intersects(interactable.GetComponent<Collider>().bounds))
-        {
-            if (!isTouch)
-            {
-                OnTouchEnterFunction(interactable);
-                onTouchEnter?.Invoke();
-            }
-            else
-            {
-                onTouchStay?.Invoke();
-            }
-
-            isHover = false;
-            isTouch = true;
-        }
-        else
-        {
-            if (isTouch)
-            {
-                isTouch = false;
-                isHover = true;
-
-                OnTouchExitFunction(interactable);
-                onTouchExit?.Invoke();
-
-                //Call HoverEnter again
-                OnHoverEnterFunction(interactable);
-                onHoverEnter?.Invoke();
-            }
-        }
-    }
-
-    private void OnTouchEnterFunction(Transform interactable)
-    {
-        SetFeedback(touchColor, touchScaleMultiplier);
-
-        if (playSound && touchSound != null)
-        {
-            audioSource.Stop();
-            audioSource.clip = touchSound;
-            audioSource.Play();
-        }
-
-        if (useHapticFeedback)
-            HapticFeedback(interactable, hapticAmplitude, hapticTouchFrequence);
-    }
-
-    private void OnTouchExitFunction(Transform interactable)
-    {
-        SetFeedback(hoverColor, hoverScaleMultiplier);
-
-        if (useHapticFeedback)
-            HapticFeedbackStop(interactable);
-    }
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag.Equals("interactable"))
         {
-            if (detectHover)
+            if (detectProximity)
             {
-                isHover = true;
+                isInProximityArea = true;
                 onHoverEnterPos = other.transform.position;
 
-                OnHoverEnterFunction(other.transform);
-                onHoverEnter?.Invoke();
+                OnProximityAreaEnterFunction(other.transform);
+                onProximityAreaEnter?.Invoke();
             }
         }
     }
@@ -327,15 +244,12 @@ public class XRFeedback : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
-            if (detectTouch)
-                CheckTouchState(other.transform);
-
-            if (detectHover)
+            if (detectProximity)
             {
-                if (isHover)
+                if (isInProximityArea)
                 {
-                    OnHoverStayFunction(other.transform);
-                    onHoverStay?.Invoke();
+                    OnProximityAreaStayFunction(other.transform);
+                    onProximityAreaStay?.Invoke();
                 }
             }
         }
@@ -345,12 +259,12 @@ public class XRFeedback : MonoBehaviour
     {
         if (other.tag.Equals("interactable"))
         {
-            if (detectHover)
+            if (detectProximity)
             {
-                isHover = false;
+                isInProximityArea = false;
 
-                OnHoverExitFunction(other.transform);
-                onHoverExit?.Invoke();
+                OnProximityAreaExitFunction(other.transform);
+                onProximityAreaExit?.Invoke();
             }
         }
     }

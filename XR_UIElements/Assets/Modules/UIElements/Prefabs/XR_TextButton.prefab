@@ -814,11 +814,22 @@ PrefabInstance:
       propertyPath: alphaByDistance
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2771427859727389231, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+        type: 3}
+      propertyPath: proximityCollider
+      value: 
+      objectReference: {fileID: 7592150272572093225}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e5370b0c0751a24298dab7cf9d80d20, type: 3}
 --- !u!4 &7676301143980635109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2771427859727389229, guid: 4e5370b0c0751a24298dab7cf9d80d20,
+    type: 3}
+  m_PrefabInstance: {fileID: 5544394913209115080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7592150272572093225 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2714854458474664673, guid: 4e5370b0c0751a24298dab7cf9d80d20,
     type: 3}
   m_PrefabInstance: {fileID: 5544394913209115080}
   m_PrefabAsset: {fileID: 0}

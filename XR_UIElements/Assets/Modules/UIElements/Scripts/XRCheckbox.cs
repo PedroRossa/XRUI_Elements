@@ -55,7 +55,7 @@ public class XRCheckbox : MonoBehaviour
         checkButton.onClickDown.AddListener(OnchangeStateFunction);
 
         XRFeedback xrFeedback = checkButton.GetComponentInChildren<XRFeedback>();
-        xrFeedback.onHoverExit.AddListener(SetCheckboxColor);
+        xrFeedback.onProximityAreaExit.AddListener(SetCheckboxColor);
     }
 
     private void OnchangeStateFunction()

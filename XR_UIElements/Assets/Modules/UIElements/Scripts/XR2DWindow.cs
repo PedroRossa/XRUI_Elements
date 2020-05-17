@@ -62,9 +62,6 @@ public class XR2DWindow : MonoBehaviour
             bodyMesh.sharedMaterial.color = bodyColor;
         }
 
-        if (tmpTitle != null)
-            tmpTitle.text = windowTitle;
-
         if (manipulableContent == null)
             manipulableContent = GetComponentInChildren<XR2DManipulableContent>();
 
@@ -75,9 +72,21 @@ public class XR2DWindow : MonoBehaviour
         btnMiddle.gameObject.SetActive(showMiddleButton);
         btnRight.gameObject.SetActive(showRightButton);
     }
+    
+    //Runs only in editor
+    private void OnValidate()
+    {
+        if (tmpTitle != null) 
+            tmpTitle.text = windowTitle;
+
+        UpdateVisual();
+    }
+
 
     private void Awake()
     {
+        UpdateVisual();
+
         if (manipulableContent == null)
             manipulableContent = GetComponentInChildren<XR2DManipulableContent>();
 

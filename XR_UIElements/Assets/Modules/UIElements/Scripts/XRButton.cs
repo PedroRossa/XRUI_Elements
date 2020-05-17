@@ -65,9 +65,8 @@ public class XRButton : MonoBehaviour
 
         if (xrFeedback != null)
         {
-            xrFeedback.onHoverStay.AddListener(OnHoverStayFunction);
-            xrFeedback.onHoverExit.AddListener(OnHoverExitFuncion);
-            xrFeedback.onTouchStay.AddListener(OnTouchStayFunction);
+            xrFeedback.onProximityAreaStay.AddListener(OnHoverStayFunction);
+            xrFeedback.onProximityAreaExit.AddListener(OnHoverExitFuncion);
         }
 
         frontPanelRigidBody = frontPanel.GetComponent<Rigidbody>();

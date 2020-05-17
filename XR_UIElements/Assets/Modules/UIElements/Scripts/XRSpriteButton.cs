@@ -19,8 +19,10 @@ public class XRSpriteButton : XRButton
         {
             //Get the spriterenderer on child to set the new sprite when changed
             if (buttonSpriteRenderer == null)
-            {
                 buttonSpriteRenderer = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
+
+            if (buttonSpriteRenderer != null)
+            {
                 buttonSpriteRenderer.sprite = sprite;
                 buttonSpriteRenderer.color = spriteColor;
             }
