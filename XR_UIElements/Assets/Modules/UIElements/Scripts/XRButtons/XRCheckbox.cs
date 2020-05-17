@@ -54,7 +54,7 @@ public class XRCheckbox : MonoBehaviour
         //add checkbox unity event on xrButton clickDown event
         checkButton.onClickDown.AddListener(OnchangeStateFunction);
 
-        XRFeedback xrFeedback = checkButton.GetComponentInChildren<XRFeedback>();
+        XRSpriteFeedback xrFeedback = checkButton.GetComponentInChildren<XRSpriteFeedback>();
         xrFeedback.onProximityAreaExit.AddListener(SetCheckboxColor);
     }
 

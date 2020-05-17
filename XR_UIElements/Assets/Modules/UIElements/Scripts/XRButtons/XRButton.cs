@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class XRButton : MonoBehaviour
 {
-    private XRFeedback xrFeedback;
+    private XRSpriteFeedback xrFeedback;
     private AudioSource audioSource;
     private Rigidbody frontPanelRigidBody;
 
@@ -61,7 +61,7 @@ public class XRButton : MonoBehaviour
 
         ConfigureAudioSource();
 
-        xrFeedback = GetComponentInChildren<XRFeedback>();
+        xrFeedback = GetComponentInChildren<XRSpriteFeedback>();
 
         if (xrFeedback != null)
         {

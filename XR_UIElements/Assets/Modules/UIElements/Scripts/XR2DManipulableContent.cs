@@ -76,10 +76,10 @@ public class XR2DManipulableContent : MonoBehaviour
 
         foreach (XRDraggableElement item in GetComponentsInChildren<XRDraggableElement>(true))
         {
-            XRFeedback currFeedback = item.GetComponentInChildren<XRFeedback>();
-            currFeedback.alphaByDistance = feedbackByProximity;
-            currFeedback.playSound = soundFeedback;
-            currFeedback.useHapticFeedback = hapticsFeedback;
+            //XRFeedback currFeedback = item.GetComponentInChildren<XRFeedback>();
+            //currFeedback.alphaByDistance = feedbackByProximity;
+            //currFeedback.playSound = soundFeedback;
+            //currFeedback.useHapticFeedback = hapticsFeedback;
 
             if (!activeScale && item.isScalableElement)
             {
