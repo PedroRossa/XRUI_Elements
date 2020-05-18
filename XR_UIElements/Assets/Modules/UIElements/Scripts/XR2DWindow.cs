@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class XR2DWindow : MonoBehaviour
 {
-    private XR2DManipulableContent manipulableContent;
+    private XRManipulable2D manipulableContent;
     private bool minimizeState = false;
 
     [Header("Internal References")]
@@ -63,10 +63,10 @@ public class XR2DWindow : MonoBehaviour
         }
 
         if (manipulableContent == null)
-            manipulableContent = GetComponentInChildren<XR2DManipulableContent>();
+            manipulableContent = GetComponentInChildren<XRManipulable2D>();
 
-        manipulableContent.manipulationIsActive = showDraggableElements;
-        manipulableContent.UpdateVisual();
+        manipulableContent.SetInteractablesVisibility(showDraggableElements);
+        manipulableContent.UpdateManipulablesPosition();
 
         btnLeft.gameObject.SetActive(showLeftButton);
         btnMiddle.gameObject.SetActive(showMiddleButton);
@@ -88,9 +88,10 @@ public class XR2DWindow : MonoBehaviour
         UpdateVisual();
 
         if (manipulableContent == null)
-            manipulableContent = GetComponentInChildren<XR2DManipulableContent>();
+            manipulableContent = GetComponentInChildren<XRManipulable2D>();
 
-        manipulableContent.manipulationIsActive = showDraggableElements;
+        manipulableContent.SetInteractablesVisibility(showDraggableElements);
+        manipulableContent.UpdateManipulablesPosition();
 
         if (btnLeft != null)
         {
