@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50ed092eaf3a894c80ae3423986325b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkSprite: {fileID: 21300000, guid: 72885f6390be8b340872e50b67022870, type: 3}
+  checkSprite: {fileID: 21300000, guid: e54bfab82a30df84599128461566b391, type: 3}
   uncheckSprite: {fileID: 21300000, guid: 61449ac459993fd4390efccf125bec00, type: 3}
   checkColor: {r: 0.4745906, g: 0.745283, b: 0.4745906, a: 1}
   uncheckColor: {r: 0.745283, g: 0.33397114, b: 0.33397114, a: 1}
@@ -54,6 +54,12 @@ MonoBehaviour:
   textPanel: {fileID: 68725031653228745}
   checkText: My Checkbox
   onChageState:
+    m_PersistentCalls:
+      m_Calls: []
+  onCheck:
+    m_PersistentCalls:
+      m_Calls: []
+  onUncheck:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &68725031577076402
@@ -381,6 +387,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 68725030535461543}
     m_Modifications:
+    - target: {fileID: 2039417935610088425, guid: ca694279e207c9046b8285914a66fca2,
+        type: 3}
+      propertyPath: hapticProximityFrequence
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2310897901607425651, guid: ca694279e207c9046b8285914a66fca2,
         type: 3}
       propertyPath: m_SortingOrder

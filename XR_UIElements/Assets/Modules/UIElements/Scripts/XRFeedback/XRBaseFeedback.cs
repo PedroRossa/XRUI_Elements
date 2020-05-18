@@ -47,8 +47,9 @@ public abstract class XRBaseFeedback : MonoBehaviour
         if (playSound)
             ConfigureAudioSource();
 
-        if (proximityCollider == null)
-            throw new System.Exception("The element don't have a trigger Collider attached");
+        onProximityAreaEnter = new UnityEvent();
+        onProximityAreaStay = new UnityEvent();
+        onProximityAreaExit = new UnityEvent();
     }
 
     private void ConfigureAudioSource()

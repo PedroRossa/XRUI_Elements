@@ -1197,8 +1197,8 @@ MonoBehaviour:
   m_RetainTransformParent: 1
   isScaleElement: 1
   isRotationElement: 0
-  moveParent: 0
-  parentToMove: {fileID: 0}
+  moveParent: 1
+  parentToMove: {fileID: 7260646051953305803}
   selectMaterial: {fileID: 2100000, guid: 4af54815d979efd43b6ceab350599150, type: 2}
 --- !u!114 &2063715665120089598
 MonoBehaviour:
@@ -1241,7 +1241,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4880048261060833130
 GameObject:
@@ -1432,8 +1432,8 @@ MonoBehaviour:
   m_RetainTransformParent: 1
   isScaleElement: 1
   isRotationElement: 0
-  moveParent: 0
-  parentToMove: {fileID: 0}
+  moveParent: 1
+  parentToMove: {fileID: 7260646051953305803}
   selectMaterial: {fileID: 2100000, guid: 4af54815d979efd43b6ceab350599150, type: 2}
 --- !u!114 &4880048261060833124
 MonoBehaviour:
@@ -1476,7 +1476,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5229491538855313146
 GameObject:
@@ -1667,8 +1667,8 @@ MonoBehaviour:
   m_RetainTransformParent: 1
   isScaleElement: 1
   isRotationElement: 0
-  moveParent: 0
-  parentToMove: {fileID: 0}
+  moveParent: 1
+  parentToMove: {fileID: 7260646051953305803}
   selectMaterial: {fileID: 2100000, guid: 4af54815d979efd43b6ceab350599150, type: 2}
 --- !u!114 &5229491538855313140
 MonoBehaviour:
@@ -1711,7 +1711,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5315795417570514101
 GameObject:
@@ -1902,8 +1902,8 @@ MonoBehaviour:
   m_RetainTransformParent: 1
   isScaleElement: 1
   isRotationElement: 0
-  moveParent: 0
-  parentToMove: {fileID: 0}
+  moveParent: 1
+  parentToMove: {fileID: 7260646051953305803}
   selectMaterial: {fileID: 2100000, guid: 4af54815d979efd43b6ceab350599150, type: 2}
 --- !u!114 &5315795417570514103
 MonoBehaviour:
@@ -1946,7 +1946,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7260646051763330113
 GameObject:
@@ -1991,7 +1991,7 @@ GameObject:
   - component: {fileID: 7260646051953305803}
   - component: {fileID: 7260646051953305796}
   m_Layer: 0
-  m_Name: XRManipulabe2D
+  m_Name: XR_Manipulabe2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

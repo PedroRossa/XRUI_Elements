@@ -66,7 +66,7 @@ public class XR2DWindow : MonoBehaviour
             manipulableContent = GetComponentInChildren<XRManipulable2D>();
 
         manipulableContent.SetInteractablesVisibility(showDraggableElements);
-        manipulableContent.UpdateManipulablesPosition();
+        manipulableContent.UpdateManipulables();
 
         btnLeft.gameObject.SetActive(showLeftButton);
         btnMiddle.gameObject.SetActive(showMiddleButton);
@@ -85,13 +85,11 @@ public class XR2DWindow : MonoBehaviour
 
     private void Awake()
     {
-        UpdateVisual();
-
         if (manipulableContent == null)
             manipulableContent = GetComponentInChildren<XRManipulable2D>();
 
         manipulableContent.SetInteractablesVisibility(showDraggableElements);
-        manipulableContent.UpdateManipulablesPosition();
+        manipulableContent.UpdateManipulables();
 
         if (btnLeft != null)
         {
@@ -116,6 +114,8 @@ public class XR2DWindow : MonoBehaviour
 
             btnRight.gameObject.SetActive(showRightButton);
         }
+
+        UpdateVisual();
     }
 
     public void ToggleWindowState()

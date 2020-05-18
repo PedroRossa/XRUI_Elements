@@ -28,6 +28,8 @@ public class XRCheckbox : MonoBehaviour
     public class CheckboxEvent : UnityEvent<bool> { }
 
     public CheckboxEvent onChageState;
+    public UnityEvent onCheck;
+    public UnityEvent onUncheck;
 
     private void OnValidate()
     {
@@ -61,6 +63,11 @@ public class XRCheckbox : MonoBehaviour
     private void OnchangeStateFunction()
     {
         isChecked = !isChecked;
+
+        if (isChecked)
+            onCheck?.Invoke();
+        else
+            onUncheck?.Invoke();
 
         SetCheckboxSprite();
         SetCheckboxColor();
@@ -96,5 +103,10 @@ public class XRCheckbox : MonoBehaviour
     private void SetCheckboxColor()
     {
         checkButton.frontPanel.color = isChecked ? checkColor : uncheckColor;
+    }
+
+    public void SetText(string value)
+    {
+        tmpCheckText.text = value;
     }
 }

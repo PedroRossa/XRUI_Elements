@@ -3,12 +3,13 @@ using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRManipulable2D : MonoBehaviour
+public class XRManipulable3D : MonoBehaviour
 {
     internal class InteractionElement
     {
@@ -71,29 +72,22 @@ public class XRManipulable2D : MonoBehaviour
     public bool showByProximity = false;
     public bool showInteractables = true;
 
-    [MinMaxSlider(0.05f, 100.0f)]
-    public Vector2 minMaxScale;
+    [MinMaxSlider(0.005f, 20.0f)]
+    public Vector2 minMaxScale = new Vector2(0.01f, 10);
 
     [Range(0.01f, 0.1f)]
     public float interactablesOffset = 0.1f;
 
-    [BoxGroup("Scale Interactables")]
-    public XRManipulableGrabInteractable topLeft;
-    [BoxGroup("Scale Interactables")]
-    public XRManipulableGrabInteractable topRight;
-    [BoxGroup("Scale Interactables")]
-    public XRManipulableGrabInteractable bottomLeft;
-    [BoxGroup("Scale Interactables")]
-    public XRManipulableGrabInteractable bottomRight;
+    public Transform scaleElements;
+    public Material scaleMaterial;
+    public Transform rotationElements;
+    public Material rotationMaterial;
+    public bool is3DManipulable = false;
 
-    [BoxGroup("Rotation Interactables")]
-    public XRManipulableGrabInteractable left;
-    [BoxGroup("Rotation Interactables")]
-    public XRManipulableGrabInteractable right;
-    [BoxGroup("Rotation Interactables")]
-    public XRManipulableGrabInteractable top;
-    [BoxGroup("Rotation Interactables")]
-    public XRManipulableGrabInteractable bottom;
+    [Dropdown("FeedbackTypes")]
+    public string feedbackType;
+
+    private List<string> FeedbackTypes { get { return new List<string>() { "Mesh", "Outline" }; } }
 
     [ReadOnly]
     public bool isTwoHandsGrabing = false;
@@ -107,27 +101,29 @@ public class XRManipulable2D : MonoBehaviour
     private InteractionElement interactionB;
     private Quaternion originalRotation;
 
-    Vector3 minBound;
-    Vector3 maxBound;
+    private GameObject wireBox;
+
+    private Vector3 minBound;
+    private Vector3 maxBound;
 
     [Button]
     public void UpdateManipulables()
     {
         CalculateInteractablesDistance();
+
+        SetWireframeBox();
         SetScaleInteractablesPosition();
         SetRotationInteractablesPosition();
 
+        ConfigureInteractables();
         SetInteractablesVisibility(showInteractables);
     }
 
     private void Start()
     {
-        ConfigureInteractables();
-
         interactionA = new InteractionElement();
         interactionB = new InteractionElement();
 
-        CalculateInteractablesDistance();
         UpdateManipulables();
     }
 
@@ -239,24 +235,167 @@ public class XRManipulable2D : MonoBehaviour
         maxBound += Vector3.one * interactablesOffset;
     }
 
+    private void SetWireframeBox()
+    {
+        Transform wireTransform = transform.Find("Wirebox");
+        if (wireTransform != null)
+            DestroyImmediate(wireTransform.gameObject);
+
+        wireBox = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        wireBox.name = "Wirebox";
+
+        MeshRenderer wireBoxMesh = wireBox.GetComponent<MeshRenderer>();
+        wireBoxMesh.sharedMaterial = new Material(Shader.Find("Unlit/Wireframe"));
+        wireBoxMesh.sharedMaterial.SetFloat("_WireframeVal", 0.01f);
+        wireBoxMesh.sharedMaterial.SetColor("_Color", Color.white);
+
+        //Get the middle of de content boundbox
+        wireBox.transform.position = (maxBound + minBound) / 2;
+        //Adjust scale
+        wireBox.transform.localScale = (maxBound - minBound);
+        wireBox.transform.SetParent(transform);
+        wireBox.transform.SetAsFirstSibling();
+
+        //if is a 2d manipulabe make te box a plane (put 0 on z scale)
+        if (!is3DManipulable)
+            wireBox.transform.localScale = new Vector3(wireBox.transform.localScale.x, wireBox.transform.localScale.y, 0);
+    }
+
+
+
+    private GameObject CreateManipulableObject(bool isScale)
+    {
+        GameObject go;
+        if (isScale)
+        {
+            go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            go.transform.SetParent(scaleElements);
+
+            if (scaleMaterial != null)
+                go.GetComponent<MeshRenderer>().sharedMaterial = new Material(scaleMaterial);
+            else
+                go.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+
+            go.GetComponent<MeshRenderer>().sharedMaterial.color = Color.green;
+        }
+        else
+        {
+            go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            go.transform.SetParent(rotationElements);
+
+            if (rotationMaterial != null)
+                go.GetComponent<MeshRenderer>().sharedMaterial = new Material(rotationMaterial);
+            else
+                go.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+
+            go.GetComponent<MeshRenderer>().sharedMaterial.color = Color.blue;
+        }
+        return go;
+    }
+
+    private void ConfigureManipulable(ref GameObject go, bool isScale)
+    {
+        XRManipulableGrabInteractable manipulable = go.AddComponent<XRManipulableGrabInteractable>();
+        manipulable.parentToMove = transform;
+        manipulable.trackRotation = false;
+        manipulable.throwOnDetach = false;
+
+        manipulable.selectMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+        manipulable.isScaleElement = isScale;
+        manipulable.isRotationElement = !isScale;
+        manipulable.moveParent = true;
+    }
+
+    private void ConfigureFeedback(ref GameObject go, Collider feedbackCollider)
+    {
+        XRBaseFeedback feedback;
+        if (feedbackType.Equals("Outline"))
+            feedback = go.AddComponent<XROutlineFeedback>();
+        else
+            feedback = go.AddComponent<XRMeshFeedback>();
+
+        feedback.proximityCollider = feedbackCollider;
+        feedback.proximityColor = Color.magenta;
+    }
+    
+    private void CreateManipulableElement(string name, Vector3 position, bool isScale)
+    {
+        GameObject go = CreateManipulableObject(isScale);
+       
+        SphereCollider collider = go.AddComponent<SphereCollider>();
+        collider.isTrigger = true;
+        collider.radius = 2;
+
+        ConfigureManipulable(ref go, isScale);
+        ConfigureFeedback(ref go, collider);
+
+        go.GetComponent<Rigidbody>().useGravity = false;
+        go.GetComponent<Rigidbody>().isKinematic = true;
+
+        go.name = name;
+        go.transform.localScale = Vector3.one;
+        go.transform.position = position;
+    }
+
+   
+
     private void SetScaleInteractablesPosition()
     {
-        float z = (maxBound.z + minBound.z) / 2;
+        while (scaleElements.childCount > 0)
+            DestroyImmediate(scaleElements.GetChild(0).gameObject);
 
-        topLeft.transform.position = new Vector3(minBound.x, maxBound.y, z);
-        topRight.transform.position = new Vector3(maxBound.x, maxBound.y, z);
-        bottomLeft.transform.position = new Vector3(minBound.x, minBound.y, z);
-        bottomRight.transform.position = new Vector3(maxBound.x, minBound.y, z);
+        if (is3DManipulable)
+        {
+            CreateManipulableElement("frontTopLeft", new Vector3(minBound.x, maxBound.y, minBound.z), true);
+            CreateManipulableElement("frontTopRight", new Vector3(maxBound.x, maxBound.y, minBound.z), true);
+            CreateManipulableElement("frontBottomLeft", new Vector3(minBound.x, minBound.y, minBound.z), true);
+            CreateManipulableElement("frontBottomRight", new Vector3(maxBound.x, minBound.y, minBound.z), true);
+
+            CreateManipulableElement("backTopLeft", new Vector3(minBound.x, maxBound.y, maxBound.z), true);
+            CreateManipulableElement("backTopRight", new Vector3(maxBound.x, maxBound.y, maxBound.z), true);
+            CreateManipulableElement("backBottomLeft", new Vector3(minBound.x, minBound.y, maxBound.z), true);
+            CreateManipulableElement("backBottomRight", new Vector3(maxBound.x, minBound.y, maxBound.z), true);
+        }
+        else
+        {
+            Vector3 middle = (maxBound + minBound) / 2;
+            CreateManipulableElement("topLeft", new Vector3(minBound.x, maxBound.y, middle.z), true);
+            CreateManipulableElement("topRight", new Vector3(maxBound.x, maxBound.y, middle.z), true);
+            CreateManipulableElement("bottomLeft", new Vector3(minBound.x, minBound.y, middle.z), true);
+            CreateManipulableElement("bottomRight", new Vector3(maxBound.x, minBound.y, middle.z), true);
+        }
     }
 
     private void SetRotationInteractablesPosition()
     {
-        Vector3 middle = (maxBound + minBound) / 2;
+        while (rotationElements.childCount > 0)
+            DestroyImmediate(rotationElements.GetChild(0).gameObject);
 
-        left.transform.position = new Vector3(minBound.x, middle.y, middle.z);
-        right.transform.position = new Vector3(maxBound.x, middle.y, middle.z);
-        top.transform.position = new Vector3(middle.x, maxBound.y, middle.z);
-        bottom.transform.position = new Vector3(middle.x, minBound.y, middle.z);
+        Vector3 middle = (maxBound + minBound) / 2;
+        if (is3DManipulable)
+        {
+            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, minBound.z), false);
+            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, minBound.z), false);
+            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, minBound.z), false);
+            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, minBound.z), false);
+
+            CreateManipulableElement("middleTopLeft", new Vector3(minBound.x, maxBound.y, middle.z), false);
+            CreateManipulableElement("middleTopRight", new Vector3(maxBound.x, maxBound.y, middle.z), false);
+            CreateManipulableElement("middleBottomLeft", new Vector3(minBound.x, minBound.y, middle.z), false);
+            CreateManipulableElement("middleBottomRight", new Vector3(maxBound.x, minBound.y, middle.z), false);
+
+            CreateManipulableElement("backLeft", new Vector3(minBound.x, middle.y, maxBound.z), false);
+            CreateManipulableElement("backRight", new Vector3(maxBound.x, middle.y, maxBound.z), false);
+            CreateManipulableElement("backTop", new Vector3(middle.x, maxBound.y, maxBound.z), false);
+            CreateManipulableElement("backBottom", new Vector3(middle.x, minBound.y, maxBound.z), false);
+        }
+        else
+        {
+            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, middle.z), false);
+            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, middle.z), false);
+            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, middle.z), false);
+            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, middle.z), false);
+        }
     }
 
 
@@ -264,6 +403,7 @@ public class XRManipulable2D : MonoBehaviour
     {
         Vector3 fPos = interactionA.Interactable.transform.position;
         Vector3 sPos = interactionB.Interactable.transform.position;
+
 
         float sqrMagnitude = (fPos - sPos).sqrMagnitude;
         float clampedValue = Mathf.Clamp(sqrMagnitude, minMaxScale.x, minMaxScale.y);

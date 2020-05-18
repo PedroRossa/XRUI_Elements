@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 2031301019194445861}
   showByProximity: 0
+  showInteractables: 1
   minMaxScale: {x: 0.05, y: 100}
   interactablesOffset: 0.025
   topLeft: {fileID: 2031301019412301382}

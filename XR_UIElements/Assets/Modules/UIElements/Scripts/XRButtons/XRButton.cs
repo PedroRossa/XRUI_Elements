@@ -65,8 +65,8 @@ public class XRButton : MonoBehaviour
 
         if (xrFeedback != null)
         {
-            xrFeedback.onProximityAreaStay.AddListener(OnHoverStayFunction);
-            xrFeedback.onProximityAreaExit.AddListener(OnHoverExitFuncion);
+            xrFeedback.onProximityAreaStay.AddListener(OnProximityStayFunction);
+            xrFeedback.onProximityAreaExit.AddListener(OnProximityExitFuncion);
         }
 
         frontPanelRigidBody = frontPanel.GetComponent<Rigidbody>();
@@ -147,7 +147,7 @@ public class XRButton : MonoBehaviour
         if (audioSource != null)
             audioSource.Play();
 
-        xrFeedback.gameObject.SetActive(false);
+        xrFeedback.enabled = false;
     }
 
     private void OnClickPressFunction()
@@ -156,7 +156,7 @@ public class XRButton : MonoBehaviour
 
     private void OnClickUpFucntion()
     {
-        xrFeedback.gameObject.SetActive(true);
+        xrFeedback.enabled = true;
 
         isPressed = false;
         frontPanel.color = normalColor;
@@ -165,7 +165,7 @@ public class XRButton : MonoBehaviour
     }
 
 
-    private void OnHoverStayFunction()
+    private void OnProximityStayFunction()
     {
         ConstraintLocally();
 
@@ -173,30 +173,18 @@ public class XRButton : MonoBehaviour
             return;
 
         Color alphaColor = lineBoxColor;
+        float normalizedDistance = 1 / initialPos * distance;
 
-        alphaColor.a = 0.15f;
+        alphaColor.a = (1 - normalizedDistance) + 0.15f;
         wireframeMesh.sharedMaterial.color = alphaColor;
     }
 
-    private void OnHoverExitFuncion()
+    private void OnProximityExitFuncion()
     {
         if (wireframeMesh == null)
             return;
 
         wireframeMesh.sharedMaterial.color = Color.clear;
-    }
-
-    private void OnTouchStayFunction()
-    {
-        if (distance <= 0 || wireframeMesh == null)
-            return;
-
-        Color alphaColor = lineBoxColor;
-        float normalizedDistance = 1 / initialPos * distance;
-
-        alphaColor.a = (1 - normalizedDistance) + 0.15f;
-        wireframeMesh.sharedMaterial.color = alphaColor;
-
     }
 
     public void SetNormalColor(Color color)
