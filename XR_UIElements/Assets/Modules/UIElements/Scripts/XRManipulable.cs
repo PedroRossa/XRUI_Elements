@@ -266,7 +266,7 @@ public class XRManipulable : MonoBehaviour
 
 
 
-    private GameObject CreateManipulableObject(bool isScale)
+    private GameObject CreateManipulableObject(bool isScale) 
     {
         GameObject go;
         if (isScale)
