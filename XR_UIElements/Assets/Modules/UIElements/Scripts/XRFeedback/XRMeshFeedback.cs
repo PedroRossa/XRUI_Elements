@@ -21,6 +21,7 @@ public class XRMeshFeedback : XRBaseFeedback
 
     public override void SetColor(Color color)
     {
-        elementMesh.material.color = color;
+        if (elementMesh != null)
+            elementMesh.material.color = color;
     }
 }

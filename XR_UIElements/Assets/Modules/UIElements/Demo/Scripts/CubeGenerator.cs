@@ -30,7 +30,7 @@ public class CubeGenerator : MonoBehaviour
     {
         GameObject cube = Instantiate(cubePrefab);
         cube.transform.SetParent(generatedCubes);
-        GameObject content = cube.GetComponent<XRManipulable2D>().content.GetChild(0).gameObject;
+        GameObject content = cube.GetComponent<XRManipulable>().content.GetChild(0).gameObject;
 
         if (colorId >= cubeColors.Length || colorId < 0)
             content.GetComponent<MeshRenderer>().sharedMaterial.color = new Color(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1), 1);
@@ -72,7 +72,7 @@ public class CubeGenerator : MonoBehaviour
 
         for (int i = 0; i < generatedCubes.transform.childCount; i++)
         {
-            GameObject go = generatedCubes.transform.GetChild(i).GetComponent<XRManipulable2D>().content.GetChild(0).gameObject;
+            GameObject go = generatedCubes.transform.GetChild(i).GetComponent<XRManipulable>().content.GetChild(0).gameObject;
             go.GetComponent<MeshRenderer>().sharedMaterial.color = cubeColors[colorId];
         }
     }
@@ -88,7 +88,7 @@ public class CubeGenerator : MonoBehaviour
         if (state)
         {
             for (int i = 0; i < generatedCubes.childCount; i++)
-                generatedCubes.GetChild(i).GetComponent<XRManipulable2D>().SetInteractablesVisibility(state);
+                generatedCubes.GetChild(i).GetComponent<XRManipulable>().SetInteractablesVisibility(state);
         }
     }
 }

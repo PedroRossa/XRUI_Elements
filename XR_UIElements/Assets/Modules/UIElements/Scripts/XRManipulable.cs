@@ -1,15 +1,11 @@
-﻿using JetBrains.Annotations;
-using NaughtyAttributes;
-using System;
+﻿using NaughtyAttributes;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRManipulable3D : MonoBehaviour
+public class XRManipulable : MonoBehaviour
 {
     internal class InteractionElement
     {
@@ -78,11 +74,16 @@ public class XRManipulable3D : MonoBehaviour
     [Range(0.01f, 0.1f)]
     public float interactablesOffset = 0.1f;
 
+    [Range(0.1f, 1.0f)]
+    public float interactablesSize = 0.1f;
+
     public Transform scaleElements;
     public Material scaleMaterial;
+    
     public Transform rotationElements;
     public Material rotationMaterial;
     public bool is3DManipulable = false;
+    public bool showWireBox = true;
 
     [Dropdown("FeedbackTypes")]
     public string feedbackType;
@@ -259,6 +260,8 @@ public class XRManipulable3D : MonoBehaviour
         //if is a 2d manipulabe make te box a plane (put 0 on z scale)
         if (!is3DManipulable)
             wireBox.transform.localScale = new Vector3(wireBox.transform.localScale.x, wireBox.transform.localScale.y, 0);
+
+        wireBox.SetActive(showWireBox);
     }
 
 
@@ -333,7 +336,7 @@ public class XRManipulable3D : MonoBehaviour
         go.GetComponent<Rigidbody>().isKinematic = true;
 
         go.name = name;
-        go.transform.localScale = Vector3.one;
+        go.transform.localScale = Vector3.one * interactablesSize;
         go.transform.position = position;
     }
 

@@ -16,6 +16,7 @@ public class XRSpriteFeedback : XRBaseFeedback
 
     public override void SetColor(Color color)
     {
-        elementSprite.color = color;
+        if (elementSprite != null)
+            elementSprite.color = color;
     }
 }

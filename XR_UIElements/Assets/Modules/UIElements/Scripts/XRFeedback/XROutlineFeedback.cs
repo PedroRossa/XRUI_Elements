@@ -11,13 +11,14 @@ public class XROutlineFeedback : XRBaseFeedback
 
         outline = GetComponent<Outline>();
         outline.enabled = false;
-        
+
         onProximityAreaEnter.AddListener(() => outline.enabled = true);
         onProximityAreaExit.AddListener(() => outline.enabled = false);
     }
 
     public override void SetColor(Color color)
     {
-        outline.OutlineColor = color;
+        if (outline != null)
+            outline.OutlineColor = color;
     }
 }
