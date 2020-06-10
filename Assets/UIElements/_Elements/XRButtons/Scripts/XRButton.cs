@@ -70,6 +70,11 @@ public class XRButton : MonoBehaviour
         buttonRigidBody = buttonTransform.GetComponent<Rigidbody>();
     }
 
+    private void FixedUpdate()
+    {
+        ConstraintLocally();
+    }
+
     void Update()
     {
         ButtonLoop();
@@ -120,6 +125,9 @@ public class XRButton : MonoBehaviour
 
         buttonRigidBody.velocity = transform.TransformDirection(localVelocity);
         buttonRigidBody.position = transform.TransformPoint(localPosition);
+
+        //fix local rotation to zero
+        buttonRigidBody.transform.localRotation = Quaternion.identity;
     }
 
     private void ConfigureAudioSource()
@@ -157,14 +165,11 @@ public class XRButton : MonoBehaviour
 
         isPressed = false;
         buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = normalColor;
-
-        ConstraintLocally();
     }
 
 
     private void OnProximityStayFunction()
     {
-        ConstraintLocally();
     }
 
     private void OnProximityExitFuncion()
