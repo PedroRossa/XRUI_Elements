@@ -19,7 +19,7 @@ public class XRSpriteButton : XRButton
         {
             //Get the spriterenderer on child to set the new sprite when changed
             if (buttonSpriteRenderer == null)
-                buttonSpriteRenderer = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
+                buttonSpriteRenderer = buttonTransform.GetComponentInChildren<SpriteRenderer>();
 
             if (buttonSpriteRenderer != null)
             {
@@ -32,7 +32,7 @@ public class XRSpriteButton : XRButton
     private void Awake()
     {
         if (buttonSpriteRenderer == null)
-            buttonSpriteRenderer = frontPanel.GetComponentsInChildren<SpriteRenderer>()[1];
+            buttonSpriteRenderer = buttonTransform.GetComponentInChildren<SpriteRenderer>();
     }
 
     public void SetSprite(Sprite sprite)

@@ -56,7 +56,7 @@ public class XRCheckbox : MonoBehaviour
         //add checkbox unity event on xrButton clickDown event
         checkButton.onClickDown.AddListener(OnchangeStateFunction);
 
-        XRSpriteFeedback xrFeedback = checkButton.GetComponentInChildren<XRSpriteFeedback>();
+        XRMeshFeedback xrFeedback = checkButton.GetComponentInChildren<XRMeshFeedback>();
         xrFeedback.onProximityAreaExit.AddListener(SetCheckboxColor);
     }
 
@@ -93,7 +93,7 @@ public class XRCheckbox : MonoBehaviour
     {
         if (checkSprite == null && uncheckSprite == null)
             return;
-        
+
         if (isChecked)
             checkButton.SetSprite(checkSprite);
         else
@@ -102,7 +102,8 @@ public class XRCheckbox : MonoBehaviour
 
     private void SetCheckboxColor()
     {
-        checkButton.frontPanel.color = isChecked ? checkColor : uncheckColor;
+        if (checkButton.buttonTransform.GetComponent<MeshRenderer>().sharedMaterial != null)
+            checkButton.buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = isChecked ? checkColor : uncheckColor;
     }
 
     public void SetText(string value)

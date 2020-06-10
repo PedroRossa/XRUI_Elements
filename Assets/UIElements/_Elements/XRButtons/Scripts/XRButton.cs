@@ -1,26 +1,18 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 public class XRButton : MonoBehaviour
 {
-    private XRSpriteFeedback xrFeedback;
-    private AudioSource audioSource;
-    private Rigidbody frontPanelRigidBody;
-
     [Header("Internal Properties")]
-    public SpriteRenderer frontPanel;
-    public MeshRenderer wireframeMesh;
+    public Transform backgroundPanel;
+    public Transform buttonTransform;
     public AudioClip clickSound;
 
-    [Header("Properties")]
-    [ShowIf("hasLineBox")]
-    [Range(0.0f, 1.0f)]
-    public float lineBoxWidth = 0.013f;
-    [ShowIf("hasLineBox")] 
-    public Color lineBoxColor = Color.white;
-
     [Header("Color Event Properties")]
+    public Color backgroundColor = Color.gray;
+    public Color proximityColor = Color.blue;
     public Color normalColor = Color.white;
     public Color clickColor = Color.green;
 
@@ -33,25 +25,30 @@ public class XRButton : MonoBehaviour
     public UnityEvent onClickPress;
     public UnityEvent onClickUp;
 
+    private AudioSource audioSource;
+    private Rigidbody buttonRigidBody;
+    private XRMeshFeedback meshFeedback;
+
     private float initialPos;
     private float distance = 1;
-    private bool hasLineBox = true;
 
     //This function need's to be called on child classes
     protected void BaseOnValidate()
     {
-        frontPanel.color = normalColor;
+        if (meshFeedback == null)
+            meshFeedback = GetComponentInChildren<XRMeshFeedback>();
 
-        if (wireframeMesh == null)
+        if (meshFeedback != null)
+            meshFeedback.proximityColor = proximityColor;
+        
+        backgroundPanel.GetComponent<SpriteRenderer>().color = backgroundColor;
+
+        MeshRenderer mr = buttonTransform.GetComponent<MeshRenderer>();
+        if (mr != null)
         {
-            hasLineBox = false;
-            return;
+            mr.sharedMaterial = new Material(Shader.Find("Sprites/Default"));
+            mr.sharedMaterial.color = normalColor;
         }
-        hasLineBox = true;
-        wireframeMesh.sharedMaterial = new Material(Shader.Find("Unlit/Wireframe"));
-
-        wireframeMesh.sharedMaterial.SetFloat("_WireframeVal", lineBoxWidth);
-        wireframeMesh.sharedMaterial.SetColor("_Color", lineBoxColor);
     }
 
     void Start()
@@ -60,22 +57,17 @@ public class XRButton : MonoBehaviour
         onClickPress.AddListener(OnClickPressFunction);
         onClickUp.AddListener(OnClickUpFucntion);
 
-        initialPos = frontPanel.transform.localPosition.z;
-
-        if (wireframeMesh != null)
-            wireframeMesh.sharedMaterial.color = Color.clear;
+        initialPos = buttonTransform.localPosition.z;
 
         ConfigureAudioSource();
 
-        xrFeedback = GetComponentInChildren<XRSpriteFeedback>();
+        if (meshFeedback == null)
+            meshFeedback = GetComponentInChildren<XRMeshFeedback>();
 
-        if (xrFeedback != null)
-        {
-            xrFeedback.onProximityAreaStay.AddListener(OnProximityStayFunction);
-            xrFeedback.onProximityAreaExit.AddListener(OnProximityExitFuncion);
-        }
+        meshFeedback.onProximityAreaStay.AddListener(OnProximityStayFunction);
+        meshFeedback.onProximityAreaExit.AddListener(OnProximityExitFuncion);
 
-        frontPanelRigidBody = frontPanel.GetComponent<Rigidbody>();
+        buttonRigidBody = buttonTransform.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -85,11 +77,11 @@ public class XRButton : MonoBehaviour
 
     private void ButtonLoop()
     {
-        distance = frontPanel.transform.localPosition.z;
+           distance = buttonTransform.localPosition.z;
 
         if (distance <= 0)
         {
-            frontPanel.transform.localPosition = Vector3.zero;
+            buttonTransform.localPosition = Vector3.zero;
 
             if (!isPressed)
             {
@@ -104,9 +96,9 @@ public class XRButton : MonoBehaviour
         else
         {
             if (distance > initialPos)
-                frontPanel.transform.localPosition = new Vector3(0, 0, initialPos);
+                buttonTransform.localPosition = new Vector3(0, 0, initialPos);
             else
-                frontPanel.transform.localPosition = new Vector3(0, 0, frontPanel.transform.localPosition.z);
+                buttonTransform.localPosition = new Vector3(0, 0, buttonTransform.localPosition.z);
 
             if (isPressed)
             {
@@ -114,16 +106,20 @@ public class XRButton : MonoBehaviour
                 onClickUp?.Invoke();
             }
         }
-
     }
 
     private void ConstraintLocally()
     {
-        Vector3 localVelocity = transform.InverseTransformDirection(frontPanelRigidBody.velocity);
+        Vector3 localVelocity = transform.InverseTransformDirection(buttonRigidBody.velocity);
         localVelocity.x = 0;
         localVelocity.y = 0;
 
-        frontPanelRigidBody.velocity = transform.TransformDirection(localVelocity);
+        Vector3 localPosition = transform.InverseTransformPoint(buttonRigidBody.position);
+        localPosition.x = 0;
+        localPosition.y = 0;
+
+        buttonRigidBody.velocity = transform.TransformDirection(localVelocity);
+        buttonRigidBody.position = transform.TransformPoint(localPosition);
     }
 
     private void ConfigureAudioSource()
@@ -143,12 +139,12 @@ public class XRButton : MonoBehaviour
     private void OnClickDownFucntion()
     {
         isPressed = true;
-        frontPanel.color = clickColor;
+        buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = clickColor;
 
         if (audioSource != null)
             audioSource.Play();
 
-        xrFeedback.enabled = false;
+        meshFeedback.enabled = false;
     }
 
     private void OnClickPressFunction()
@@ -157,10 +153,10 @@ public class XRButton : MonoBehaviour
 
     private void OnClickUpFucntion()
     {
-        xrFeedback.enabled = true;
+        meshFeedback.enabled = true;
 
         isPressed = false;
-        frontPanel.color = normalColor;
+        buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = normalColor;
 
         ConstraintLocally();
     }
@@ -169,23 +165,10 @@ public class XRButton : MonoBehaviour
     private void OnProximityStayFunction()
     {
         ConstraintLocally();
-
-        if (wireframeMesh == null)
-            return;
-
-        Color alphaColor = lineBoxColor;
-        float normalizedDistance = 1 / initialPos * distance;
-
-        alphaColor.a = (1 - normalizedDistance) + 0.15f;
-        wireframeMesh.sharedMaterial.color = alphaColor;
     }
 
     private void OnProximityExitFuncion()
     {
-        if (wireframeMesh == null)
-            return;
-
-        wireframeMesh.sharedMaterial.color = Color.clear;
     }
 
     public void SetNormalColor(Color color)
