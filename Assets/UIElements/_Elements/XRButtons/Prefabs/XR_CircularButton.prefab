@@ -450,8 +450,8 @@ SpringJoint:
   m_GameObject: {fileID: 5999615285463679745}
   m_ConnectedBody: {fileID: 2310897901607425648}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0.25}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0.12500001}
   serializedVersion: 2
   m_Spring: 100
   m_Damper: 5

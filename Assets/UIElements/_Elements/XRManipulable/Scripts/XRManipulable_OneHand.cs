@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
@@ -274,7 +275,8 @@ public class XRManipulable_OneHand : MonoBehaviour
         return go;
     }
 
-    private void ConfigureManipulable(ref GameObject go, bool isScale)
+    //TODO: Solve this rotationAxis to be called in a better way
+    private void ConfigureManipulable(ref GameObject go, bool isScale, Vector3 rotationAxis)
     {
         XRManipulableInteractable manipulable = go.AddComponent<XRManipulableInteractable>();
         manipulable.trackRotation = false;
@@ -282,6 +284,7 @@ public class XRManipulable_OneHand : MonoBehaviour
 
         manipulable.isScaleElement = isScale;
         manipulable.isRotationElement = !isScale;
+        manipulable.rotationAxis = rotationAxis;
     }
 
     private void ConfigureFeedback(ref GameObject go)
@@ -298,11 +301,11 @@ public class XRManipulable_OneHand : MonoBehaviour
         feedback.AutoconfigureColliderAsSphere();
     }
 
-    private void CreateManipulableElement(string name, Vector3 position, bool isScale)
+    private void CreateManipulableElement(string name, Vector3 position, bool isScale, Vector3 rotationAxis = new Vector3())
     {
         GameObject go = CreateManipulableObject(isScale);
 
-        ConfigureManipulable(ref go, isScale);
+        ConfigureManipulable(ref go, isScale, rotationAxis);
         ConfigureFeedback(ref go);
 
         Rigidbody rb = go.GetComponent<Rigidbody>();
@@ -351,27 +354,27 @@ public class XRManipulable_OneHand : MonoBehaviour
         Vector3 middle = (maxBound + minBound) / 2;
         if (is3DManipulable)
         {
-            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, minBound.z), false);
-            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, minBound.z), false);
-            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, minBound.z), false);
-            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, minBound.z), false);
+            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, minBound.z), false, Vector3.up);
+            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, minBound.z), false, Vector3.up);
+            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, minBound.z), false, Vector3.right);
+            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, minBound.z), false, Vector3.right);
 
-            CreateManipulableElement("middleTopLeft", new Vector3(minBound.x, maxBound.y, middle.z), false);
-            CreateManipulableElement("middleTopRight", new Vector3(maxBound.x, maxBound.y, middle.z), false);
-            CreateManipulableElement("middleBottomLeft", new Vector3(minBound.x, minBound.y, middle.z), false);
-            CreateManipulableElement("middleBottomRight", new Vector3(maxBound.x, minBound.y, middle.z), false);
+            CreateManipulableElement("middleTopLeft", new Vector3(minBound.x, maxBound.y, middle.z), false, Vector3.forward);
+            CreateManipulableElement("middleTopRight", new Vector3(maxBound.x, maxBound.y, middle.z), false, Vector3.forward);
+            CreateManipulableElement("middleBottomLeft", new Vector3(minBound.x, minBound.y, middle.z), false, Vector3.forward);
+            CreateManipulableElement("middleBottomRight", new Vector3(maxBound.x, minBound.y, middle.z), false, Vector3.forward);
 
-            CreateManipulableElement("backLeft", new Vector3(minBound.x, middle.y, maxBound.z), false);
-            CreateManipulableElement("backRight", new Vector3(maxBound.x, middle.y, maxBound.z), false);
-            CreateManipulableElement("backTop", new Vector3(middle.x, maxBound.y, maxBound.z), false);
-            CreateManipulableElement("backBottom", new Vector3(middle.x, minBound.y, maxBound.z), false);
+            CreateManipulableElement("backLeft", new Vector3(minBound.x, middle.y, maxBound.z), false, Vector3.up);
+            CreateManipulableElement("backRight", new Vector3(maxBound.x, middle.y, maxBound.z), false, Vector3.up);
+            CreateManipulableElement("backTop", new Vector3(middle.x, maxBound.y, maxBound.z), false, Vector3.right);
+            CreateManipulableElement("backBottom", new Vector3(middle.x, minBound.y, maxBound.z), false, Vector3.right);
         }
         else
         {
-            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, middle.z), false);
-            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, middle.z), false);
-            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, middle.z), false);
-            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, middle.z), false);
+            CreateManipulableElement("frontLeft", new Vector3(minBound.x, middle.y, middle.z), false, Vector3.up);
+            CreateManipulableElement("frontRight", new Vector3(maxBound.x, middle.y, middle.z), false, Vector3.up);
+            CreateManipulableElement("frontTop", new Vector3(middle.x, maxBound.y, middle.z), false, Vector3.right);
+            CreateManipulableElement("frontBottom", new Vector3(middle.x, minBound.y, middle.z), false, Vector3.right);
         }
     }
 
@@ -380,29 +383,30 @@ public class XRManipulable_OneHand : MonoBehaviour
     private void ScaleContent()
     {
         Vector3 interactablePos = currentInteractable.interactable.transform.position;
-        Vector3 center = (minBound + maxBound) / 2;
 
-        //vector that determines the direction from center to selected manipulable
-        Vector3 manipulableDirection = currentInteractable.initialPosition - center;
+        Vector3 pivot = 2 * originalPosition - currentInteractable.initialPosition;
 
-        //Calculate distance to change Scale
-        float originalDistance = Vector3.Distance(currentInteractable.initialPosition, center);
-        float distance = Vector3.Distance(interactablePos, center);
 
-        transform.localScale = originalScale + Vector3.one * distance;
+        Debug.DrawLine(originalPosition, currentInteractable.initialPosition, Color.magenta);
+
+        float initialDistance = Vector3.Distance(pivot, currentInteractable.initialPosition);
+        float distance = Vector3.Distance(pivot, interactablePos);
+
+        float t = distance / initialDistance;
+
+        ScaleAround(transform, pivot, originalScale * t);
+
+        //transform.localScale = Vector3.one * t;
     }
-   
-    
+
+
     private void RotateContent()
     {
         Vector3 originalDirection = (currentInteractable.initialPosition - originalPosition).normalized;
         Vector3 currentDirection = (currentInteractable.interactable.transform.position - transform.position).normalized;
 
-        //freeze axis by manipulable Type
-        if (currentInteractable.initialLocalPosition.x != 0)
-            originalDirection.y = currentDirection.y = 0;
-        else if (currentInteractable.initialLocalPosition.y != 0)
-            originalDirection.x = currentDirection.x = 0;
+        originalDirection = Vector3.ProjectOnPlane(originalDirection, originalRotation * currentInteractable.interactable.rotationAxis);
+        currentDirection = Vector3.ProjectOnPlane(currentDirection, originalRotation * currentInteractable.interactable.rotationAxis);
 
         Quaternion differenceDirection = Quaternion.FromToRotation(originalDirection, currentDirection);
         transform.rotation = differenceDirection * originalRotation;
@@ -434,5 +438,54 @@ public class XRManipulable_OneHand : MonoBehaviour
 
         ConfigureInteractables();
         SetInteractablesVisibility(showInteractables);
+    }
+
+    ///<summary>
+    /// Scales the target around an arbitrary point by scaleFactor.
+    /// This is relative scaling, meaning using  scale Factor of Vector3.one
+    /// will not change anything and new Vector3(0.5f,0.5f,0.5f) will reduce
+    /// the object size by half.
+    /// The pivot is assumed to be the position in the space of the target.
+    /// Scaling is applied to localScale of target.
+    /// </summary>
+    /// <param name="target">The object to scale.</param>
+    /// <param name="pivot">The point to scale around in space of target.</param>
+    /// <param name="scaleFactor">The factor with which the current localScale of the target will be multiplied with.</param>
+    public static void ScaleAroundRelative(Transform target, Vector3 pivot, Vector3 scaleFactor)
+    {
+        // pivot
+        var pivotDelta = target.localPosition - pivot;
+        pivotDelta.Scale(scaleFactor);
+        target.localPosition = pivot + pivotDelta;
+
+        // scale
+        var finalScale = target.localScale;
+        finalScale.Scale(scaleFactor);
+        target.localScale = finalScale;
+    }
+
+    /// <summary>
+    /// Scales the target around an arbitrary pivot.
+    /// This is absolute scaling, meaning using for example a scale factor of
+    /// Vector3.one will set the localScale of target to x=1, y=1 and z=1.
+    /// The pivot is assumed to be the position in the space of the target.
+    /// Scaling is applied to localScale of target.
+    /// </summary>
+    /// <param name="target">The object to scale.</param>
+    /// <param name="pivot">The point to scale around in the space of target.</param>
+    /// <param name="scaleFactor">The new localScale the target object will have after scaling.</param>
+    public static void ScaleAround(Transform target, Vector3 pivot, Vector3 newScale)
+    {
+        // pivot
+        Vector3 pivotDelta = target.position - pivot; // diff from object pivot to desired pivot/origin
+        Vector3 scaleFactor = new Vector3(
+            newScale.x / target.localScale.x,
+            newScale.y / target.localScale.y,
+            newScale.z / target.localScale.z);
+        pivotDelta.Scale(scaleFactor);
+        target.position = pivot + pivotDelta;
+
+        //scale
+        target.localScale = newScale;
     }
 }

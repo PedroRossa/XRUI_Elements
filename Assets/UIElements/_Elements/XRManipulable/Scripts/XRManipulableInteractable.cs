@@ -8,4 +8,7 @@ public class XRManipulableInteractable : XRGrabInteractable
     [Header("ManipulableProperties")]
     public bool isScaleElement;
     public bool isRotationElement;
+
+    [ShowIf("isRotationElement")]
+    public Vector3 rotationAxis;
 }
