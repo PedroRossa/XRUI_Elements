@@ -1,14 +1,68 @@
 ﻿using NaughtyAttributes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRManipulable_OneHand : MonoBehaviour
 {
+    protected class OriginalState
+    {
+        public Vector3 position;
+        public Vector3 localPosition;
+        public Vector3 scale;
+        public Quaternion rotation;
+
+        public OriginalState()
+        {
+            position = new Vector3();
+            localPosition = new Vector3();
+            scale = new Vector3();
+            rotation = new Quaternion();
+        }
+
+        public OriginalState(Vector3 position, Vector3 localPosition, Vector3 scale, Quaternion rotation)
+        {
+            this.position = position;
+            this.localPosition = localPosition;
+            this.scale = scale;
+            this.rotation = rotation;
+        }
+    }
+   
+    protected class InteractableData
+    {
+        public XRManipulableInteractable interactable;
+        public OriginalState originalState;
+
+        public InteractableData()
+        {
+            interactable = null;
+            originalState = new OriginalState();
+        }
+
+        public InteractableData(XRManipulableInteractable interactable)
+        {
+            this.interactable = interactable;
+            originalState = new OriginalState
+            (
+                interactable.transform.position,
+                interactable.transform.localPosition,
+                interactable.transform.localScale,
+                interactable.transform.rotation
+            );
+        }
+
+        public void ResetTransform()
+        {
+            interactable.transform.localScale = originalState.scale;
+            interactable.transform.localPosition = originalState.localPosition;
+            interactable.transform.rotation = originalState.rotation;
+        }
+    }
+
     [Header("General References")]
     public Transform content;
     public Transform scaleElements;
@@ -16,11 +70,11 @@ public class XRManipulable_OneHand : MonoBehaviour
 
     [Header("General Configurations")]
     //TODO: Make readonly until solve the problem of alpha calculation
-    [NaughtyAttributes.ReadOnly]
+    [ReadOnly]
     public bool showByProximity = false;
     public bool showInteractables = true;
 
-    [MinMaxSlider(0.005f, 20.0f)]
+    [MinMaxSlider(0.1f, 100.0f)]
     public Vector2 minMaxScale = new Vector2(0.01f, 10);
     [Range(0.01f, 0.1f)]
     public float interactablesOffset = 0.1f;
@@ -45,18 +99,24 @@ public class XRManipulable_OneHand : MonoBehaviour
     public Color rotationElementColor = Color.blue;
     public Color proximityColor = Color.magenta;
 
-    public UnityEvent onGrabStart;
-    public UnityEvent onGrabStay;
-    public UnityEvent onGrabEnd;
+    [ReadOnly]
+    private bool isSelected;
+    [ReadOnly]
+    private bool isScalling;
+    [ReadOnly]
+    private bool isRotating;
 
+    #region UnityEvents
     public UnityEvent onScaleStart;
     public UnityEvent onScaleStay;
     public UnityEvent onScaleEnd;
+    public UnityEvent onRotationStart;
+    public UnityEvent onRotationStay;
+    public UnityEvent onRotationEnd;
+    #endregion 
 
-    private Vector3 originalPosition;
-    private Quaternion originalRotation;
-    private Vector3 originalScale;
-    private bool isSelected;
+    private OriginalState originalState;
+    private InteractableData currentInteractable;
 
     private GameObject wireBox;
 
@@ -65,34 +125,9 @@ public class XRManipulable_OneHand : MonoBehaviour
 
     private GameObject manipulableCopy;
 
-    public struct InteractableData
-    {
-        public XRManipulableInteractable interactable;
-
-        public Vector3 initialPosition;
-        public Quaternion initialRotation;
-
-        public Vector3 initialLocalPosition;
-
-        public InteractableData(XRManipulableInteractable interactable)
-        {
-            this.interactable = interactable;
-            initialPosition = interactable.transform.position;
-            initialLocalPosition = interactable.transform.localPosition;
-            initialRotation = interactable.transform.rotation;
-        }
-
-        public void ResetTransform()
-        {
-            interactable.transform.localPosition = initialLocalPosition;
-            interactable.transform.rotation = initialRotation;
-        }
-    }
-
-    private InteractableData currentInteractable;
-
     private void Start()
     {
+        currentInteractable = new InteractableData();
         UpdateManipulables();
     }
 
@@ -100,13 +135,10 @@ public class XRManipulable_OneHand : MonoBehaviour
     {
         if (currentInteractable.interactable != null)
         {
-            //onTwoHandsGrabingStart?.Invoke();
-
             if (currentInteractable.interactable.isScaleElement)
-                ScaleContent();
+                ManageScale();
             if (currentInteractable.interactable.isRotationElement)
-                RotateContent();
-            //onTwoHandsGrabingStay?.Invoke();
+                ManageRotation();
 
             if (isSelected)
             {
@@ -119,13 +151,35 @@ public class XRManipulable_OneHand : MonoBehaviour
             else if (!isSelected && currentInteractable.interactable.transform.parent != null)
             {
                 currentInteractable.ResetTransform();
-                currentInteractable.interactable = null;
+                currentInteractable = new InteractableData();
             }
         }
-        else
+    }
+
+    private void ManageScale()
+    {
+        if (!isScalling)
         {
-            //onTwoHandsGrabingEnd?.Invoke();
+            onScaleStart?.Invoke();
+            isScalling = true;
         }
+        else
+            onScaleStay?.Invoke();
+
+        ScaleContent();
+    }
+
+    private void ManageRotation()
+    {
+        if (!isRotating)
+        {
+            onRotationStart?.Invoke();
+            isRotating = true;
+        }
+        else
+            onRotationStay?.Invoke();
+
+        RotateContent();
     }
 
 
@@ -188,18 +242,27 @@ public class XRManipulable_OneHand : MonoBehaviour
         if (currentInteractable.interactable == null)
         {
             currentInteractable = new InteractableData((XRManipulableInteractable)interactor.selectTarget);
-            originalRotation = transform.rotation;
-            originalPosition = transform.position;
-            originalScale = transform.localScale;
+            originalState = new OriginalState(transform.position, transform.localPosition, transform.localScale, transform.rotation);
             CreateManipulableCopy();
         }
     }
 
     private void OnInteractableSelectExit(XRBaseInteractor interactor)
     {
+        if (isRotating)
+        {
+            onRotationEnd?.Invoke();
+            isRotating = false;
+        }
+
+        if (isScalling)
+        {
+            onScaleEnd?.Invoke();
+            isScalling = false;
+        }
+
         Destroy(manipulableCopy);
         isSelected = false;
-
     }
 
 
@@ -275,7 +338,6 @@ public class XRManipulable_OneHand : MonoBehaviour
         return go;
     }
 
-    //TODO: Solve this rotationAxis to be called in a better way
     private void ConfigureManipulable(ref GameObject go, bool isScale, Vector3 rotationAxis)
     {
         XRManipulableInteractable manipulable = go.AddComponent<XRManipulableInteractable>();
@@ -380,37 +442,33 @@ public class XRManipulable_OneHand : MonoBehaviour
 
     #endregion
 
+
     private void ScaleContent()
     {
         Vector3 interactablePos = currentInteractable.interactable.transform.position;
+        Vector3 pivot = 2 * originalState.position - currentInteractable.originalState.position;
 
-        Vector3 pivot = 2 * originalPosition - currentInteractable.initialPosition;
-
-
-        Debug.DrawLine(originalPosition, currentInteractable.initialPosition, Color.magenta);
-
-        float initialDistance = Vector3.Distance(pivot, currentInteractable.initialPosition);
+        float initialDistance = Vector3.Distance(pivot, currentInteractable.originalState.position);
         float distance = Vector3.Distance(pivot, interactablePos);
 
         float t = distance / initialDistance;
-
-        ScaleAround(transform, pivot, originalScale * t);
-
-        //transform.localScale = Vector3.one * t;
+        //Limitate scale
+        if ((originalState.scale.x * t) <= minMaxScale.y && (originalState.scale.x * t) >= minMaxScale.x)
+            XRUIElements_Helper.ScaleAround(transform, pivot, originalState.scale * t);
     }
-
 
     private void RotateContent()
     {
-        Vector3 originalDirection = (currentInteractable.initialPosition - originalPosition).normalized;
+        Vector3 originalDirection = (currentInteractable.originalState.position - originalState.position).normalized;
         Vector3 currentDirection = (currentInteractable.interactable.transform.position - transform.position).normalized;
 
-        originalDirection = Vector3.ProjectOnPlane(originalDirection, originalRotation * currentInteractable.interactable.rotationAxis);
-        currentDirection = Vector3.ProjectOnPlane(currentDirection, originalRotation * currentInteractable.interactable.rotationAxis);
+        originalDirection = Vector3.ProjectOnPlane(originalDirection, originalState.rotation * currentInteractable.interactable.rotationAxis);
+        currentDirection = Vector3.ProjectOnPlane(currentDirection, originalState.rotation * currentInteractable.interactable.rotationAxis);
 
         Quaternion differenceDirection = Quaternion.FromToRotation(originalDirection, currentDirection);
-        transform.rotation = differenceDirection * originalRotation;
+        transform.rotation = differenceDirection * originalState.rotation;
     }
+
 
     public void SetInteractablesVisibility(bool value)
     {
@@ -438,54 +496,5 @@ public class XRManipulable_OneHand : MonoBehaviour
 
         ConfigureInteractables();
         SetInteractablesVisibility(showInteractables);
-    }
-
-    ///<summary>
-    /// Scales the target around an arbitrary point by scaleFactor.
-    /// This is relative scaling, meaning using  scale Factor of Vector3.one
-    /// will not change anything and new Vector3(0.5f,0.5f,0.5f) will reduce
-    /// the object size by half.
-    /// The pivot is assumed to be the position in the space of the target.
-    /// Scaling is applied to localScale of target.
-    /// </summary>
-    /// <param name="target">The object to scale.</param>
-    /// <param name="pivot">The point to scale around in space of target.</param>
-    /// <param name="scaleFactor">The factor with which the current localScale of the target will be multiplied with.</param>
-    public static void ScaleAroundRelative(Transform target, Vector3 pivot, Vector3 scaleFactor)
-    {
-        // pivot
-        var pivotDelta = target.localPosition - pivot;
-        pivotDelta.Scale(scaleFactor);
-        target.localPosition = pivot + pivotDelta;
-
-        // scale
-        var finalScale = target.localScale;
-        finalScale.Scale(scaleFactor);
-        target.localScale = finalScale;
-    }
-
-    /// <summary>
-    /// Scales the target around an arbitrary pivot.
-    /// This is absolute scaling, meaning using for example a scale factor of
-    /// Vector3.one will set the localScale of target to x=1, y=1 and z=1.
-    /// The pivot is assumed to be the position in the space of the target.
-    /// Scaling is applied to localScale of target.
-    /// </summary>
-    /// <param name="target">The object to scale.</param>
-    /// <param name="pivot">The point to scale around in the space of target.</param>
-    /// <param name="scaleFactor">The new localScale the target object will have after scaling.</param>
-    public static void ScaleAround(Transform target, Vector3 pivot, Vector3 newScale)
-    {
-        // pivot
-        Vector3 pivotDelta = target.position - pivot; // diff from object pivot to desired pivot/origin
-        Vector3 scaleFactor = new Vector3(
-            newScale.x / target.localScale.x,
-            newScale.y / target.localScale.y,
-            newScale.z / target.localScale.z);
-        pivotDelta.Scale(scaleFactor);
-        target.position = pivot + pivotDelta;
-
-        //scale
-        target.localScale = newScale;
     }
 }
