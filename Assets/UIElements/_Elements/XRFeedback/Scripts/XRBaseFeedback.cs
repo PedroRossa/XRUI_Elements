@@ -47,7 +47,7 @@ public abstract class XRBaseFeedback : MonoBehaviour
     protected Vector3 onProximityStayPos;
 
     private AudioSource audioSource;
-    private XRBaseInteractor interactor;
+    private XRBaseControllerInteractor interactor;
 
     protected virtual void Awake()
     {
@@ -142,9 +142,8 @@ public abstract class XRBaseFeedback : MonoBehaviour
         if (playSound && proximitySound != null)
             audioSource.Play();
 
-        //TODO: Deal here to send haptic on Ray Interactor to!
         if (useHapticFeedback)
-            ((XRDirectInteractor)interactor).SendHapticImpulse(hapticAmplitude, hapticProximityFrequence);
+           interactor.SendHapticImpulse(hapticAmplitude, hapticProximityFrequence);
     }
 
     private void OnProximityAreaStayFunction()
@@ -168,7 +167,7 @@ public abstract class XRBaseFeedback : MonoBehaviour
     {
         if (other.CompareTag("interactable"))
         {
-            interactor = other.GetComponent<XRBaseInteractor>();
+            interactor = other.GetComponent<XRBaseControllerInteractor>();
             isInProximityArea = true;
             OnProximityAreaEnterFunction();
             onProximityAreaEnter?.Invoke();

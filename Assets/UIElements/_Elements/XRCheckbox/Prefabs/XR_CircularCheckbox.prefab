@@ -483,6 +483,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7602150583028752171, guid: ca694279e207c9046b8285914a66fca2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8871175845980948470, guid: ca694279e207c9046b8285914a66fca2,
         type: 3}
       propertyPath: normalColor.r
