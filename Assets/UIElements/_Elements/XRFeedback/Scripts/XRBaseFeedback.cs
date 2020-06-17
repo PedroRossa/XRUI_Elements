@@ -165,7 +165,7 @@ public abstract class XRBaseFeedback : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("interactable"))
+        if (other.CompareTag("XRInteractor"))
         {
             interactor = other.GetComponent<XRBaseControllerInteractor>();
             isInProximityArea = true;
@@ -176,7 +176,7 @@ public abstract class XRBaseFeedback : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("interactable"))
+        if (other.CompareTag("XRInteractor"))
         {
             if (isInProximityArea)
             {
@@ -188,7 +188,7 @@ public abstract class XRBaseFeedback : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("interactable"))
+        if (other.CompareTag("XRInteractor"))
         {
             interactor = null;
             isInProximityArea = false;
