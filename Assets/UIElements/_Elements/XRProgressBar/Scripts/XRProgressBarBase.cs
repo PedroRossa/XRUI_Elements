@@ -3,13 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XR2DProgressBar : MonoBehaviour
+public abstract class XRProgressBarBase : MonoBehaviour
 {
     [Header("Prefab References")]
+    public Transform background;
+    public Transform totalProgress;
     public Transform progressElement;
-    public SpriteRenderer backgroundSprite;
-    public SpriteRenderer totalProgressSprite;
-    public SpriteRenderer progressPointSprite;
+    public Transform progressPointElement;
     public TextMeshPro tmpProgress;
 
     public bool isEnabled = true;
@@ -20,7 +20,7 @@ public class XR2DProgressBar : MonoBehaviour
 
     [Header("State Colors")]
     public Color32 normalColor = new Color32(10, 198, 242, 255);
-    public Color32 touchColor = new Color32(27, 140, 175, 255);
+    public Color32 proximityColor = new Color32(27, 140, 175, 255);
     public Color32 selectColor = new Color32(17, 100, 128, 255);
     public Color32 disabledColor = new Color32(128, 128, 128, 255);
 
@@ -59,25 +59,32 @@ public class XR2DProgressBar : MonoBehaviour
     private SpriteRenderer currentProgressSprite;
     private AudioSource audioSource;
     private XR2DDragInteractable dragInteractable;
+    private XROutlineFeedback outlineFeedback;
 
 
-    private void OnValidate()
+    protected virtual void OnValidate()
     {
+        SetElementsVisibility();
         UpdateProgress();
         UpdateColors();
-
-        if (backgroundSprite != null)
-            backgroundSprite.gameObject.SetActive(showBackground);
-
-        if (progressPointSprite != null)
-            progressPointSprite.gameObject.SetActive(showProgressPoint);
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
+        SetElementsVisibility();
+        UpdateColors();
+
         dragInteractable = GetComponentInChildren<XR2DDragInteractable>();
-        dragInteractable.interactable.onHoverEnter.AddListener(WhenTouchStart);
-        dragInteractable.interactable.onHoverExit.AddListener(WhenTouchEnd);
+        outlineFeedback = GetComponentInChildren<XROutlineFeedback>();
+
+        if (dragInteractable != null)
+        {
+            dragInteractable.interactable.onHoverEnter.AddListener(WhenTouchStart);
+            dragInteractable.interactable.onHoverExit.AddListener(WhenTouchEnd);
+        }
+
+        if (outlineFeedback != null)
+            outlineFeedback.proximityColor = proximityColor;
 
         if (playSound && soundClick != null)
         {
@@ -86,20 +93,27 @@ public class XR2DProgressBar : MonoBehaviour
             audioSource.clip = soundClick;
         }
 
-        if (backgroundSprite != null)
-            backgroundSprite.gameObject.SetActive(showBackground);
-
-        if (progressPointSprite != null)
-            progressPointSprite.gameObject.SetActive(showProgressPoint);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        if(dragInteractable.isSelected)
+        if (dragInteractable.isSelected)
         {
             SetProgress(dragInteractable.normalizedValue);
             UpdateProgress();
         }
+    }
+
+    private void SetElementsVisibility()
+    {
+        if (background != null)
+            background.gameObject.SetActive(showBackground);
+
+        if (progressPointElement != null)
+            progressPointElement.gameObject.SetActive(showProgressPoint);
+
+        if (tmpProgress != null)
+            tmpProgress.gameObject.SetActive(showProgressText);
     }
 
     private void SetProgress(float value)
@@ -127,29 +141,16 @@ public class XR2DProgressBar : MonoBehaviour
         {
             int currentProgress = (int)(Progress * 100);
             tmpProgress.text = currentProgress.ToString() + " %";
-            tmpProgress.enabled = showProgressText;
         }
 
-        if (progressPointSprite != null)
-            progressPointSprite.transform.localPosition = new Vector3(Progress, 0, 0);
+        //Get child object that is containered between 0 - 1
+        if (progressPointElement != null && progressPointElement.childCount > 0)
+            progressPointElement.GetChild(0).transform.localPosition = new Vector3(Progress, 0, 0);
     }
 
-    private void UpdateColors()
-    {
-        if (backgroundSprite != null)
-            backgroundSprite.color = backgroundColor;
+    protected abstract void UpdateColors();
 
-        if (totalProgressSprite != null)
-            totalProgressSprite.color = totalProgressColor;
-
-        if (currentProgressSprite != null)
-            currentProgressSprite.color = isEnabled ? normalColor : disabledColor;
-
-        if (progressPointSprite != null)
-            progressPointSprite.color = isEnabled ? normalColor : disabledColor;
-    }
-
-    public void WhenTouchStart(XRBaseInteractor interactor)
+    protected virtual void WhenTouchStart(XRBaseInteractor interactor)
     {
         isTouch = true;
 
@@ -163,15 +164,13 @@ public class XR2DProgressBar : MonoBehaviour
                 controller.SendHapticImpulse(hapticsIntensity, hapticsDuration);
         }
 
-        progressPointSprite.transform.localScale *= 1.1f; //increase the scale in 10%
-        progressPointSprite.color = touchColor;
+        progressPointElement.transform.localScale *= 1.1f; //increase the scale in 10%
     }
 
-    public void WhenTouchEnd(XRBaseInteractor interactor)
+    protected virtual void WhenTouchEnd(XRBaseInteractor interactor)
     {
         isTouch = false;
 
-        progressPointSprite.transform.localScale /= 1.1f; //decrease the scale in 10%
-        progressPointSprite.color = normalColor;
+        progressPointElement.transform.localScale /= 1.1f; //decrease the scale in 10%
     }
 }

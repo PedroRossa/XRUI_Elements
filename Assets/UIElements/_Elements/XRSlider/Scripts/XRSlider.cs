@@ -1,197 +1,61 @@
-﻿using NaughtyAttributes;
-using System;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRSlider : MonoBehaviour
+public class XRSlider : XRProgressBarBase
 {
-    [Header("Prefab References")]
-    public GameObject lineObject;
-    public GameObject sliderObject;
-    public GameObject textObject;
-    public Transform sliderInit;
-    public Transform sliderEnd;
+    public Material backgroundMaterial;
+    public Material sliderElementMaterial;
 
-    [Header("Prefab Color Properties")]
-    public Color lineColor = Color.white;
-    public Color32 sliderObjectColor = new Color32(27, 140, 175, 255);
+    private MeshRenderer backgroundMesh;
+    private MeshRenderer sliderElementMesh;
 
-    [Header("General Properties")]
-
-    [Range(0.0f, 1.0f)]
-    [SerializeField]
-    private float sliderValue = 0.75f;
-    public float SliderValue
+    protected override void OnValidate()
     {
-        get => sliderValue;
-        set => SetSliderValue(value);
+        base.OnValidate();
+        GetMeshReferences();
     }
 
-    public bool canPush = true;
-    public bool showText = true;
-
-    [ReadOnly]
-    public bool isHover = false;
-    [ReadOnly]
-    public bool isSelected = false;
-
-    public XRUIElements_Helper.UnityFloatEvent onSliderChange;
-
-    private Rigidbody interactableRigidbody;
-
-    private TextMeshPro tmpSliderText;
-    private Vector3 initPos;
-    private Vector3 endPos;
-
-    private void SetSliderValue(float value)
+    protected override void Awake()
     {
-        if (sliderValue == value) return;
-
-        //limit the value between 0 and 1
-        sliderValue = Mathf.Clamp01(value);
-
-        UpdateSliderPosition();
-        UpdateSliderText();
-        onSliderChange?.Invoke(sliderValue);
+        base.Awake();
+        GetMeshReferences();
     }
 
-    private void ConfigureInteractable()
+    protected override void UpdateColors()
     {
-        XRBaseInteractable interactable = sliderObject.GetComponentInChildren<XRBaseInteractable>();
+        if (backgroundMesh != null && backgroundMesh.sharedMaterial != null)
+            backgroundMesh.sharedMaterial.color = backgroundColor;
 
-        if (interactable == null)
-            throw new SystemException("The slider object needs a XRInteractable to work.");
-
-        interactableRigidbody = interactable.GetComponent<Rigidbody>();
-
-        if (!canPush)
-            interactableRigidbody.isKinematic = true;
-
-        //Configure select listeners
-        interactable.onSelectEnter.RemoveAllListeners();
-        interactable.onSelectEnter.AddListener((XRBaseInteractor) => { isSelected = true; });
-
-        interactable.onSelectExit.RemoveAllListeners();
-        interactable.onSelectExit.AddListener((XRBaseInteractor) =>
-        {
-            isSelected = false;
-            interactableRigidbody.velocity = Vector3.zero;
-        });
-
-        //Configure hover listeners
-        interactable.onFirstHoverEnter.RemoveAllListeners();
-        interactable.onFirstHoverEnter.AddListener((XRBaseInteractor) =>
-        {
-            isHover = true;
-            if (canPush)
-                interactableRigidbody.isKinematic = false;
-        });
-
-        interactable.onLastHoverExit.RemoveAllListeners();
-        interactable.onLastHoverExit.AddListener((XRBaseInteractor) =>
-        {
-            isHover = false;
-            interactableRigidbody.isKinematic = true;
-            interactableRigidbody.velocity = Vector3.zero;
-        });
+        if (sliderElementMesh != null && sliderElementMesh.sharedMaterial != null)
+            sliderElementMesh.sharedMaterial.color = isEnabled ? normalColor : disabledColor;
     }
 
-    private void RefreshConfigurations()
+    private void GetMeshReferences()
     {
-        if (lineObject != null)
-            lineObject.GetComponent<MeshRenderer>().sharedMaterial.color = lineColor;
-
-        if (sliderObject != null)
-            sliderObject.GetComponent<MeshRenderer>().sharedMaterial.color = sliderObjectColor;
-
-        if (textObject != null)
+        if (backgroundMesh == null && background != null)
         {
-            if (tmpSliderText == null)
-                tmpSliderText = textObject.GetComponentInChildren<TextMeshPro>();
+            backgroundMesh = background.GetComponent<MeshRenderer>();
 
-            textObject.SetActive(showText);
+            if (backgroundMaterial != null && backgroundMesh.sharedMaterial == null)
+                backgroundMesh.sharedMaterial = new Material(backgroundMaterial);
         }
 
-        if (sliderInit == null || sliderEnd == null)
-            throw new SystemException("It's necessary set slider init and end references.");
-
-        initPos = sliderInit.transform.localPosition;
-        endPos = sliderEnd.transform.localPosition;
-    }
-
-
-    private void OnValidate()
-    {
-        RefreshConfigurations();
-        UpdateSliderPosition();
-        UpdateSliderText();
-    }
-
-    private void Awake()
-    {
-        ConfigureInteractable();
-        RefreshConfigurations();
-        UpdateSliderPosition();
-    }
-
-    private void Update()
-    {
-        if (isHover || isSelected)
+        if (sliderElementMesh == null && progressPointElement != null && progressPointElement.childCount > 0)
         {
-            UpdateSliderByMovement();
-            ConstraintLocally();
+            sliderElementMesh = progressPointElement.GetChild(0).GetComponent<MeshRenderer>();
+
+            if (sliderElementMaterial != null && sliderElementMesh.sharedMaterial == null)
+                sliderElementMesh.sharedMaterial = new Material(sliderElementMaterial);
         }
     }
 
-    private void UpdateSliderByMovement()
+    protected override void WhenTouchStart(XRBaseInteractor interactor)
     {
-        if (isSelected)
-        {
-            if (sliderObject.transform.parent == null)
-                sliderObject.transform.SetParent(transform);
-        }
-
-        SliderValue = NormalizedSliderPosition();
+        base.WhenTouchStart(interactor);
     }
 
-    private float NormalizedSliderPosition()
+    protected override void WhenTouchEnd(XRBaseInteractor interactor)
     {
-        if (sliderObject == null)
-            throw new SystemException("The component don't have the sliderObject set. It's necessary this reference to calculate the slider value.");
-
-        //Get x position that represents the current local slider object position
-        float posX = sliderObject.transform.localPosition.x;
-
-        sliderObject.transform.localPosition = new Vector3(posX, 0, 0);
-
-        float normalized = (posX - initPos.x) / (endPos.x - initPos.x);
-        return normalized;
-    }
-
-    private void ConstraintLocally()
-    {
-        Vector3 localVelocity = sliderObject.transform.InverseTransformDirection(interactableRigidbody.velocity);
-        localVelocity.y = 0;
-        localVelocity.z = 0;
-
-        interactableRigidbody.velocity = sliderObject.transform.TransformDirection(localVelocity);
-    }
-
-    private void UpdateSliderPosition()
-    {
-        if (sliderObject == null)
-            return;
-
-        //n1 + ((n2 - n1) * percent)
-        Vector3 pos = initPos + ((endPos - initPos) * SliderValue);
-
-        sliderObject.transform.localPosition = pos;
-    }
-
-    private void UpdateSliderText()
-    {
-        if (tmpSliderText != null)
-            tmpSliderText.text = SliderValue.ToString("f2");
+        base.WhenTouchEnd(interactor);
     }
 }

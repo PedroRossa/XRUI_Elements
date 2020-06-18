@@ -23,6 +23,11 @@ public class XR2DDragInteractable : MonoBehaviour
         originalParent = transform.parent;
     }
 
+    private void FixedUpdate()
+    {
+        ConstraintLocally();
+    }
+
     private void Update()
     {
         if (isSelected)
@@ -30,15 +35,10 @@ public class XR2DDragInteractable : MonoBehaviour
             UpdateByMovement();
         }
     }
-
-    private void FixedUpdate()
-    {
-        ConstraintLocally();
-    }
-
+   
     private void ConfigureInteractable()
     {
-        interactable = GetComponent<XRBaseInteractable>();
+        interactable = gameObject.GetComponent<XRBaseInteractable>();
 
         interactableRigidbody = interactable.GetComponent<Rigidbody>();
         interactableRigidbody.isKinematic = true;
@@ -74,5 +74,6 @@ public class XR2DDragInteractable : MonoBehaviour
         localVelocity.z = 0;
 
         interactableRigidbody.velocity = transform.TransformDirection(localVelocity);
+        transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
     }
 }
