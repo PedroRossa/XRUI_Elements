@@ -13,6 +13,7 @@ public abstract class XRProgressBarBase : MonoBehaviour
     public TextMeshPro tmpProgress;
 
     public bool isEnabled = true;
+    public bool canPush = false;
 
     [Header("Color Properties")]
     public Color backgroundColor = Color.white;
@@ -75,13 +76,15 @@ public abstract class XRProgressBarBase : MonoBehaviour
         UpdateColors();
 
         dragInteractable = GetComponentInChildren<XR2DDragInteractable>();
-        outlineFeedback = GetComponentInChildren<XROutlineFeedback>();
 
         if (dragInteractable != null)
         {
+            dragInteractable.Setup(canPush);
             dragInteractable.interactable.onHoverEnter.AddListener(WhenTouchStart);
             dragInteractable.interactable.onHoverExit.AddListener(WhenTouchEnd);
         }
+
+        outlineFeedback = GetComponentInChildren<XROutlineFeedback>();
 
         if (outlineFeedback != null)
             outlineFeedback.proximityColor = proximityColor;
@@ -97,7 +100,7 @@ public abstract class XRProgressBarBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (dragInteractable.isSelected)
+        if (dragInteractable.isSelected || (canPush && isTouch))
         {
             SetProgress(dragInteractable.normalizedValue);
             UpdateProgress();
@@ -163,14 +166,10 @@ public abstract class XRProgressBarBase : MonoBehaviour
             if (controller != null)
                 controller.SendHapticImpulse(hapticsIntensity, hapticsDuration);
         }
-
-        progressPointElement.transform.localScale *= 1.1f; //increase the scale in 10%
     }
 
     protected virtual void WhenTouchEnd(XRBaseInteractor interactor)
     {
         isTouch = false;
-
-        progressPointElement.transform.localScale /= 1.1f; //decrease the scale in 10%
     }
 }

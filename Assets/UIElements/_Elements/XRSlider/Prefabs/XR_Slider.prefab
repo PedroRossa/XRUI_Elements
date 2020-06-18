@@ -131,6 +131,7 @@ MonoBehaviour:
   progressPointElement: {fileID: 4148120439163406013}
   tmpProgress: {fileID: 979038812822886942}
   isEnabled: 1
+  canPush: 1
   backgroundColor: {r: 1, g: 1, b: 1, a: 0.33333334}
   totalProgressColor:
     serializedVersion: 2
@@ -150,12 +151,12 @@ MonoBehaviour:
   playSound: 1
   soundClick: {fileID: 0}
   useHaptics: 1
-  hapticsIntensity: 0
-  hapticsDuration: 0
+  hapticsIntensity: 0.064
+  hapticsDuration: 0.267
   showBackground: 1
   showProgressPoint: 1
   showProgressText: 1
-  progress: 0.75
+  progress: 0.771
   isTouch: 0
   onProgressChange:
     m_PersistentCalls:
@@ -307,7 +308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 75 %
+  m_text: 77 %
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -463,7 +464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9103698822929801612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0, z: 0}
+  m_LocalPosition: {x: 0.771, y: 0, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_Children: []
   m_Father: {fileID: 4148120439163406013}
@@ -693,6 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befe1922c3713714ca488498f09dce6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHover: 0
   isSelected: 0
   normalizedValue: 0
   interactable: {fileID: 0}

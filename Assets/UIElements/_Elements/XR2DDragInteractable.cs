@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XR2DDragInteractable : MonoBehaviour
 {
     [ReadOnly]
+    public bool isHover = false;
+    [ReadOnly]
     public bool isSelected = false;
     [HideInInspector]
     public float normalizedValue;
@@ -19,7 +21,9 @@ public class XR2DDragInteractable : MonoBehaviour
 
     private void Awake()
     {
-        ConfigureInteractable();
+        interactable = gameObject.GetComponent<XRBaseInteractable>();
+        interactableRigidbody = interactable.GetComponent<Rigidbody>();
+
         originalParent = transform.parent;
     }
 
@@ -30,21 +34,23 @@ public class XR2DDragInteractable : MonoBehaviour
 
     private void Update()
     {
-        if (isSelected)
+        if (isHover || isSelected)
         {
             UpdateByMovement();
         }
     }
-   
-    private void ConfigureInteractable()
-    {
-        interactable = gameObject.GetComponent<XRBaseInteractable>();
 
-        interactableRigidbody = interactable.GetComponent<Rigidbody>();
-        interactableRigidbody.isKinematic = true;
+    public void Setup(bool canPush)
+    {
+        interactableRigidbody.isKinematic = !canPush;
+
+        if (canPush)
+        {
+            interactable.onFirstHoverEnter.AddListener((XRBaseInteractor) => { isHover = true; });
+            interactable.onLastHoverExit.AddListener((XRBaseInteractor) => { isHover = false; });
+        }
 
         interactable.onSelectEnter.AddListener((XRBaseInteractor) => { isSelected = true; });
-
         interactable.onSelectExit.AddListener((XRBaseInteractor) =>
         {
             isSelected = false;

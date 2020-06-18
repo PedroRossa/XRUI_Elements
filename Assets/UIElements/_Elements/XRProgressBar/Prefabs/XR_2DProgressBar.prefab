@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befe1922c3713714ca488498f09dce6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHover: 0
   isSelected: 0
   normalizedValue: 0
   interactable: {fileID: 0}
@@ -772,6 +773,7 @@ MonoBehaviour:
   progressPointElement: {fileID: 915992990166679757}
   tmpProgress: {fileID: 915992988325605333}
   isEnabled: 1
+  canPush: 0
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   totalProgressColor:
     serializedVersion: 2

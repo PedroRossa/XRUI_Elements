@@ -54,10 +54,14 @@ public class XR2DProgressBar : XRProgressBarBase
     protected override void WhenTouchStart(XRBaseInteractor interactor)
     {
         base.WhenTouchStart(interactor);
+
+        progressPointSprite.transform.localScale *= 1.1f; //increase the scale in 10%
     }
 
     protected override void WhenTouchEnd(XRBaseInteractor interactor)
     {
         base.WhenTouchEnd(interactor);
+
+        progressPointSprite.transform.localScale /= 1.1f; //decrease the scale in 10%
     }
 }
