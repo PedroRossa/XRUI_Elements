@@ -1,10 +1,15 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
-public class XR2DSpriteButton : XR2DButton
+public class XR2DSpriteButton : XRUIBase
 {
-    [Header("Icon Properties")]
+    public bool backgroundFeedback;
+
+    public SpriteRenderer backgroundSprite;
     public SpriteRenderer iconSprite;
+
+    [HideIf("backgroundFeedback")]
+    public Color32 backgroundColor = new Color32(255, 255, 255, 255);
 
     [Header("Sprite Properties")]
     [ShowAssetPreview(32, 32)]
@@ -18,10 +23,7 @@ public class XR2DSpriteButton : XR2DButton
     [ShowIf("backgroundFeedback")]
     public Color iconDisabledColor = Color.gray;
 
-    private bool HasIconSet()
-    {
-        return icon != null ? true : false;
-    }
+    public bool HasIconSet() { return icon != null ? true : false; }
 
     protected override void OnValidate()
     {
@@ -40,7 +42,10 @@ public class XR2DSpriteButton : XR2DButton
                 backgroundSprite.color = isEnabled ? normalColor : disabledColor;
             }
             else
+            {
                 iconSprite.color = isEnabled ? normalColor : disabledColor;
+                backgroundSprite.color = backgroundColor;
+            }
         }
     }
 

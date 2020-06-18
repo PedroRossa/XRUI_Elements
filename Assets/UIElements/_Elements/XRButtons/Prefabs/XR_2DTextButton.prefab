@@ -158,11 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7cdb34b9a91841ade1512ec70c095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundFeedback: 1
-  backgroundSprite: {fileID: 2913888419649652682}
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4294967295
   isEnabled: 1
   normalColor:
     serializedVersion: 2
@@ -191,6 +186,11 @@ MonoBehaviour:
   onTouchExit:
     m_PersistentCalls:
       m_Calls: []
+  backgroundFeedback: 1
+  backgroundSprite: {fileID: 2913888419649652682}
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4294967295
   txtValue: My Text here
   fontSize: 23
 --- !u!1 &2913888419649652680

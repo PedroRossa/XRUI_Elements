@@ -1,8 +1,14 @@
-﻿using TMPro;
+﻿using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 
-public class XR2DTextButton : XR2DButton
+public class XR2DTextButton : XRUIBase
 {
+    public bool backgroundFeedback;
+    public SpriteRenderer backgroundSprite;
+    [HideIf("backgroundFeedback")]
+    public Color32 backgroundColor = new Color32(255, 255, 255, 255);
+
     private TextMeshPro tmpField;
 
     [Header("Properties")]
@@ -30,6 +36,10 @@ public class XR2DTextButton : XR2DButton
     protected override void Awake()
     {
         base.Awake();
+
+        //TODO: make a way to set feedback on text, current only on background
+        backgroundFeedback = true;
+
         if (tmpField == null)
             tmpField = GetComponentInChildren<TextMeshPro>();
 
@@ -38,6 +48,9 @@ public class XR2DTextButton : XR2DButton
 
         onTouchEnter.AddListener(OnTouchEnterFunction);
         onTouchExit.AddListener(OnTouchExitFunction);
+
+        if (backgroundSprite != null)
+            backgroundSprite.color = backgroundColor;
     }
 
     private void OnTouchEnterFunction()
