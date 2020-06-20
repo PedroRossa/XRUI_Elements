@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5436278335919764418}
   - component: {fileID: 5436278335919764419}
   - component: {fileID: 5436278335919764441}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressPointObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5436278337633800208}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressPointElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184705833709592060}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 9184705834114356974}
   - component: {fileID: 9184705834114356975}
   - component: {fileID: 9184705834114356972}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TotalProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 9184705834144988437}
   - component: {fileID: 9184705834144988434}
   - component: {fileID: 9184705834144988435}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9184705834492745280}
   - component: {fileID: 9184705834492745293}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 9184705834917022900}
   - component: {fileID: 9184705834917022901}
   - component: {fileID: 9184705834917022899}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 9184705835280293177}
   - component: {fileID: 9184705835280293158}
   - component: {fileID: 9184705835280293159}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184705835466394022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

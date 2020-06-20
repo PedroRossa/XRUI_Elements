@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 198765520683631305}
   - component: {fileID: 613308393334330906}
   - component: {fileID: 8187625978901052138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 979038811225506029}
   - component: {fileID: 8340925188982516938}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 979038812265094923}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 979038812822886937}
   - component: {fileID: 979038812822886936}
   - component: {fileID: 979038812822886942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148120439163406013}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressPointElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 9103698822929801603}
   - component: {fileID: 9103698822929801602}
   - component: {fileID: 1843170731}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressPointObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

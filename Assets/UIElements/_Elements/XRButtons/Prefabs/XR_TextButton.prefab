@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1754541259807530010}
   - component: {fileID: 7631571738684928786}
-  - component: {fileID: 6333548643840396632}
+  - component: {fileID: 6526648858996814484}
   m_Layer: 8
   m_Name: XR_TextButton
   m_TagString: Untagged
@@ -46,12 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6eb91ac24bfdb64ebc40ae271ad5734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnabled: 1
   backgroundPanel: {fileID: 1754541260355633043}
   buttonTransform: {fileID: 5827030130792334246}
-  clickSound: {fileID: 8300000, guid: 32918f19e230d2842a7f3df628463b3e, type: 3}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  proximityColor: {r: 0, g: 0, b: 1, a: 0.5686275}
-  normalColor: {r: 1, g: 1, b: 1, a: 0.5529412}
   clickColor: {r: 0, g: 1, b: 0, a: 0.5529412}
   isPressed: 0
   onClickDown:
@@ -65,102 +63,33 @@ MonoBehaviour:
       m_Calls: []
   txtValue: My Button :D
   fontSize: 20
---- !u!82 &6333548643840396632
-AudioSource:
+--- !u!114 &6526648858996814484
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1754541259807530009}
   m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32427094956b224408ae40b158c572d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalColor:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
+    rgba: 4294100490
+  nearColor:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
+    rgba: 4289694747
+  touchColor:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
+    rgba: 4286604305
+  selectColor:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+    rgba: 4286604305
+  disabledColor:
+    serializedVersion: 2
+    rgba: 4282400832
 --- !u!1 &1754541260355633042
 GameObject:
   m_ObjectHideFlags: 0

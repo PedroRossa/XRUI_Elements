@@ -1,15 +1,9 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
-public class XR2DSpriteButton : XRUIBase
+public class XR2DSpriteButton : XR2DButton
 {
-    public bool backgroundFeedback;
-
-    public SpriteRenderer backgroundSprite;
     public SpriteRenderer iconSprite;
-
-    [HideIf("backgroundFeedback")]
-    public Color32 backgroundColor = new Color32(255, 255, 255, 255);
 
     [Header("Sprite Properties")]
     [ShowAssetPreview(32, 32)]
@@ -39,11 +33,11 @@ public class XR2DSpriteButton : XRUIBase
             if (backgroundFeedback)
             {
                 iconSprite.color = isEnabled ? iconColor : iconDisabledColor;
-                backgroundSprite.color = isEnabled ? normalColor : disabledColor;
+                backgroundSprite.color = isEnabled ? uiColors.normalColor : uiColors.disabledColor;
             }
             else
             {
-                iconSprite.color = isEnabled ? normalColor : disabledColor;
+                iconSprite.color = isEnabled ? uiColors.normalColor : uiColors.disabledColor;
                 backgroundSprite.color = backgroundColor;
             }
         }
@@ -52,27 +46,27 @@ public class XR2DSpriteButton : XRUIBase
     protected override void Awake()
     {
         base.Awake();
-        onTouchEnter.AddListener(OnTouchEnterFunction);
-        onTouchExit.AddListener(OnTouchExitFunction);
+        touchManagement.onTouchEnter.AddListener(OnTouchEnterFunction);
+        touchManagement.onTouchExit.AddListener(OnTouchExitFunction);
     }
 
-    private void OnTouchEnterFunction()
+    protected void OnTouchEnterFunction()
     {
         //Aplly on parent because it's a empty object with normalized scale
         iconSprite.transform.parent.localScale = Vector3.one * 1.1f;
         if (backgroundFeedback)
-            backgroundSprite.color = touchColor;
+            backgroundSprite.color = uiColors.touchColor;
         else
-            iconSprite.color = touchColor;
+            iconSprite.color = uiColors.touchColor;
     }
 
-    private void OnTouchExitFunction()
+    protected void OnTouchExitFunction()
     {
         //Aplly on parent because it's a empty object with normalized scale
         iconSprite.transform.parent.localScale = Vector3.one;
         if (backgroundFeedback)
-            backgroundSprite.color = normalColor;
+            backgroundSprite.color = uiColors.normalColor;
         else
-            iconSprite.color = normalColor;
+            iconSprite.color = uiColors.normalColor;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRUIElements_Helper
 {
@@ -9,6 +10,9 @@ public class XRUIElements_Helper
 
     [Serializable]
     public class UnityFloatEvent : UnityEvent<float> { }
+
+    [Serializable]
+    public class UnityXRControllerEvent : UnityEvent<XRController> { }
 
 
     ///<summary>

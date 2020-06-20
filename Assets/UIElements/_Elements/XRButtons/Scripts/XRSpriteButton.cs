@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System.Windows.Markup;
 using UnityEngine;
 
 public class XRSpriteButton : XRButton
@@ -11,9 +12,9 @@ public class XRSpriteButton : XRButton
     private SpriteRenderer buttonSpriteRenderer;
 
     //Runs only in editor
-    private void OnValidate()
+    protected override void OnValidate()
     {
-        BaseOnValidate();
+        base.OnValidate();
 
         if (sprite != null)
         {

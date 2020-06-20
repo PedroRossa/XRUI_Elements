@@ -10,9 +10,9 @@ public class XRTextButton : XRButton
     public int fontSize = 20;
 
     //Runs only in editor
-    private void OnValidate()
+    protected override void OnValidate()
     {
-        BaseOnValidate();
+        base.OnValidate();
 
         if (tmpField == null)
             tmpField = GetComponentInChildren<TextMeshPro>();

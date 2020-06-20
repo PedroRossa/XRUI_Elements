@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7538884190764591427}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: IconElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7538884191171958459}
   - component: {fileID: 7538884191171958456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backgroundSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,9 @@ GameObject:
   - component: {fileID: 7538884191668135595}
   - component: {fileID: 7538884191668135593}
   - component: {fileID: 6584343472528051696}
-  m_Layer: 0
+  - component: {fileID: 3036073658541441963}
+  - component: {fileID: 7544157177712334395}
+  m_Layer: 8
   m_Name: XR_2DButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,20 +191,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  backgroundFeedback: 0
+  backgroundSprite: {fileID: 7538884191171958456}
+  backgroundColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  iconSprite: {fileID: 7538884192470009850}
+  icon: {fileID: 0}
+  iconScale: 0
+  iconColor: {r: 1, g: 1, b: 1, a: 1}
+  iconDisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+--- !u!114 &3036073658541441963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538884191668135589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32427094956b224408ae40b158c572d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   normalColor:
     serializedVersion: 2
     rgba: 4294100490
-  hoverColor:
+  nearColor:
     serializedVersion: 2
     rgba: 4289694747
   touchColor:
     serializedVersion: 2
     rgba: 4286604305
+  selectColor:
+    serializedVersion: 2
+    rgba: 4286604305
   disabledColor:
     serializedVersion: 2
-    rgba: 4286611584
+    rgba: 4282400832
+--- !u!114 &7544157177712334395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7538884191668135589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8f1d8d63e660041894f8e4bc045da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   playSound: 1
-  soundClick: {fileID: 0}
+  soundClip: {fileID: 0}
   useHaptics: 1
   hapticsIntensity: 0
   hapticsDuration: 0
@@ -216,16 +255,6 @@ MonoBehaviour:
   onTouchExit:
     m_PersistentCalls:
       m_Calls: []
-  backgroundFeedback: 0
-  backgroundSprite: {fileID: 7538884191171958456}
-  iconSprite: {fileID: 0}
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  icon: {fileID: 0}
-  iconScale: 0
-  iconColor: {r: 1, g: 1, b: 1, a: 1}
-  iconDisabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &7538884192470009844
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7538884192470009845}
   - component: {fileID: 7538884192470009850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: iconSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

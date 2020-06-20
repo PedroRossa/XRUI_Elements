@@ -16,8 +16,17 @@ public class XR2DDragInteractable : MonoBehaviour
     public Vector3 localInitPos = Vector3.zero;
     public Vector3 localEndPos = Vector3.right;
 
+    private Vector3 worldInitPos = Vector3.zero;
+    private Vector3 worldEndPos = Vector3.zero;
+
     private Rigidbody interactableRigidbody;
     private Transform originalParent;
+
+    private void OnValidate()
+    {
+        worldInitPos = transform.parent.TransformDirection(localInitPos) + transform.parent.position;
+        worldEndPos = transform.parent.TransformVector(localEndPos) + transform.parent.position;
+    }
 
     private void Awake()
     {
@@ -25,6 +34,9 @@ public class XR2DDragInteractable : MonoBehaviour
         interactableRigidbody = interactable.GetComponent<Rigidbody>();
 
         originalParent = transform.parent;
+
+        worldInitPos = transform.parent.TransformDirection(localInitPos) + transform.parent.position;
+        worldEndPos = transform.parent.TransformVector(localEndPos) + transform.parent.position;
     }
 
     private void FixedUpdate()
@@ -81,5 +93,13 @@ public class XR2DDragInteractable : MonoBehaviour
 
         interactableRigidbody.velocity = transform.TransformDirection(localVelocity);
         transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(worldInitPos, transform.localScale.x);
+        Gizmos.DrawLine(worldInitPos, worldEndPos);
+        Gizmos.DrawWireSphere(worldEndPos, transform.localScale.x);
     }
 }

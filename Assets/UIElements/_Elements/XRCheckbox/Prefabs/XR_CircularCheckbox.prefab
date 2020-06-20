@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 68725030535461543}
   - component: {fileID: 68725030535461540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_CircularCheckbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 68725031577076403}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CheckText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 68725031653228855}
   - component: {fileID: 68725031653228854}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: checkTextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 68725032050660029}
   - component: {fileID: 68725032050660028}
   - component: {fileID: 68725032050660031}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,6 +380,33 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &-7902915489101371332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7109991978336271576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8f1d8d63e660041894f8e4bc045da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playSound: 1
+  soundClip: {fileID: 0}
+  useHaptics: 1
+  hapticsIntensity: 0
+  hapticsDuration: 0
+  isTouch: 0
+  onTouchEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouchStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onTouchExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4808209897613609263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -483,6 +510,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5999615285463679745, guid: ca694279e207c9046b8285914a66fca2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7602150583028752171, guid: ca694279e207c9046b8285914a66fca2,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -505,6 +537,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca694279e207c9046b8285914a66fca2, type: 3}
+--- !u!1 &7109991978336271576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2310897902124987895, guid: ca694279e207c9046b8285914a66fca2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4808209897613609263}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7109991978336271579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2310897902124987892, guid: ca694279e207c9046b8285914a66fca2,

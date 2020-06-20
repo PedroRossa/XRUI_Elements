@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8735585869073231618}
   - component: {fileID: 8735585869073231619}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: checkTextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8735585869148335238}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CheckText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 8735585869749615752}
   - component: {fileID: 8735585869749615753}
   - component: {fileID: 8735585869749615754}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8735585870128092306}
   - component: {fileID: 8735585870128092305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_Checkbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

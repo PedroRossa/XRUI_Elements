@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 915992988325605335}
   - component: {fileID: 915992988325605332}
   - component: {fileID: 915992988325605333}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tmpProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915992988513169309}
   - component: {fileID: 915992988513169308}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: backgroundSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 3365538622864441190}
   - component: {fileID: 3365538622864441184}
   - component: {fileID: 3365538622864441215}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: progressPointSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915992989129710351}
   - component: {fileID: 915992989129710350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: totalProgressSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -648,7 +648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915992989171278920}
   - component: {fileID: 915992989171278923}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: progressSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915992989193867894}
   - component: {fileID: 3365538623458082551}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: XR_2DProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 915992989608017188}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 915992990166679757}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProgressPointElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}

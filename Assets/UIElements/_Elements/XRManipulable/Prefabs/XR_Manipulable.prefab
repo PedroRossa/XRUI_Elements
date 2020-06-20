@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 5978552040257757745}
   - component: {fileID: 5978552040257757750}
   - component: {fileID: 5978552040257757751}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 5978552040538454542}
   - component: {fileID: 5978552040538454543}
   - component: {fileID: 5978552040538454540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,8 +256,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5978552041576255962}
   - component: {fileID: 5978552041576255964}
-  m_Layer: 0
-  m_Name: XR_Manipulabe
+  m_Layer: 8
+  m_Name: XR_Manipulable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,16 +293,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 5978552041635587411}
+  scaleElements: {fileID: 3029419995712031470}
+  rotationElements: {fileID: 3029419995230548436}
   showByProximity: 1
   showInteractables: 1
   minMaxScale: {x: 0.01, y: 10}
   interactablesOffset: 0.025
-  scaleElements: {fileID: 3029419995712031470}
-  scaleMaterial: {fileID: 0}
-  rotationElements: {fileID: 3029419995230548436}
-  rotationMaterial: {fileID: 0}
+  interactablesSize: 0.1
+  proximityColliderRadius: 0
   is3DManipulable: 0
+  showWireBox: 1
   feedbackType: Outline
+  wireBoxColor: {r: 1, g: 1, b: 1, a: 1}
+  scaleElementColor: {r: 0, g: 1, b: 0, a: 1}
+  rotationElementColor: {r: 0, g: 0, b: 1, a: 1}
+  proximityColor: {r: 1, g: 0, b: 1, a: 1}
   isTwoHandsGrabing: 0
   onTwoHandsGrabingStart:
     m_PersistentCalls:
@@ -322,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5978552041635587411}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}

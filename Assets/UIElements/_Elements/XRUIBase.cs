@@ -1,111 +1,28 @@
-﻿using NaughtyAttributes;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
+﻿using UnityEngine;
 
-public class XRUIBase : MonoBehaviour
+[RequireComponent(typeof(XRUIColors))]
+public abstract class XRUIBase : MonoBehaviour
 {
     public bool isEnabled = true;
 
-    [Header("State Colors")]
-    public Color32 normalColor = new Color32(10, 198, 242, 255);
-    public Color32 hoverColor = new Color32(27, 140, 175, 255);
-    public Color32 touchColor = new Color32(17, 100, 128, 255);
-    public Color32 disabledColor = new Color32(64, 64, 64, 255);
-
-    public bool playSound = true;
-    [ShowIf("playSound")]
-    public AudioClip soundClick;
-
-    public bool useHaptics = true;
-    [ShowIf("useHaptics")]
-    [Range(0, 1)]
-    public float hapticsIntensity;
-    [ShowIf("useHaptics")]
-    [Range(0, 1)]
-    public float hapticsDuration;
-
-    [ReadOnly]
-    public bool isTouch = false;
-
-    public UnityEvent onTouchEnter;
-    public UnityEvent onTouchStay;
-    public UnityEvent onTouchExit;
-
-    private AudioSource audioSource;
+    protected XRUIColors uiColors;
+    protected AudioSource audioSource;
 
     protected virtual void OnValidate()
     {
+        uiColors = GetComponent<XRUIColors>();
     }
 
     protected virtual void Awake()
     {
-        ConfigureSound();
-    }
+        audioSource = gameObject.GetComponent<AudioSource>();
 
-    private void ConfigureSound()
-    {
-        if (playSound && soundClick != null)
-        {
+        if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-            audioSource.clip = soundClick;
-        }
+
+        uiColors = GetComponent<XRUIColors>();
     }
 
-    private void OnTouchEnterFunction(XRController controller)
-    {
-        isTouch = true;
-
-        if (playSound && soundClick != null)
-            audioSource.Play();
-
-        if (useHaptics)
-            controller.SendHapticImpulse(hapticsIntensity, hapticsDuration);
-
-        //Call event if exists
-        onTouchEnter?.Invoke();
-    }
-
-    private void OnTouchExitFunction(XRController controller)
-    {
-        isTouch = false;
-
-        //Call event if exists
-        onTouchExit?.Invoke();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!isEnabled)
-            return;
-
-        XRController controller = other.GetComponent<XRController>();
-        if (controller != null)
-            OnTouchEnterFunction(controller);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (!isEnabled)
-            return;
-
-        if (isTouch)
-        {
-            //Call event if exists
-            onTouchStay?.Invoke();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!isEnabled)
-            return;
-
-        XRController controller = other.GetComponent<XRController>();
-        if (controller != null)
-        {
-            OnTouchExitFunction(controller);
-        }
-    }
+    //TODO: Criar aqui todas as ações pra lidar com o audioSoruce, assim não precisa das referencias nas herancas
+    //TODO: Criar um sistema de templates de cor
 }

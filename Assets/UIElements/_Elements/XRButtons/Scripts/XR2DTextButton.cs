@@ -1,19 +1,13 @@
-﻿using NaughtyAttributes;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-public class XR2DTextButton : XRUIBase
+public class XR2DTextButton : XR2DButton
 {
-    public bool backgroundFeedback;
-    public SpriteRenderer backgroundSprite;
-    [HideIf("backgroundFeedback")]
-    public Color32 backgroundColor = new Color32(255, 255, 255, 255);
-
-    private TextMeshPro tmpField;
-
-    [Header("Properties")]
+    [Header("Text Properties")]
     public string txtValue;
     public int fontSize = 20;
+
+    private TextMeshPro tmpField;
 
     protected override void OnValidate()
     {
@@ -30,7 +24,7 @@ public class XR2DTextButton : XRUIBase
         //TODO: make a way to set feedback on text, current only on background
         backgroundFeedback = true;
 
-        backgroundSprite.color = isEnabled ? normalColor : disabledColor;
+        backgroundSprite.color = isEnabled ? uiColors.normalColor : uiColors.disabledColor;
     }
 
     protected override void Awake()
@@ -46,20 +40,10 @@ public class XR2DTextButton : XRUIBase
         tmpField.text = txtValue;
         tmpField.fontSize = fontSize;
 
-        onTouchEnter.AddListener(OnTouchEnterFunction);
-        onTouchExit.AddListener(OnTouchExitFunction);
+        touchManagement.onTouchEnter.AddListener(() => { backgroundSprite.color = uiColors.touchColor; });
+        touchManagement.onTouchExit.AddListener(() => { backgroundSprite.color = uiColors.normalColor; });
 
         if (backgroundSprite != null)
             backgroundSprite.color = backgroundColor;
-    }
-
-    private void OnTouchEnterFunction()
-    {
-        backgroundSprite.color = touchColor;
-    }
-
-    private void OnTouchExitFunction()
-    {
-        backgroundSprite.color = normalColor;
     }
 }

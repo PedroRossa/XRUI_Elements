@@ -1,17 +1,12 @@
 ﻿using NaughtyAttributes;
-using System.Collections;
-using System.Security.Policy;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
-using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public abstract class XRBaseFeedback : MonoBehaviour
 {
     [Header("Feedback Properties")]
-   
+
     //TODO: Make readonly until solve the problem of alpha calculation
     [NaughtyAttributes.ReadOnly]
     public bool alphaColorByDistance = false;
