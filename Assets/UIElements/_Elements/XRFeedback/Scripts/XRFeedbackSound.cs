@@ -29,66 +29,58 @@ public class XRFeedbackSound : XRFeedbackBaseType
         audioSource.playOnAwake = false;
     }
 
-    protected override void ConfigureNearFeedback()
+
+    protected override void OnNearEnterFeedbackFunction(XRController controller)
     {
         if (nearEnterAudioClip != null)
         {
-            xrFeedback.onNearEnter.AddListener((XRController controller) =>
-            {
-                audioSource.clip = nearEnterAudioClip;
-                audioSource.Play();
-            });
-        }
-
-        if (nearExitAudioClip != null)
-        {
-            xrFeedback.onNearExit.AddListener((XRController controller) =>
-            {
-                audioSource.clip = nearExitAudioClip;
-                audioSource.Play();
-            });
+            audioSource.clip = nearEnterAudioClip;
+            audioSource.Play();
         }
     }
 
-    protected override void ConfigureTouchFeedback()
+    protected override void OnNearExitFeedbackFunction(XRController controller)
+    {
+        if (nearExitAudioClip != null)
+        {
+            audioSource.clip = nearExitAudioClip;
+            audioSource.Play();
+        }
+    }
+
+    protected override void OnTouchEnterFeedbackFunction(XRController controller)
     {
         if (touchEnterAudioClip != null)
         {
-            xrFeedback.onTouchEnter.AddListener((XRController controller) =>
-            {
-                audioSource.clip = touchEnterAudioClip;
-                audioSource.Play();
-            });
-        }
-
-        if (touchExitAudioClip != null)
-        {
-            xrFeedback.onTouchExit.AddListener((XRController controller) =>
-            {
-                audioSource.clip = touchExitAudioClip;
-                audioSource.Play();
-            });
+            audioSource.clip = touchEnterAudioClip;
+            audioSource.Play();
         }
     }
 
-    protected override void ConfigureSelectFeedback()
+    protected override void OnTouchExitFeedbackFunction(XRController controller)
+    {
+        if (touchExitAudioClip != null)
+        {
+            audioSource.clip = touchExitAudioClip;
+            audioSource.Play();
+        }
+    }
+
+    protected override void OnSelectEnterFeedbackFunction(XRController controller)
     {
         if (selectEnterAudioClip != null)
         {
-            xrFeedback.onSelectEnter.AddListener((XRController controller) =>
-            {
-                audioSource.clip = selectEnterAudioClip;
-                audioSource.Play();
-            });
+            audioSource.clip = selectEnterAudioClip;
+            audioSource.Play();
         }
+    }
 
+    protected override void OnSelectExitFeedbackFunction(XRController controller)
+    {
         if (selectExitAudioClip != null)
         {
-            xrFeedback.onSelectExit.AddListener((XRController controller) =>
-            {
-                audioSource.clip = selectExitAudioClip;
-                audioSource.Play();
-            });
+            audioSource.clip = selectExitAudioClip;
+            audioSource.Play();
         }
     }
 }

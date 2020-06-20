@@ -47,39 +47,34 @@ public class XRFeedbackHaptics : XRFeedbackBaseType
     public float selectExitHapticFrequence = 0.1f;
 
 
-    protected override void ConfigureNearFeedback()
+    protected override void OnNearEnterFeedbackFunction(XRController controller)
     {
-        xrFeedback.onNearEnter.AddListener((XRController controller) => 
-        {
-            controller.SendHapticImpulse(nearEnterHapticAmplitude, nearEnterHapticFrequence); 
-        });
-        xrFeedback.onNearExit.AddListener((XRController controller) => 
-        {
-            controller.SendHapticImpulse(nearExitHapticAmplitude, nearExitHapticFrequence);
-        });
+        _ = controller.SendHapticImpulse(nearEnterHapticAmplitude, nearEnterHapticFrequence);
     }
 
-    protected override void ConfigureSelectFeedback()
+    protected override void OnNearExitFeedbackFunction(XRController controller)
     {
-        xrFeedback.onTouchEnter.AddListener((XRController controller) =>
-        {
-            controller.SendHapticImpulse(touchEnterHapticAmplitude, touchEnterHapticFrequence);
-        });
-        xrFeedback.onTouchExit.AddListener((XRController controller) =>
-        {
-            controller.SendHapticImpulse(touchExitHapticAmplitude, touchExitHapticFrequence);
-        });
+        _ = controller.SendHapticImpulse(nearExitHapticAmplitude, nearExitHapticFrequence);
     }
 
-    protected override void ConfigureTouchFeedback()
+    protected override void OnTouchEnterFeedbackFunction(XRController controller)
     {
-        xrFeedback.onSelectEnter.AddListener((XRController controller) =>
-        {
-            controller.SendHapticImpulse(selectEnterHapticAmplitude, selectEnterHapticFrequence);
-        });
-        xrFeedback.onSelectExit.AddListener((XRController controller) =>
-        {
-            controller.SendHapticImpulse(selectExitHapticAmplitude, selectExitHapticFrequence);
-        });
+        _ = controller.SendHapticImpulse(touchEnterHapticAmplitude, touchEnterHapticFrequence);
     }
+
+    protected override void OnTouchExitFeedbackFunction(XRController controller)
+    {
+        _ = controller.SendHapticImpulse(touchExitHapticAmplitude, touchExitHapticFrequence);
+    }
+
+    protected override void OnSelectEnterFeedbackFunction(XRController controller)
+    {
+        _ = controller.SendHapticImpulse(selectEnterHapticAmplitude, selectEnterHapticFrequence);
+    }
+
+    protected override void OnSelectExitFeedbackFunction(XRController controller)
+    {
+        _ = controller.SendHapticImpulse(selectExitHapticAmplitude, selectExitHapticFrequence);
+    }
+
 }
