@@ -20,11 +20,11 @@ public class XRFeedbackColor : XRFeedbackBaseType
 
     private void OnValidate()
     {
-        CheckComponentsByType();
-
         if (xrUIColors == null)
             xrUIColors = GetComponent<XRUIColors>();
-        RefreshObjectNormalColor();
+
+        CheckComponentsByType();
+        RefreshElementColor();
     }
 
     protected override void Awake()
@@ -33,27 +33,31 @@ public class XRFeedbackColor : XRFeedbackBaseType
 
         if (xrUIColors == null)
             xrUIColors = GetComponent<XRUIColors>();
-        RefreshObjectNormalColor();
+
+        RefreshElementColor();
 
         InitializeByType();
     }
 
 
-    private void RefreshObjectNormalColor()
+    public void RefreshElementColor()
     {
         if (meshRenderer != null)
         {
             meshRenderer.sharedMaterial = new Material(meshRenderer.sharedMaterial);
-            meshRenderer.sharedMaterial.color = xrUIColors.normalColor;
+            meshRenderer.sharedMaterial.color = xrFeedback.isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         }
         else if (spriteRenderer != null)
-            xrUIColors.normalColor = spriteRenderer.color;
+            spriteRenderer.color = xrFeedback.isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
     }
 
     private void CheckComponentsByType()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (xrFeedback == null)
+            xrFeedback = GetComponent<XRFeedback>();
+
+        meshRenderer = xrUIColors.target.GetComponent<MeshRenderer>();
+        spriteRenderer = xrUIColors.target.GetComponent<SpriteRenderer>();
 
         if (feedbackType == VisualFeedbackType.MeshRenderer && meshRenderer == null)
         {
@@ -75,7 +79,7 @@ public class XRFeedbackColor : XRFeedbackBaseType
         CheckComponentsByType();
 
         if (feedbackType == VisualFeedbackType.Outline && outline == null)
-            outline = gameObject.AddComponent<Outline>();
+            outline = xrUIColors.target.gameObject.AddComponent<Outline>();
     }
 
 

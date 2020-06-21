@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32427094956b224408ae40b158c572d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 2310897902124987892}
   normalColor:
     serializedVersion: 2
     rgba: 4294100490

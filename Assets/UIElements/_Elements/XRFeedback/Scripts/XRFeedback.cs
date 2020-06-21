@@ -2,12 +2,13 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class XRFeedback : MonoBehaviour
 {
+    public bool isEnabled;
+
     public bool useNearEvents = false;
     public bool useTouchEvents = false;
     [Tooltip("To use the Select Events, it's necessary to have a XRInteractable attached to gameobject.")]
@@ -78,7 +79,7 @@ public class XRFeedback : MonoBehaviour
     {
         CreateNearCollider();
 
-        xrInteractable = GetComponent<XRBaseInteractable>();
+        xrInteractable = transform.GetComponent<XRBaseInteractable>();
 
         if (xrInteractable != null)
             ConfigureSelectListeners();
@@ -116,15 +117,22 @@ public class XRFeedback : MonoBehaviour
         switch (nearColliderType)
         {
             case NearColliderType.Box:
-                nearCollider = nearColliderObject.AddComponent<BoxCollider>();
-                ((BoxCollider)nearCollider).center = nearColliderOffset;
-                ((BoxCollider)nearCollider).size = nearColliderScale;
+                {
+                    Vector3 boxScale = transform.localScale;
+                    boxScale.Scale(nearColliderScale);
+
+                    nearCollider = nearColliderObject.AddComponent<BoxCollider>();
+                    ((BoxCollider)nearCollider).center = nearColliderOffset;
+                    ((BoxCollider)nearCollider).size = boxScale;
+                }
                 break;
             case NearColliderType.Sphere:
-                nearCollider = nearColliderObject.AddComponent<SphereCollider>();
-                ((SphereCollider)nearCollider).center = nearColliderOffset;
-                ((SphereCollider)nearCollider).radius = nearColliderRadius;
-                break;
+                {
+                    nearCollider = nearColliderObject.AddComponent<SphereCollider>();
+                    ((SphereCollider)nearCollider).center = nearColliderOffset;
+                    ((SphereCollider)nearCollider).radius = nearColliderRadius;
+                    break;
+                }
             default:
                 throw new Exception("Unknow NearColliderType selected");
         }
@@ -195,7 +203,10 @@ public class XRFeedback : MonoBehaviour
         switch (nearColliderType)
         {
             case NearColliderType.Box:
-                Gizmos.DrawWireCube(worldNearColliderOffset, transform.localScale * nearColliderRadius);
+                Vector3 boxScale = transform.localScale;
+                boxScale.Scale(nearColliderScale);
+
+                Gizmos.DrawWireCube(worldNearColliderOffset, boxScale);
                 break;
             case NearColliderType.Sphere:
                 Gizmos.DrawWireSphere(worldNearColliderOffset, transform.localScale.x * nearColliderRadius);

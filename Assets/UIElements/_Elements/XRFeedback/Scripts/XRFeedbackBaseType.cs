@@ -4,15 +4,18 @@ using UnityEngine.XR.Interaction.Toolkit;
 [RequireComponent(typeof(XRFeedback))]
 public abstract class XRFeedbackBaseType : MonoBehaviour
 {
-    public bool runOnNear;
-    public bool runOnTouch;
-    public bool runOnSelect;
+    public bool runOnNear = true;
+    public bool runOnTouch = true;
+    public bool runOnSelect = true;
 
     protected XRFeedback xrFeedback;
 
     protected virtual void Awake()
     {
         xrFeedback = GetComponent<XRFeedback>();
+
+        if (!xrFeedback.isEnabled)
+            return;
 
         if (runOnNear)
         {

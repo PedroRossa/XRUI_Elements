@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRButton : XRUIBase
 {
@@ -34,7 +35,7 @@ public class XRButton : XRUIBase
         if (mr != null)
         {
             mr.sharedMaterial = new Material(Shader.Find("Sprites/Default"));
-            mr.sharedMaterial.color = isEnabled ? uiColors.normalColor : uiColors.disabledColor;
+            mr.sharedMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         }
     }
 
@@ -123,6 +124,6 @@ public class XRButton : XRUIBase
     private void OnClickUpFucntion()
     {
         isPressed = false;
-        buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = uiColors.normalColor;
+        buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = xrUIColors.normalColor;
     }
 }
