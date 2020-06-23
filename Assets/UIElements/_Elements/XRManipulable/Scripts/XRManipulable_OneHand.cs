@@ -454,7 +454,7 @@ public class XRManipulable_OneHand : MonoBehaviour
         float t = distance / initialDistance;
         //Limitate scale
         if ((originalState.scale.x * t) <= minMaxScale.y && (originalState.scale.x * t) >= minMaxScale.x)
-            XRUIElements_Helper.ScaleAround(transform, pivot, originalState.scale * t);
+            XRUI_Helper.ScaleAround(transform, pivot, originalState.scale * t);
     }
 
     private void RotateContent()

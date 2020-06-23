@@ -296,6 +296,7 @@ MonoBehaviour:
   runOnTouch: 1
   runOnSelect: 0
   feedbackType: 2
+  xrUIColors: {fileID: 6742236279392719989}
 --- !u!114 &6742236279392719995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrFeedback: {fileID: 6742236279392719990}
   onClickDown:
     m_PersistentCalls:
       m_Calls: []

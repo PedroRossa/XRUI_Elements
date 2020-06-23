@@ -46,7 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6eb91ac24bfdb64ebc40ae271ad5734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 1
   backgroundPanel: {fileID: 1754541260355633043}
   buttonTransform: {fileID: 5827030130792334246}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}

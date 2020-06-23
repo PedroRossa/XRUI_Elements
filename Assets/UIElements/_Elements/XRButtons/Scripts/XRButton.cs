@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRButton : XRUIBase
+public class XRButton : MonoBehaviour
 {
     [Header("Internal Properties")]
     public Transform backgroundPanel;
@@ -26,16 +26,15 @@ public class XRButton : XRUIBase
     private float initialPos;
     private float distance = 1;
 
-    protected override void OnValidate()
+    protected virtual void OnValidate()
     {
-        base.OnValidate();
         backgroundPanel.GetComponent<SpriteRenderer>().color = backgroundColor;
 
         MeshRenderer mr = buttonTransform.GetComponent<MeshRenderer>();
         if (mr != null)
         {
             mr.sharedMaterial = new Material(Shader.Find("Sprites/Default"));
-            mr.sharedMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
+            //mr.sharedMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         }
     }
 
@@ -124,6 +123,6 @@ public class XRButton : XRUIBase
     private void OnClickUpFucntion()
     {
         isPressed = false;
-        buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = xrUIColors.normalColor;
+        //buttonTransform.GetComponent<MeshRenderer>().sharedMaterial.color = xrUIColors.normalColor;
     }
 }
