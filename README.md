@@ -1,14 +1,12 @@
-Instalação realizada via [Package Manager](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html).
-
 # XR_UIElements 0.1 Alpha
 
-XRUI_Elements é um pacote de elementos para interação em Realidade Virtual (e futuramente Realidade Aumentada) para a Unity.
+XRUI_Elements it's a Element Package to be used on Virtual Reality (and in the near future Augmented Reality) Applications on Unity.
 
-Os elementos deste pacote foram desenvolvidos para funcionar integrados ao package [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html).
+This package's elements was developed to be worked with the package [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html).
 
-Atualmente é possível baixar e adicionar a XRUI_Elements em um projeto da unity a partir do sistema de custom packages [Instalation](#installation).
+By now, it's possible to download and add the XRUI_Elements on a Unity project by te custom packages system (explained on [Instalation](#installation)).
 
-Este projeto faz parte do projeto de pesquisa de Mestrado do @PedroRossa em parceria com o Vizlab | X-Reality and GeoInformatics Lab @vizlab-uni.
+This project it's part of a Master's Study made by @PedroRossa in partnership wit the Vizlab | X-Reality and GeoInformatics Lab - @vizlab-uni.
 
 <p align="center">
 <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/capaProvisoriaXRUIElements.png"  width="700" align="..." alt="Provisory Image">
@@ -23,15 +21,15 @@ Este projeto faz parte do projeto de pesquisa de Mestrado do @PedroRossa em parc
 
 ## Installation
 
-Softwares necessários para utilização do pacote XRUI_Elements
+Necessary softwares to use the XRUI_Elements Package.
 
-* [Visual Studio](https://visualstudio.microsoft.com/vs/community/) ou [Visual Code](https://code.visualstudio.com/docs/other/unity)
+* [Visual Studio](https://visualstudio.microsoft.com/vs/community/) or [Visual Code](https://code.visualstudio.com/docs/other/unity)
 * [Unity 2019.4 LTS](https://unity3d.com/unity/qa/lts-releases?_ga=2.178802020.1167371567.1592846982-112079466.1585313065).
 
 # Configuring XR Interaction Toolkit
 
 1. Create a new Unity Project or open an existent one (Unity 2019.4).
-2. On Menu Bar, access "Window->PackageManager"
+2. On Menu Bar, access "Window->PackageManager" - [Package Manager](https://docs.unity3d.com/Packages/com.unity.package-manager-ui@2.0/manual/index.html).
 <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/PackageManager_01.png" alt="PackageManager Unity" width="350">
 3. Check the option to show PREVIEW Packages
 <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/PackageManager_02.png" alt="Preview Packages Option" width="350"">
