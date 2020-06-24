@@ -1,3 +1,0 @@
-Está sendo usado um sistema de Layers.
-Então todos os elementos de XR_UI precisam ter a layer XRInteractable, assim como o controle de interação em VR.
-Desta forma, outros objetos com colisão não irão interagir com os ui elements.
