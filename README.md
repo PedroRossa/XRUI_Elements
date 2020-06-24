@@ -1,3 +1,5 @@
+!!! UNDER CONSTRUCTION - OFICIAL ANOUNCEMENT of the Alpha 0.1 Version By 07/01/2020 !!!
+
 # XR_UIElements 0.1 Alpha
 
 XRUI_Elements it's a Element Package to be used on Virtual Reality (and in the near future Augmented Reality) Applications on Unity.
