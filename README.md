@@ -94,6 +94,13 @@ Now you already have all the basics to star te amazing journey on the developmen
 | Manipulables  | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/Manipulables.png" alt="Manipulables" height="128" > |
 | Feedback System | - |
 
+# Class Architecture
+
+The class architecture can be saw on the image below.
+It was used a inheritance system to encapsulate elements and facilitate de extension of this elements.
+
+<img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/Architecture.png" alt="Manipulables" height="128" >
+
 # Demo Scene
 
 The package comes with a Demo Scene where the users can interact with all the existent elements created on XRUI_Elements.
