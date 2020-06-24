@@ -99,7 +99,7 @@ Now you already have all the basics to star te amazing journey on the developmen
 The class architecture can be saw on the image below.
 It was used a inheritance system to encapsulate elements and facilitate de extension of this elements.
 
-<img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/Architecture.png" alt="Manipulables" height="128" >
+<img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/Architecture.png" alt="XRUI_Elements Architecture" height="128" >
 
 # Demo Scene
 
