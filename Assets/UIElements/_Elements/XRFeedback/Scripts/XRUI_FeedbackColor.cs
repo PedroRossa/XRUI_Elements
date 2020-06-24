@@ -73,13 +73,14 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             Debug.LogError("Automatically changed to Outline Feedback");
             feedbackType = VisualFeedbackType.Outline;
         }
-        if (feedbackType == VisualFeedbackType.Outline && outline == null)
-            outline = xrUIColors.target.gameObject.AddComponent<Outline>();
     }
 
     private void InitializeByType()
     {
         CheckComponentsByType();
+
+        if (feedbackType == VisualFeedbackType.Outline && outline == null)
+            outline = xrUIColors.target.gameObject.AddComponent<Outline>();
     }
 
     public void RefreshElementColor()

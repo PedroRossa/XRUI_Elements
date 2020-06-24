@@ -39,7 +39,7 @@ public class XRUI_Feedback : MonoBehaviour
 
     #endregion
 
-    protected enum NearColliderType
+    public enum NearColliderType
     {
         Box = 0,
         Sphere = 1
@@ -49,8 +49,7 @@ public class XRUI_Feedback : MonoBehaviour
     private bool IsNearSphereCollider() { return nearColliderType == NearColliderType.Sphere ? true : false; }
 
     [Header("Near Collider")]
-    [SerializeField]
-    private NearColliderType nearColliderType;
+    public NearColliderType nearColliderType;
 
     [ShowIf("IsNearBoxCollider")]
     public Vector3 nearColliderScale = Vector3.one * 1.5f;

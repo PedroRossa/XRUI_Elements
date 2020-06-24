@@ -12,18 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d4223b0e891ff4483dbac8303eddb8, type: 3}
   m_Name: XRUI_Prefabs
   m_EditorClassIdentifier: 
-  ButtonSprite2D: {fileID: 0}
-  ButtonText2D: {fileID: 0}
-  ProgressBar2D: {fileID: 0}
-  Slider2D: {fileID: 0}
-  Toggle2D: {fileID: 0}
-  ProgressBar3D: {fileID: 0}
-  Slider3D: {fileID: 0}
-  SliderBox3D: {fileID: 0}
-  Toggle3D: {fileID: 0}
-  Manipulable: {fileID: 0}
-  FeedbackColorSprite: {fileID: 0}
-  FeedbackColorMesh: {fileID: 0}
-  FeedbackColorOutline: {fileID: 0}
-  FeedbackSound: {fileID: 0}
-  FeedbackHaptics: {fileID: 0}
+  ButtonSprite2D: {fileID: 7741509650942510750, guid: b6ff2f836245caa458cbf2c3087ada9a,
+    type: 3}
+  ButtonText2D: {fileID: 6742236279392719997, guid: a695134fab9d8724db87fadcf82c1854,
+    type: 3}
+  ProgressBar2D: {fileID: 9166759388679252891, guid: fef4948f5b0ef9446a995747acce1d57,
+    type: 3}
+  Toggle2D: {fileID: 8800360918565456896, guid: 37c9a623043bbf746a9b5ca0edfbca1f,
+    type: 3}
+  ProgressBar3D: {fileID: 7925310964296920422, guid: 4b4c1641b77206d418415047c4f3aa4c,
+    type: 3}
+  Slider3D: {fileID: 5905469458481601772, guid: f1768e9d32aff7f45b687868609e4e62,
+    type: 3}
+  SliderBox3D: {fileID: 1184222494059829822, guid: f8a250d7edf360a4da95dea0f4eefd8c,
+    type: 3}
+  Toggle3D: {fileID: 611349041749565371, guid: d48b202e5ff470a4bbd70412ff2eba85, type: 3}
+  Manipulable: {fileID: 5978552041576255963, guid: ac02d80d292626943a398622ceffcaac,
+    type: 3}
+  FeedbackColorSprite: {fileID: 7859664747276518302, guid: 9a47b0578ab1e0f49b2dd38a763c329c,
+    type: 3}
+  FeedbackColorMesh: {fileID: 7727474791153342807, guid: 19411af6410ab7c498d758bb7c8aa0d1,
+    type: 3}
+  FeedbackColorOutline: {fileID: 6940042445129764984, guid: a5eed629ea2338b428e896bd661a8c04,
+    type: 3}
+  FeedbackSound: {fileID: 3887745071000513344, guid: 997bf8539b174d34ca2ba321677098fc,
+    type: 3}
+  FeedbackHaptics: {fileID: 2631130617258708916, guid: 4a532adaf0e984e479c5b5d2797cad19,
+    type: 3}

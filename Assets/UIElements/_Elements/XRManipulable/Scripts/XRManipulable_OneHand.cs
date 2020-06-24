@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.XR.Interaction.Toolkit;
 
+[RequireComponent(typeof(XRUI_Colors))]
 public class XRManipulable_OneHand : MonoBehaviour
 {
     protected class OriginalState
@@ -31,7 +32,7 @@ public class XRManipulable_OneHand : MonoBehaviour
             this.rotation = rotation;
         }
     }
-   
+
     protected class InteractableData
     {
         public XRManipulableInteractable interactable;
@@ -80,8 +81,6 @@ public class XRManipulable_OneHand : MonoBehaviour
     public float interactablesOffset = 0.1f;
     [Range(0.1f, 1.0f)]
     public float interactablesSize = 0.1f;
-    [Range(0.5f, 10.0f)]
-    public float proximityColliderRadius;
 
 
     public bool is3DManipulable = false;
@@ -97,7 +96,6 @@ public class XRManipulable_OneHand : MonoBehaviour
     public Color wireBoxColor = Color.white;
     public Color scaleElementColor = Color.green;
     public Color rotationElementColor = Color.blue;
-    public Color proximityColor = Color.magenta;
 
     [ReadOnly]
     private bool isSelected;
@@ -187,10 +185,6 @@ public class XRManipulable_OneHand : MonoBehaviour
     {
         foreach (var item in GetComponentsInChildren<XRManipulableInteractable>(true).ToList())
         {
-            item.GetComponent<XRBaseFeedback>().alphaColorByDistance = showByProximity;
-            if (showByProximity)
-                item.GetComponent<XRBaseFeedback>().SetColor(Color.clear);
-
             item.onSelectEnter.AddListener(OnInteractableSelectEnter);
             item.onSelectExit.AddListener(OnInteractableSelectExit);
         }
@@ -207,10 +201,11 @@ public class XRManipulable_OneHand : MonoBehaviour
 
         //Remove components
         Destroy(manipulableCopy.GetComponent<XRManipulableInteractable>());
+        Destroy(manipulableCopy.GetComponent<XRUI_FeedbackColor>());
+        Destroy(manipulableCopy.GetComponent<XRUI_Feedback>());
+        Destroy(manipulableCopy.GetComponent<XRUI_Colors>());
         Destroy(manipulableCopy.GetComponent<Rigidbody>());
-
-        foreach (Collider item in manipulableCopy.GetComponents<Collider>())
-            Destroy(item);
+        Destroy(manipulableCopy.GetComponent<Collider>());
 
         //Set manipulable copy color with transparency
         MeshRenderer mr = manipulableCopy.GetComponent<MeshRenderer>();
@@ -325,7 +320,6 @@ public class XRManipulable_OneHand : MonoBehaviour
             go.transform.SetParent(scaleElements);
 
             go.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
-            go.GetComponent<MeshRenderer>().sharedMaterial.color = scaleElementColor;
         }
         else
         {
@@ -333,7 +327,6 @@ public class XRManipulable_OneHand : MonoBehaviour
             go.transform.SetParent(rotationElements);
 
             go.GetComponent<MeshRenderer>().sharedMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
-            go.GetComponent<MeshRenderer>().sharedMaterial.color = rotationElementColor;
         }
         return go;
     }
@@ -349,18 +342,34 @@ public class XRManipulable_OneHand : MonoBehaviour
         manipulable.rotationAxis = rotationAxis;
     }
 
-    private void ConfigureFeedback(ref GameObject go)
+    private void ConfigureFeedback(ref GameObject go, bool isScale)
     {
-        XRBaseFeedback feedback;
-        if (feedbackType.Equals("Outline"))
-            feedback = go.AddComponent<XROutlineFeedback>();
+        //Set object active to false to don't call the Awake methods of components
+        go.SetActive(false);
+
+        XRUI_Colors xrUIColors = go.AddComponent<XRUI_Colors>();
+        XRUI_Feedback xrUIFeedback = go.AddComponent<XRUI_Feedback>();
+
+        XRUI_FeedbackColor xRUIFeedbackColor = go.AddComponent<XRUI_FeedbackColor>();
+        xRUIFeedbackColor.xrUIColors = xrUIColors;
+
+        if (isScale)
+            xrUIColors.normalColor = scaleElementColor;
         else
-            feedback = go.AddComponent<XRMeshFeedback>();
+            xrUIColors.normalColor = rotationElementColor;
 
-        feedback.proximityColor = proximityColor;
-        feedback.proximityColliderSize = proximityColliderRadius;
+        xrUIFeedback.nearColliderType = XRUI_Feedback.NearColliderType.Sphere;
+        xrUIFeedback.nearColliderRadius = 0.3f;
 
-        feedback.AutoconfigureColliderAsSphere();
+        if (feedbackType.Equals("Mesh"))
+            xRUIFeedbackColor.feedbackType = XRUI_FeedbackColor.VisualFeedbackType.MeshRenderer;
+        else
+            xRUIFeedbackColor.feedbackType = XRUI_FeedbackColor.VisualFeedbackType.Outline;
+
+        //after configure all components re-active gameObject so all the awake calls gona occurs
+        go.SetActive(true);
+
+        xRUIFeedbackColor.RefreshElementColor();
     }
 
     private void CreateManipulableElement(string name, Vector3 position, bool isScale, Vector3 rotationAxis = new Vector3())
@@ -368,7 +377,7 @@ public class XRManipulable_OneHand : MonoBehaviour
         GameObject go = CreateManipulableObject(isScale);
 
         ConfigureManipulable(ref go, isScale, rotationAxis);
-        ConfigureFeedback(ref go);
+        ConfigureFeedback(ref go, isScale);
 
         Rigidbody rb = go.GetComponent<Rigidbody>();
         rb.useGravity = false;
