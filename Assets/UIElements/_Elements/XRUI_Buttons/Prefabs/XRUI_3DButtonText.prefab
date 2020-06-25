@@ -313,7 +313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isColliding: 0
   buttonCollider: {fileID: 6351440271073142054}
-  xrUIButton: {fileID: 0}
+  xrUIButton: {fileID: 6351440270829582940}
 --- !u!1 &6351440270485320789
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +575,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

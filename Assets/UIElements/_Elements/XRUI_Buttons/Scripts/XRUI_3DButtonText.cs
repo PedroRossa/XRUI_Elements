@@ -19,20 +19,12 @@ public class XRUI_3DButtonText : XRUI_ButtonBase
     {
         base.OnValidate();
 
-        if (buttonMesh == null)
-            buttonMesh = buttonObject.GetComponent<MeshRenderer>();
-
-        buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
-
         ConfigureButtonMaterial();
     }
 
     protected override void Awake()
     {
         base.Awake();
-
-        buttonMesh = buttonObject.GetComponent<MeshRenderer>();
-        buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
 
         ConfigureButtonMaterial();
 
@@ -50,11 +42,20 @@ public class XRUI_3DButtonText : XRUI_ButtonBase
 
     private void ConfigureButtonMaterial()
     {
+        buttonMesh = buttonObject.GetComponent<MeshRenderer>();
+        buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
+
         if (buttonMesh == null)
             return;
 
         buttonMesh.sharedMaterial = new Material(buttonMaterial);
+
         buttonMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         buttonMesh.material = buttonMaterial;
+
+        buttonMesh.sharedMaterial = new Material(buttonMesh.sharedMaterial);
+
+        xrUIColors.target = buttonMesh.transform;
+        buttonMesh.sharedMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
     }
 }

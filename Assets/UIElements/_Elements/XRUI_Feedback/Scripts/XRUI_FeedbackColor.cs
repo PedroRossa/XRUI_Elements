@@ -21,8 +21,11 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
 
     private void OnValidate()
     {
+        if (xrFeedback == null)
+            xrFeedback = GetComponent<XRUI_Feedback>();
+
         LookForXRUIColor();
-        CheckComponentsByType();
+        CheckTargetType();
         RefreshElementColor();
     }
 
@@ -30,9 +33,12 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
     {
         base.Awake();
 
+        if (xrFeedback == null)
+            xrFeedback = GetComponent<XRUI_Feedback>();
+
         LookForXRUIColor();
-        RefreshElementColor();
-        InitializeByType();
+        RefreshElementColor(); 
+        CheckTargetType();
     }
 
     private void LookForXRUIColor()
@@ -46,41 +52,35 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             throw new System.Exception("XR Feedback Color needs a XRUIColor reference to work properly.");
     }
 
-    private void CheckComponentsByType()
+   
+    private void CheckTargetType()
     {
-        if (xrFeedback == null)
-            xrFeedback = GetComponent<XRUI_Feedback>();
+        if (xrUIColors == null)
+            return;
 
-        if(meshRenderer == null)
-            meshRenderer = xrUIColors.target.GetComponent<MeshRenderer>();
-        
-        if(spriteRenderer == null)
-            spriteRenderer = xrUIColors.target.GetComponent<SpriteRenderer>();
-
-        if (outline == null)
+        if (feedbackType == VisualFeedbackType.Outline)
+        {
             outline = xrUIColors.target.GetComponent<Outline>();
+            if (outline == null)
+                outline = xrUIColors.target.gameObject.AddComponent<Outline>();
 
-        if (feedbackType == VisualFeedbackType.MeshRenderer && meshRenderer == null)
-        {
-            Debug.LogError("MeshRenderer Feedback it's only aplicable on gameobjects with a MeshRenderer attached");
-            Debug.LogError("Automatically changed to Outline Feedback");
-            feedbackType = VisualFeedbackType.Outline;
+            return;
         }
 
-        if (feedbackType == VisualFeedbackType.SpriteRenderer && spriteRenderer == null)
+        meshRenderer = xrUIColors.target.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
         {
-            Debug.LogError("SpriteRenderer Feedback it's only aplicable on gameobjects with a SpriteRenderer attached");
-            Debug.LogError("Automatically changed to Outline Feedback");
-            feedbackType = VisualFeedbackType.Outline;
+            feedbackType = VisualFeedbackType.MeshRenderer;
+            return;
         }
-    }
 
-    private void InitializeByType()
-    {
-        CheckComponentsByType();
-
-        if (feedbackType == VisualFeedbackType.Outline && outline == null)
-            outline = xrUIColors.target.gameObject.AddComponent<Outline>();
+        spriteRenderer = xrUIColors.target.GetComponent<SpriteRenderer>(); 
+        if (spriteRenderer != null)
+        {
+            feedbackType = VisualFeedbackType.SpriteRenderer;
+            return;
+        }
+        feedbackType = VisualFeedbackType.MeshRenderer;
     }
 
     public void RefreshElementColor()
@@ -90,15 +90,15 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             case VisualFeedbackType.MeshRenderer:
                 if (meshRenderer != null && meshRenderer.sharedMaterial != null)
                     meshRenderer.sharedMaterial.color = xrFeedback.isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
-                
+
                 break;
             case VisualFeedbackType.SpriteRenderer:
                 if (spriteRenderer != null)
                     spriteRenderer.color = xrFeedback.isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
-               
+
                 break;
             case VisualFeedbackType.Outline:
-                if(outline!= null)
+                if (outline != null)
                     outline.OutlineColor = xrFeedback.isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
 
                 break;

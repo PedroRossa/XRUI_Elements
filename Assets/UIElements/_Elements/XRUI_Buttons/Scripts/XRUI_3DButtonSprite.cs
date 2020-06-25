@@ -48,7 +48,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
         
         ConfigureButtonMaterial();
-        SetSpriteColors();
+        SetColors();
     }
 
     protected override void Awake()
@@ -60,7 +60,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         
         ConfigureButtonMaterial();
 
-        SetSpriteColors();
+        SetColors();
 
         onClickDown.AddListener(() =>
         {
@@ -96,12 +96,14 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         iconSprite.sprite = icon;
     }
 
-    private void SetSpriteColors()
+    private void SetColors()
     {
         RefreshSprite();
 
-        if (buttonMesh != null)
-            buttonMesh.sharedMaterial = new Material(buttonMesh.sharedMaterial);
+        if (buttonMesh == null)
+            return;
+
+        buttonMesh.sharedMaterial = new Material(buttonMesh.sharedMaterial);
 
         if (backgroundFeedback)
         {
@@ -123,6 +125,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
             return;
 
         buttonMesh.sharedMaterial = new Material(buttonMaterial);
+
         if (backgroundFeedback)
             buttonMaterial.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         else
