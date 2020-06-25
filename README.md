@@ -1,5 +1,3 @@
-!!! UNDER CONSTRUCTION - OFICIAL ANOUNCEMENT of the Alpha 0.1 Version By 07/01/2020 !!!
-
 # XR_UIElements 0.1 Alpha
 
 XRUI_Elements it's a Element Package to be used on Virtual Reality (and in the near future Augmented Reality) Applications on Unity.
@@ -46,7 +44,7 @@ The next step is get and configure the XRUI_Elements.
 
 # Get XRUI_Elements Pacakge
 
-Access [XRUI_Elements 0.1 Alpha](Link Release aqui) and download the XRUI_Elements_01_alpha.unitypackage
+Access [XRUI_Elements 0.1 Alpha](https://github.com/PedroRossa/XRUI_Elements/releases/tag/v0.1-alpha) and download the XRUI_Elements_01_alpha.unitypackage
 On the opened Unity project, go to "Assets -> Import Package -> Custom Package".
 
 <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/CustomPackage.png" alt="Import Custom Package." width="350">
