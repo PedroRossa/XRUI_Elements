@@ -63,34 +63,49 @@ Now you already have all the basics to star te amazing journey on the developmen
 
 ## Usage
 
-# 2D Elements
+This is the current list of elements implemented on XRUI_Elements;
 
-| Element       | Sample |
-| ------------- |:------:|
-| Button Sprite | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/2DButtonSprite.png" alt="2D Button Sprite" height="128"> |
-| Button Text   | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/2DButtonText.png" alt="2D Button Text" height="128" > |
-| Progress Bar  | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/2DprogressBar.png" alt="2D ProgressBar" height="128" > |
-| Toggle        | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/2DToggle.png" alt="2D Toggle" height="128" > |
-
-
-# 3D Elements
-
-| Element       | Sample |
-| ------------- |:------:|
-| Button Sprite | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DButtonSprite.png" alt="3D Button Sprite" height="128"> |
-| Button Text   | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DButtonText.png" alt="3D Button Text" height="128" > |
-| Progress Bar  | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DProgressBar.png" alt="3D ProgressBar" height="128" > |
-| Toggle        | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DToggle.png" alt="3D Toggle" height="128" > |
-| Slider        | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DSlider.png" alt="3D Slider" height="128" > |
-| Box Slider    | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/3DBoxSlider.png" alt="3D BoxSlider" height="128" > |
+### Elements List
+- 2D Button Sprite
+- 2D Button Text
+- 2D Progress Bar
+- 2D Toggle
+- 3D Button Sprite
+- 3D Button Text
+- 3D Progress Bar
+- 3D Toggle
+- 3D Slider
+- 3D Box Slider
+- Manipulables
+- Feedback System
 
 
-# General Elements
+### Feedback System
 
-| Element       | Sample |
-| ------------- |:------:|
-| Manipulables  | <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/Manipulables.png" alt="Manipulables" height="128" > |
-| Feedback System | - |
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_Feedback.png" alt="Feedback System" width="768">
+
+### Buttons
+
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_2DButton.png" alt="2D Buttons" width="768">
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_3DButton.png" alt="3D Buttons" width="768">
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_3DButtonSprite.png" alt="3D Button Sprite" width="768">
+
+### Progress Bar
+
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_2DProgressBar.png" alt="2D ProgressBar" width="768">
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_2DProgressBar.png" alt="3D ProgressBar" width="768">
+ 
+### Slider
+
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_3DSlider.png" alt="3D Slider" width="768">
+ 
+### Toggle
+
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_Toggle.png" alt="Toggles" width="768">
+ 
+### Manipulables
+
+ <img src="https://github.com/PedroRossa/XR_UIElements/blob/master/_ReadMe_Resources/ElementImages/English_XRUI_Manipulables.png" alt="Manipulables" width="768">
 
 # Class Architecture
 
