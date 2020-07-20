@@ -33,6 +33,11 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
         set => SetProgress(value);
     }
 
+    public float minRange = 0f;
+    public float maxRange = 100f;
+    public string symbol = "%";
+    public int decimalPlaces = 0;
+
     public XRUI_Helper.UnityFloatEvent onProgressChange;
 
     private XRUI_2DDragInteractable dragInteractable;
@@ -107,8 +112,9 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
 
         if (tmpProgress != null)
         {
-            int currentProgress = (int)(Progress * 100);
-            tmpProgress.text = currentProgress.ToString() + " %";
+            float currentProgress = (float)(minRange + (Progress * (maxRange - minRange)));
+
+            tmpProgress.text = currentProgress.ToString("F" + decimalPlaces) + symbol;
         }
 
         //Get child object that is containered between 0 - 1

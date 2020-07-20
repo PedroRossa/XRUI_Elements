@@ -62,7 +62,7 @@ public class XRUI_2DDragInteractable : MonoBehaviour
 
     private void Update()
     {
-        if (isHover || isSelected)
+        if (isHover || isSelected || transform.localPosition.x < 0 || transform.localPosition.x > 1)
         {
             UpdateByMovement();
         }
@@ -77,8 +77,13 @@ public class XRUI_2DDragInteractable : MonoBehaviour
         float posX = transform.localPosition.x;
         posX = posX > 1 ? 1 : posX;
         posX = posX < 0 ? 0 : posX;
+        if (posX <= 0 || posX >= 1)
+        {
+            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        }
 
-        //transform.localPosition = new Vector3(posX, 0, 0);
+        transform.localPosition = new Vector3(posX, 0, 0);
         normalizedValue = (posX - localInitPos.x) / (localEndPos.x - localInitPos.x);
     }
 

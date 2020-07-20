@@ -208,6 +208,10 @@ MonoBehaviour:
   showProgressPoint: 1
   showProgressText: 1
   progress: 0.759
+  minRange: 0
+  maxRange: 100
+  symbol: '%'
+  decimalPlaces: 0
   onProgressChange:
     m_PersistentCalls:
       m_Calls: []
@@ -548,6 +552,7 @@ MonoBehaviour:
   useNearEvents: 0
   useTouchEvents: 0
   useSelectEvents: 0
+  allowDistanceEvents: 0
   onNearEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -700,7 +705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 75 %
+  m_text: 76%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

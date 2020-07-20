@@ -21,18 +21,55 @@ public abstract class XRUI_FeedbackBaseType : MonoBehaviour
         {
             xrFeedback.onNearEnter.AddListener(OnNearEnterFeedbackFunction);
             xrFeedback.onNearExit.AddListener(OnNearExitFeedbackFunction);
+
+            if (xrFeedback.allowDistanceEvents)
+            {
+                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
+                if (interactable == null)
+                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
+
+                if (interactable != null)
+                {
+                    interactable.onHoverEnter.AddListener((XRBaseInteractor) => { OnNearEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    interactable.onHoverExit.AddListener((XRBaseInteractor) => { OnNearExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                }
+            }
         }
 
         if (runOnTouch)
         {
             xrFeedback.onTouchEnter.AddListener(OnTouchEnterFeedbackFunction);
             xrFeedback.onTouchExit.AddListener(OnTouchExitFeedbackFunction);
+            if (xrFeedback.allowDistanceEvents)
+            {
+                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
+                if (interactable == null)
+                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
+
+                if (interactable != null)
+                {
+                    interactable.onHoverEnter.AddListener((XRBaseInteractor) => { OnTouchEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    interactable.onHoverExit.AddListener((XRBaseInteractor) => { OnTouchExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                }
+            }
         }
 
         if (runOnSelect)
         {
             xrFeedback.onSelectEnter.AddListener(OnSelectEnterFeedbackFunction);
             xrFeedback.onSelectExit.AddListener(OnSelectExitFeedbackFunction);
+            if (xrFeedback.allowDistanceEvents)
+            {
+                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
+                if (interactable == null)
+                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
+
+                if (interactable != null)
+                {
+                    interactable.onSelectEnter.AddListener((XRBaseInteractor) => { OnSelectEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    interactable.onSelectExit.AddListener((XRBaseInteractor) => { OnSelectExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                }
+            }
         }
     }
 

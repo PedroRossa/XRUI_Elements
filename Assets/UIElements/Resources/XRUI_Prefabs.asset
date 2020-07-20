@@ -20,6 +20,10 @@ MonoBehaviour:
     type: 3}
   Toggle2D: {fileID: 8800360918565456896, guid: 37c9a623043bbf746a9b5ca0edfbca1f,
     type: 3}
+  ButtonSprite3D: {fileID: 8510283511047527964, guid: 7d3b54f0260007442b77b37edd9c52c9,
+    type: 3}
+  ButtonText3D: {fileID: 6351440270829582930, guid: 1da9187fce08d644d9aff2d65c2e6f26,
+    type: 3}
   ProgressBar3D: {fileID: 7925310964296920422, guid: 4b4c1641b77206d418415047c4f3aa4c,
     type: 3}
   Slider3D: {fileID: 5905469458481601772, guid: f1768e9d32aff7f45b687868609e4e62,

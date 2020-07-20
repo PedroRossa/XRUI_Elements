@@ -30,9 +30,9 @@ public class XRUI_Prefabs : ScriptableObject
 
     #region 3D Elements
 
-    [Header("2D Element Prefabs")]
-    //public GameObject ButtonSprite3D;
-    //public GameObject ButtonText3D;
+    [Header("3D Element Prefabs")]
+    public GameObject ButtonSprite3D;
+    public GameObject ButtonText3D;
     public GameObject ProgressBar3D;
     public GameObject Slider3D;
     public GameObject SliderBox3D;
