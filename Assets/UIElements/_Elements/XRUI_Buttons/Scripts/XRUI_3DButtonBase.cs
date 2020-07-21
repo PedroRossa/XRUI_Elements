@@ -58,10 +58,8 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
         float elapsedTime = 0;
         Vector3 startingPos = buttonObject.transform.position;
         Vector3 direction = (buttonObject.transform.position - buttonBackground.transform.position).normalized;
-
         Vector3 end = buttonObject.transform.position - (direction * (Vector3.Distance(buttonObject.transform.position,buttonBackground.transform.position) - (buttonMesh.bounds.size.z * 0.4f)));
-
-
+        
         while (elapsedTime < seconds && !isClicked)
         {
             //Debug.Log(isClicked);
