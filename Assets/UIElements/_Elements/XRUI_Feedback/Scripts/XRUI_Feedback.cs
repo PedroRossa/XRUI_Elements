@@ -1,6 +1,8 @@
 ﻿using NaughtyAttributes;
 using System;
+using System.Reflection;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -13,7 +15,11 @@ public class XRUI_Feedback : MonoBehaviour
     public bool useTouchEvents = false;
     [Tooltip("To use the Select Events, it's necessary to have a XRInteractable attached to gameobject.")]
     public bool useSelectEvents = false;
-    public bool allowDistanceEvents = false;
+    
+    /// <summary>
+    /// its allow to control all ui elements with ray interactor and its always true and hide until it is decided whether it's useful 
+    /// </summary>
+    private bool allowDistanceEvents = true;
     #region Unity Events
 
     [BoxGroup("NearEvents")]
@@ -63,14 +69,16 @@ public class XRUI_Feedback : MonoBehaviour
     private Vector3 worldNearColliderOffset;
     private Collider nearCollider;
     private XRUI_NearDetectionLocked.XRUI_NearDetection xrNearDetection;
+    
     private XRBaseInteractable xrInteractable;
-
+    public XRBaseInteractable XRInteractable { get => xrInteractable; } 
     private bool isTouching;
     private bool isSelected;
 
     public bool IsNear { get => xrNearDetection.IsNear; }
     public bool IsTouching { get => isTouching; }
     public bool IsSelected { get => isSelected; }
+    public bool AllowDistanceEvents { get => allowDistanceEvents; }
 
     private void OnValidate()
     {
@@ -85,13 +93,14 @@ public class XRUI_Feedback : MonoBehaviour
 
     protected virtual void Awake()
     {
-        CreateNearCollider();
-
         xrInteractable = transform.GetComponent<XRBaseInteractable>();
+        if (xrInteractable == null)
+            xrInteractable = gameObject.AddComponent<XRSimpleInteractable>();
 
         if (xrInteractable != null)
             ConfigureSelectListeners();
 
+        CreateNearCollider();
     }
 
     private void ManageEvents()
@@ -119,22 +128,19 @@ public class XRUI_Feedback : MonoBehaviour
     {
         GameObject nearColliderObject = new GameObject("NearColliderObject");
         nearColliderObject.transform.SetParent(transform);
-
         nearColliderObject.transform.localPosition = Vector3.zero;
         nearColliderObject.transform.localRotation = Quaternion.identity;
         /// its fix scale on rotation if some axis is diffent 
-
         switch (nearColliderType)
         {
             case NearColliderType.Box:
                 {
-
                     nearColliderObject.transform.localScale = new Vector3(1f / transform.localScale.x, 1f / transform.localScale.y, 1f / transform.localScale.z);
                     Vector3 boxScale = transform.localScale;
                     boxScale.Scale(nearColliderScale);
 
                     nearCollider = nearColliderObject.AddComponent<BoxCollider>();
-                    ((BoxCollider)nearCollider).center = new Vector3(nearColliderOffset.x * transform.localScale.x, nearColliderOffset.y * transform.localScale.y, nearColliderOffset.z * transform.localScale.z);
+                    ((BoxCollider)nearCollider).center = Vector3.Scale(nearColliderOffset, transform.localScale);
                     ((BoxCollider)nearCollider).size = boxScale;
                 }
                 break;
@@ -153,39 +159,37 @@ public class XRUI_Feedback : MonoBehaviour
 
         if (allowDistanceEvents)
         {
-            XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
-            if (interactable == null)
-                interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-
-            if (interactable == null)
-                interactable = gameObject.AddComponent<XRSimpleInteractable>();
-
-            if (interactable != null)
+            if (xrInteractable != null)
             {
-                interactable.onHoverEnter.AddListener((XRBaseInteractor) => { xrNearDetection.OnEnterAction(XRBaseInteractor); });
-                interactable.onHoverExit.AddListener((XRBaseInteractor) => { xrNearDetection.OnExitAction(XRBaseInteractor); });
+                xrInteractable.colliders.Add(nearCollider);
+                xrInteractable.onHoverEnter.AddListener((XRBaseInteractor) => { xrNearDetection.OnEnterAction(XRBaseInteractor); });
+                xrInteractable.onHoverExit.AddListener((XRBaseInteractor) => { xrNearDetection.OnExitAction(XRBaseInteractor); });
             }
         }
     }
 
     private void ConfigureSelectListeners()
     {
-        xrInteractable.onSelectEnter.AddListener((XRBaseInteractor interactor) =>
+        if (allowDistanceEvents)
         {
-            OnEnterInteraction(interactor);
-        });
-
-        xrInteractable.onSelectExit.AddListener((XRBaseInteractor interactor) =>
-        {
-            XRController controller = interactor.GetComponent<XRController>();
-            if (controller != null)
+            SetColliderOptions();
+            xrInteractable.onSelectEnter.AddListener((XRBaseInteractor interactor) =>
             {
-                isSelected = false;
-                nearCollider.gameObject.SetActive(true);
-                GetComponent<Collider>().enabled = true;
-                onSelectExit?.Invoke(controller);
-            }
-        });
+                OnEnterInteraction(interactor);
+            });
+
+            xrInteractable.onSelectExit.AddListener((XRBaseInteractor interactor) =>
+            {
+                OnExitInteraction(interactor);
+            });
+        }
+    }
+
+    private void SetColliderOptions()
+    {
+        Collider collider = gameObject.GetComponent<Collider>();
+        if (collider != null && collider.isTrigger)
+            collider.isTrigger = false;
     }
     private void OnEnterInteraction(XRBaseInteractor interactor)
     {
@@ -194,14 +198,19 @@ public class XRUI_Feedback : MonoBehaviour
         {
             isSelected = true;
             onSelectEnter?.Invoke(controller);
-            //nearCollider.gameObject.SetActive(false);
-            //GetComponent<Collider>().enabled = false;
-            XRUI_3DButtonBase button3d = GetComponentInChildren<XRUI_3DButtonBase>();
-            if (button3d == null)
-                button3d = GetComponentInParent<XRUI_3DButtonBase>();
 
+            XRUI_3DButtonBase button3d = GetComponentInParent<XRUI_3DButtonBase>();
             if (button3d != null)
                 button3d.SimulateClick();
+        }
+    }
+    private void OnExitInteraction(XRBaseInteractor interactor)
+    {
+        XRController controller = interactor.GetComponent<XRController>();
+        if (controller != null)
+        {
+            isSelected = false;
+            onSelectExit?.Invoke(controller);
         }
     }
 
@@ -236,13 +245,12 @@ public class XRUI_Feedback : MonoBehaviour
         }
     }
 
-
     private void OnDrawGizmosSelected()
     {
-        //#if UNITY_EDITOR
-        //        if (EditorApplication.isPlaying)
-        //            return;
-        //#endif
+#if UNITY_EDITOR
+        if (EditorApplication.isPlaying)
+            return;
+#endif
 
         Gizmos.color = Color.red;
 
@@ -254,10 +262,7 @@ public class XRUI_Feedback : MonoBehaviour
                 //scale for all parents 
                 boxScale = ScaleOfParents(transform.parent, boxScale);
                 boxScale.Scale(nearColliderScale);
-                //its set a limit of bounds of gizmos on center of object... buts its not happens on collider without fix some issues
-                //Vector3 nnearOff = new Vector3(nearColliderOffset.x != 0 ? (nearColliderOffset.x / (2f * (Mathf.Abs(nearColliderOffset.x) / boxScale.x))) : 0,
-                //                               nearColliderOffset.y != 0 ? (nearColliderOffset.y / (2f * (Mathf.Abs(nearColliderOffset.y) / boxScale.y))) : 0,
-                //                               nearColliderOffset.z != 0 ? (nearColliderOffset.z / (2f * (Mathf.Abs(nearColliderOffset.z) / boxScale.z))) : 0);
+
                 Vector3 nnearOff = new Vector3((nearColliderOffset.x * boxScale.x) / nearColliderScale.x, (nearColliderOffset.y * boxScale.y) / nearColliderScale.y, (nearColliderOffset.z * boxScale.z) / nearColliderScale.z);
                 Vector3 nworldNearColliderOffset = transform.TransformDirection(nnearOff) + transform.position;
 
@@ -277,7 +282,6 @@ public class XRUI_Feedback : MonoBehaviour
 
     private Vector3 ScaleOfParents(Transform parent, Vector3 scale)
     {
-
         Vector3 scaleOfParents = scale;
         if (parent != null)
         {

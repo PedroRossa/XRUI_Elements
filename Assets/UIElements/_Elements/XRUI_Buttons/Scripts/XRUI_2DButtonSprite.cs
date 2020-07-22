@@ -2,10 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRUI_2DButtonSprite : XRUI_ButtonBase
+public class XRUI_2DButtonSprite : XRUI_2DButtonBase
 {
     public bool backgroundFeedback;
-    public SpriteRenderer backgroundSprite;
     [HideIf("backgroundFeedback")]
     public Color backgroundColor = Color.white;
     [HideIf("backgroundFeedback")]
@@ -23,10 +22,8 @@ public class XRUI_2DButtonSprite : XRUI_ButtonBase
     [ShowIf("HasIconSet")]
     [Range(0.001f, 1.0f)]
     public float iconScale = 0.1f;
-
     public bool HasIconSet() { return icon != null ? true : false; }
 
-    public GameObject distanceCollider;
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -39,34 +36,12 @@ public class XRUI_2DButtonSprite : XRUI_ButtonBase
 
         SetSpriteColors();
     }
-
-    protected override void Awake()
-    {
-        base.Awake();
+ 
+    protected override void Initialize() {
         SetSpriteColors();
-
-        xrFeedback.onTouchEnter.AddListener((XRController controller) => { onClickDown?.Invoke(); });
-        xrFeedback.onTouchExit.AddListener((XRController controller) => { onClickUp?.Invoke(); });
-    }
-    private void Start()
-    {
-        if (xrFeedback.allowDistanceEvents)
-        {
-            XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
-            if (interactable == null)
-                interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-
-            if (interactable != null)
-                interactable.onSelectEnter.AddListener((XRBaseInteractor) => { onClickDown?.Invoke(); });
-        }
-        else if (distanceCollider != null)
-        {
-            distanceCollider.SetActive(false);
-        }
     }
     private void SetSpriteColors()
     {
-
         if (backgroundFeedback)
         {
             xrUIColors.target = backgroundSprite.transform;

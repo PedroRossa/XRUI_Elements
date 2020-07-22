@@ -54,7 +54,7 @@ public abstract class XRUI_ToggleBase : XRUI_Base
     {
         base.OnValidate();
 
-        if (selectObject != null) 
+        if (selectObject != null)
         {
             worldUnselectPos = bodyObject.transform.TransformVector(selectPos) + bodyObject.transform.position;
             worldSelectPos = bodyObject.transform.TransformVector(unselectPos) + bodyObject.transform.position;
@@ -73,9 +73,12 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         SetRenderers();
         UpdateColors();
-
-        XRBaseInteractable interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-        interactable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
+    }
+    private void Start()
+    {
+        //its done on start cause in awake its dont works for 2dtoogle
+        if (xrFeedback.XRInteractable != null)
+            xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
     }
 
     private void SetTogglePosition()
@@ -105,9 +108,10 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
     private void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         if (EditorApplication.isPlaying)
             return;
-
+#endif
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(worldUnselectPos, 0.01f);
         Gizmos.DrawLine(worldUnselectPos, worldSelectPos);

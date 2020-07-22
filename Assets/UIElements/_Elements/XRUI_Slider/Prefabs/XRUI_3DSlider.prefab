@@ -124,7 +124,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5905469458464168616}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -231,7 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befe1922c3713714ca488498f09dce6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPush: 1
   isHover: 0
   isSelected: 0
   normalizedValue: 0
@@ -254,7 +253,6 @@ MonoBehaviour:
   useNearEvents: 0
   useTouchEvents: 0
   useSelectEvents: 0
-  allowDistanceEvents: 0
   onNearEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -689,9 +687,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 5905469460030115282}
-    characterCount: 4
+    characterCount: 3
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1

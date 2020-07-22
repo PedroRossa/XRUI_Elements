@@ -665,7 +665,6 @@ MonoBehaviour:
   useNearEvents: 0
   useTouchEvents: 0
   useSelectEvents: 0
-  allowDistanceEvents: 0
   onNearEnter:
     m_PersistentCalls:
       m_Calls: []
