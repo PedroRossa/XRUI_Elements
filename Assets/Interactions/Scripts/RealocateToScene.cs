@@ -8,10 +8,12 @@ public class RealocateToScene : MonoBehaviour
     private Vector3 initialPosition;
     private Vector3 limitPosition;
     private const int waitSeconds = 2;
+    private Rigidbody rigidbody;
 
     void Start()
     {
         initialPosition = transform.position;
+        rigidbody = GetComponent<Rigidbody>();
 
         //Setando a posição limite
         limitPosition = meshLimits.bounds.extents;
@@ -24,6 +26,7 @@ public class RealocateToScene : MonoBehaviour
         if (surpassLimits())
         {
             transform.position = initialPosition;
+            rigidbody.velocity = Vector3.zero;
         }
 
         yield return new WaitForSeconds(waitSeconds);
