@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20d7a7c9ad7ddf47b4ceee437cda114, type: 3}
   m_Name: RTriggerTouch
   m_EditorClassIdentifier: 
-  button: 4
+  button: 2
   previousPress: 0

@@ -7,8 +7,10 @@ public class ExemploInputHandlers : MonoBehaviour
     public TextMeshProUGUI textButton;
     public TextMeshProUGUI textAxis;
     public TextMeshProUGUI textAxis2D;
+    public TextMeshProUGUI textSecAxis2D;
     public InputManager.ButtonHandler primaryClickHandler = null;
     public InputManager.AxisHandler2D primaryAxisHandler = null;
+    public InputManager.AxisHandler2D secundaryAxisHandler = null;
     public InputManager.AxisHandler triggerHandler = null;
     public InputManager.ButtonHandler AxisClickHandler = null;
 
@@ -17,6 +19,7 @@ public class ExemploInputHandlers : MonoBehaviour
         primaryClickHandler.OnButtonDown += PrintPrimaryButtonDown;
         primaryClickHandler.OnButtonUp += PrintPrimaryButtonUp;
         primaryAxisHandler.OnValueChange += PrintPrimaryAxis;
+        secundaryAxisHandler.OnValueChange += PrintSecundaryAxis;
         triggerHandler.OnValueChange += PrintTrigger;
         AxisClickHandler.OnButtonDown += PrintAxisClickDown;
         AxisClickHandler.OnButtonUp += PrintAxisClickUp;
@@ -59,9 +62,15 @@ public class ExemploInputHandlers : MonoBehaviour
     }
     private void PrintPrimaryAxis(XRController controller, Vector2 value)
     {
-        print("Primary axis 2d:" + value);
-        Debug.Log("Primary axis:" + value);
-        textAxis2D.text = "Primary axis 2d" + value.ToString();
+        print("Left axis 2d:" + value);
+        Debug.Log("Left axis:" + value);
+        textAxis2D.text = "Left axis 2d" + value.ToString();
+    }
+    private void PrintSecundaryAxis(XRController controller, Vector2 value)
+    {
+        print("Right axis 2d:" + value);
+        Debug.Log("Right axis:" + value);
+        textSecAxis2D.text = "Right axis 2d" + value.ToString();
     }
 
     private void PrintTrigger(XRController controller, float value)

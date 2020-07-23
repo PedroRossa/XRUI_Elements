@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20d7a7c9ad7ddf47b4ceee437cda114, type: 3}
-  m_Name: LTriggerTouch
+  m_Script: {fileID: 11500000, guid: 6460373a3afd6474ab7da4cb265c200c, type: 3}
+  m_Name: L_PrimatyAxisHandler2D
   m_EditorClassIdentifier: 
-  button: 4
-  previousPress: 0
+  axis: 1
