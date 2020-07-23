@@ -14,9 +14,6 @@ public class XRUI_2DButtonBase : XRUI_ButtonBase
 
         xrFeedback.onTouchEnter.AddListener((XRController controller) => { onClickDown?.Invoke(); });
         xrFeedback.onTouchExit.AddListener((XRController controller) => { onClickUp?.Invoke(); });
-    }
-    private void Start()
-    {
         if (xrFeedback.XRInteractable != null)
             xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { onClickDown?.Invoke(); });
     }

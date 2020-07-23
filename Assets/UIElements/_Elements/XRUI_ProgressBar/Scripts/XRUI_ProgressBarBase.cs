@@ -68,17 +68,7 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
             dragInteractable.interactable.onSelectEnter.AddListener((XRBaseInteractor) => { StopCoroutine(UpdateInfos()); });
         }
     }
-    //protected virtual void Update()
-    //{
-    //    if (!isEnabled)
-    //        return;
 
-    //    if (dragInteractable.isSelected || (canPush && xrFeedback.IsTouching))
-    //    {
-    //        SetProgress(dragInteractable.normalizedValue);
-    //        UpdateProgress();
-    //    }
-    //}
     private IEnumerator UpdateInfos()
     {
         SelectedEvent();

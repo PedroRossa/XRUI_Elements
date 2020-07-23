@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRUI_3DButtonBase : XRUI_ButtonBase
 {
@@ -32,6 +33,7 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
 
         onClickDown.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true; });
         onClickUp.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false; });
+        xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor interactor) => { SimulateClick(); });
     }
 
     private void FixedUpdate()

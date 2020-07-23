@@ -13,13 +13,11 @@ public class XRUI_2DButtonText : XRUI_2DButtonBase
     {
         base.OnValidate();
         Initialize();
-    }
 
-    protected virtual void Start()
-    {
         if (xrFeedback.XRInteractable != null)
             xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { onClickDown?.Invoke(); });
     }
+
     protected override void Initialize()
     {
         if (tmpField == null)

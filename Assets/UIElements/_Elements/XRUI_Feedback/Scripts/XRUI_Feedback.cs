@@ -79,7 +79,7 @@ public class XRUI_Feedback : MonoBehaviour
     public bool IsTouching { get => isTouching; }
     public bool IsSelected { get => isSelected; }
     public bool AllowDistanceEvents { get => allowDistanceEvents; }
-
+    
     private void OnValidate()
     {
         worldNearColliderOffset = transform.TransformDirection(nearColliderOffset) + transform.position;
@@ -198,10 +198,6 @@ public class XRUI_Feedback : MonoBehaviour
         {
             isSelected = true;
             onSelectEnter?.Invoke(controller);
-
-            XRUI_3DButtonBase button3d = GetComponentInParent<XRUI_3DButtonBase>();
-            if (button3d != null)
-                button3d.SimulateClick();
         }
     }
     private void OnExitInteraction(XRBaseInteractor interactor)

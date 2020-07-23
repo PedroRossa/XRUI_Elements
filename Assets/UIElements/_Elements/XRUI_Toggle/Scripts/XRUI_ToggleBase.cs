@@ -73,10 +73,7 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         SetRenderers();
         UpdateColors();
-    }
-    private void Start()
-    {
-        //its done on start cause in awake its dont works for 2dtoogle
+        
         if (xrFeedback.XRInteractable != null)
             xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
     }
