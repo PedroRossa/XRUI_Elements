@@ -256,9 +256,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7741509650942510750}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.334, y: -0.13900006, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.70422536, y: 0.70422536, z: 0.70422536}
   m_Children:
   - {fileID: 7741509650059558187}
   - {fileID: 7741509650723369371}
@@ -470,12 +470,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runOnNear: 0
   runOnTouch: 1
-  runOnSelect: 0
+  runOnSelect: 1
   nearEnterAudioClip: {fileID: 0}
   nearExitAudioClip: {fileID: 0}
   touchEnterAudioClip: {fileID: 8300000, guid: 32918f19e230d2842a7f3df628463b3e, type: 3}
   touchExitAudioClip: {fileID: 0}
-  selectEnterAudioClip: {fileID: 0}
+  selectEnterAudioClip: {fileID: 8300000, guid: fd66c3dd6e03a87429b55e8002106587,
+    type: 3}
   selectExitAudioClip: {fileID: 0}
 --- !u!114 &7741509650942510744
 MonoBehaviour:
@@ -541,8 +542,8 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
-  backgroundFeedback: 1
   backgroundSprite: {fileID: 7741509650718162313}
+  backgroundFeedback: 1
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   backgroundDisabledColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   iconSprite: {fileID: 7741509649378265874}

@@ -1,20 +1,8 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
-public class XRUI_3DButtonText : XRUI_ButtonBase
+public class XRUI_3DButtonText : XRUI_3DButtonBase
 {
-    [Header("Internal Properties")]
-    public Transform buttonBackground;
-    public Transform buttonObject;
-
-    public Material buttonMaterial;
-
-    [ReadOnly]
-    public bool isPressed;
-
-    private MeshRenderer buttonMesh;
-    private Rigidbody buttonRigidBody;
-
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -32,15 +20,8 @@ public class XRUI_3DButtonText : XRUI_ButtonBase
         onClickUp.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.normalColor; });
     }
 
-    private void FixedUpdate()
-    {
-        XRUI_Helper.ConstraintVelocityLocally(transform, buttonRigidBody, true, true, false);
-        XRUI_Helper.ConstraintPositionLocally(transform, buttonRigidBody, true, true, false);
-        buttonRigidBody.transform.localRotation = Quaternion.identity;
-        buttonObject.localPosition = new Vector3(0, 0, buttonObject.localPosition.z);
-    }
 
-    private void ConfigureButtonMaterial()
+    protected override void ConfigureButtonMaterial()
     {
         buttonMesh = buttonObject.GetComponent<MeshRenderer>();
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();

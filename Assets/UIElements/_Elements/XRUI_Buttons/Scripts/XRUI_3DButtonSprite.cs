@@ -1,12 +1,8 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
-public class XRUI_3DButtonSprite : XRUI_ButtonBase
+public class XRUI_3DButtonSprite : XRUI_3DButtonBase
 {
-    [Header("Internal Properties")]
-    public Transform buttonBackground;
-    public Transform buttonObject;
-
     [Header("Feedback Properties")]
     public bool backgroundFeedback = true;
 
@@ -30,14 +26,6 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
 
     public bool HasIconSet() { return icon != null ? true : false; }
 
-    public Material buttonMaterial;
-
-    [ReadOnly]
-    public bool isPressed;
-
-    private MeshRenderer buttonMesh;
-    private Rigidbody buttonRigidBody;
-
     protected override void OnValidate()
     {
         base.OnValidate();
@@ -46,7 +34,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
             buttonMesh = buttonObject.GetComponent<MeshRenderer>();
 
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
-        
+
         ConfigureButtonMaterial();
         SetColors();
     }
@@ -57,7 +45,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
 
         buttonMesh = buttonObject.GetComponent<MeshRenderer>();
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
-        
+
         ConfigureButtonMaterial();
 
         SetColors();
@@ -77,14 +65,6 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
             else
                 iconSprite.color = xrUIColors.normalColor;
         });
-    }
-
-    private void FixedUpdate()
-    {
-        XRUI_Helper.ConstraintVelocityLocally(transform, buttonRigidBody, true, true, false);
-        XRUI_Helper.ConstraintPositionLocally(transform, buttonRigidBody, true, true, false);
-        buttonRigidBody.transform.localRotation = Quaternion.identity;
-        buttonObject.localPosition = new Vector3(0, 0, buttonObject.localPosition.z);
     }
 
     private void RefreshSprite()
@@ -119,7 +99,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         }
     }
 
-    private void ConfigureButtonMaterial()
+    protected override void ConfigureButtonMaterial()
     {
         if (buttonMesh == null)
             return;

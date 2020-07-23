@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8510283511047527964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.045, y: 1.122, z: -0.222}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1194366, y: 1.1194366, z: 1.1194366}
   m_Children:
   - {fileID: 8510283511374090264}
   - {fileID: 8510283511324639598}
@@ -78,12 +78,26 @@ MonoBehaviour:
   xrFeedback: {fileID: 8510283511324639599}
   onClickDown:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ActiveMesh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
   buttonBackground: {fileID: 8510283511374090264}
   buttonObject: {fileID: 8510283511324639598}
+  buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
+  isPressed: 0
+  isClicked: 0
   backgroundFeedback: 1
   buttonColor: {r: 1, g: 1, b: 1, a: 1}
   buttonDisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -92,8 +106,6 @@ MonoBehaviour:
   iconDisabledColor: {r: 1, g: 1, b: 1, a: 1}
   icon: {fileID: 21300000, guid: fc71bb0166b4ead40be93cc2e2139a2a, type: 3}
   iconScale: 0.621
-  buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
-  isPressed: 0
 --- !u!1 &8510283511319827436
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +311,7 @@ SpringJoint:
   m_ConnectedBody: {fileID: 8510283511374090277}
   m_Anchor: {x: 0, y: 0, z: 0.5}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000011920929, y: 0, z: -159.00012}
+  m_ConnectedAnchor: {x: 0, y: 0, z: -159.00046}
   serializedVersion: 2
   m_Spring: 100
   m_Damper: 5
@@ -349,7 +361,7 @@ MonoBehaviour:
   nearColliderType: 0
   nearColliderScale: {x: 1, y: 1, z: 1.5}
   nearColliderRadius: 1.5
-  nearColliderOffset: {x: 0, y: 0, z: -0.03}
+  nearColliderOffset: {x: 0, y: 0, z: -1.25}
 --- !u!114 &8510283511324639596
 MonoBehaviour:
   m_ObjectHideFlags: 0

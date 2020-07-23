@@ -2,10 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRUI_2DButtonSprite : XRUI_ButtonBase
+public class XRUI_2DButtonSprite : XRUI_2DButtonBase
 {
     public bool backgroundFeedback;
-    public SpriteRenderer backgroundSprite;
     [HideIf("backgroundFeedback")]
     public Color backgroundColor = Color.white;
     [HideIf("backgroundFeedback")]
@@ -13,7 +12,7 @@ public class XRUI_2DButtonSprite : XRUI_ButtonBase
 
     [Header("Icon Properties")]
     public SpriteRenderer iconSprite;
-    [ShowIf("backgroundFeedback")] 
+    [ShowIf("backgroundFeedback")]
     public Color iconColor = Color.white;
     [ShowIf("backgroundFeedback")]
     public Color iconDisabledColor = Color.white;
@@ -23,7 +22,6 @@ public class XRUI_2DButtonSprite : XRUI_ButtonBase
     [ShowIf("HasIconSet")]
     [Range(0.001f, 1.0f)]
     public float iconScale = 0.1f;
-
     public bool HasIconSet() { return icon != null ? true : false; }
 
     protected override void OnValidate()
@@ -38,31 +36,23 @@ public class XRUI_2DButtonSprite : XRUI_ButtonBase
 
         SetSpriteColors();
     }
-
-    protected override void Awake()
-    {
-        base.Awake();
+ 
+    protected override void Initialize() {
         SetSpriteColors();
-
-
-        xrFeedback.onTouchEnter.AddListener((XRController controller) => { onClickDown?.Invoke(); });
-        xrFeedback.onTouchExit.AddListener((XRController controller) => { onClickUp?.Invoke(); });
     }
-
     private void SetSpriteColors()
     {
-
         if (backgroundFeedback)
         {
-            xrUIColors.target = backgroundSprite.transform; 
-           iconSprite.color = isEnabled ? iconColor : iconDisabledColor;
+            xrUIColors.target = backgroundSprite.transform;
+            iconSprite.color = isEnabled ? iconColor : iconDisabledColor;
             backgroundSprite.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
         }
         else
         {
             xrUIColors.target = iconSprite.transform;
             iconSprite.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
-            backgroundSprite.color = isEnabled ? backgroundColor : backgroundDisabledColor; 
+            backgroundSprite.color = isEnabled ? backgroundColor : backgroundDisabledColor;
         }
     }
 }

@@ -32,9 +32,8 @@ public abstract class XRBaseFeedback : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float hapticProximityFrequence = 0.1f;
 
-
-    public UnityEvent onProximityAreaEnter;
     public UnityEvent onProximityAreaStay;
+    public UnityEvent onProximityAreaEnter;
     public UnityEvent onProximityAreaExit;
 
     protected Color originalColor;
