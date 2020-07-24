@@ -19,5 +19,4 @@ public class XRUI_ButtonBase : XRUI_Base
         if (!isEnabled)
             return;
     }
-
 }

@@ -47,7 +47,6 @@ public class XRUI_NearDetectionLocked
 
         public void OnEnterAction(XRBaseInteractor xRBase)
         {
-
             XRController controller = xRBase.GetComponent<XRController>();
             if (controller != null)
             {
@@ -61,7 +60,7 @@ public class XRUI_NearDetectionLocked
             if (controller != null && IsNear)
             {
                 isNear = false;
-                feedbackBase.onNearExit?.Invoke(xRBase.GetComponent<XRController>());
+                feedbackBase.onNearExit?.Invoke(controller);
             }
         }
     }

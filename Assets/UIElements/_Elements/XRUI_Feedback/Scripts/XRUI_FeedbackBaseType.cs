@@ -16,22 +16,24 @@ public abstract class XRUI_FeedbackBaseType : MonoBehaviour
 
         if (!xrFeedback.isEnabled)
             return;
+    }
+
+    private void Start()
+    {
+          if (!xrFeedback.isEnabled)
+            return;
 
         if (runOnNear)
         {
             xrFeedback.onNearEnter.AddListener(OnNearEnterFeedbackFunction);
             xrFeedback.onNearExit.AddListener(OnNearExitFeedbackFunction);
 
-            if (xrFeedback.allowDistanceEvents)
+            if (xrFeedback.AllowDistanceEvents)
             {
-                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
-                if (interactable == null)
-                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-
-                if (interactable != null)
+                if (xrFeedback.XRInteractable != null)
                 {
-                    interactable.onHoverEnter.AddListener((XRBaseInteractor) => { OnNearEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    interactable.onHoverExit.AddListener((XRBaseInteractor) => { OnNearExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverEnter.AddListener((XRBaseInteractor) => { OnNearEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverExit.AddListener((XRBaseInteractor) => { OnNearExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
                 }
             }
         }
@@ -40,16 +42,12 @@ public abstract class XRUI_FeedbackBaseType : MonoBehaviour
         {
             xrFeedback.onTouchEnter.AddListener(OnTouchEnterFeedbackFunction);
             xrFeedback.onTouchExit.AddListener(OnTouchExitFeedbackFunction);
-            if (xrFeedback.allowDistanceEvents)
+            if (xrFeedback.AllowDistanceEvents)
             {
-                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
-                if (interactable == null)
-                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-
-                if (interactable != null)
+                if (xrFeedback.XRInteractable != null)
                 {
-                    interactable.onHoverEnter.AddListener((XRBaseInteractor) => { OnTouchEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    interactable.onHoverExit.AddListener((XRBaseInteractor) => { OnTouchExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverEnter.AddListener((XRBaseInteractor) => { OnTouchEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverExit.AddListener((XRBaseInteractor) => { OnTouchExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
                 }
             }
         }
@@ -58,16 +56,12 @@ public abstract class XRUI_FeedbackBaseType : MonoBehaviour
         {
             xrFeedback.onSelectEnter.AddListener(OnSelectEnterFeedbackFunction);
             xrFeedback.onSelectExit.AddListener(OnSelectExitFeedbackFunction);
-            if (xrFeedback.allowDistanceEvents)
+            if (xrFeedback.AllowDistanceEvents)
             {
-                XRBaseInteractable interactable = gameObject.GetComponent<XRBaseInteractable>();
-                if (interactable == null)
-                    interactable = gameObject.GetComponentInChildren<XRBaseInteractable>();
-
-                if (interactable != null)
+                if (xrFeedback.XRInteractable != null)
                 {
-                    interactable.onSelectEnter.AddListener((XRBaseInteractor) => { OnSelectEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    interactable.onSelectExit.AddListener((XRBaseInteractor) => { OnSelectExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { OnSelectEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onSelectExit.AddListener((XRBaseInteractor) => { OnSelectExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
                 }
             }
         }
