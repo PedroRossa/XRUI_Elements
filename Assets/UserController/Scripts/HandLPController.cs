@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using InputManager;
+using System.Runtime.CompilerServices;
 
 namespace UserController
 {
@@ -14,11 +15,24 @@ namespace UserController
         public ButtonHandler ThumbTouch = null;
         public ButtonHandler GripTouch = null;
         public ButtonHandler TriggerTouch = null;
+
+        private XRBaseControllerInteractor xRBaseController;
+        private bool isOnInteractableEvent = false;
+        private GrabbingType grabType = GrabbingType.HandGrab;
         // Start is called before the first frame update
         void Start()
         {
             if (anim == null)
                 anim = GetComponent<Animator>();
+
+            xRBaseController = GetComponentInParent<XRBaseControllerInteractor>();
+            if (xRBaseController != null)
+            {
+                xRBaseController.onHoverEnter.AddListener((XRBaseInteractor) => { isOnInteractableEvent = true; });
+                xRBaseController.onHoverExit.AddListener((XRBaseInteractor) => { isOnInteractableEvent = false; });
+                xRBaseController.onSelectEnter.AddListener((XRBaseInteractor) => { isOnInteractableEvent = true; });
+
+            }
 
             triggerHandler.OnValueChange += OnTrigger;
 
@@ -30,12 +44,8 @@ namespace UserController
 
             TriggerTouch.OnButtonDown += TriggerTouchButtonDown;
             TriggerTouch.OnButtonUp += TriggerTouchButtonUp;
-        }
 
-        private void Update()
-        {
         }
-
         private void ThumbButtonDown(XRController controller)
         {
             anim.SetBool("ThumbTouch", true);
@@ -54,15 +64,38 @@ namespace UserController
         }
         private void TriggerTouchButtonDown(XRController controller)
         {
-            anim.SetBool("TriggerTouch", true);
+            if (!isOnInteractableEvent)
+            {
+                anim.SetBool("TriggerTouch", true);
+                anim.SetFloat("Trigger", 0f);
+            }
         }
         private void TriggerTouchButtonUp(XRController controller)
         {
             anim.SetBool("TriggerTouch", false);
+            anim.SetFloat("TriggerFingerGrab", 0f);
+            anim.SetFloat("TriggerHandGrab", 0f);
         }
         private void OnTrigger(XRController controller, float value)
         {
-            anim.SetFloat("Trigger", value);
+            if (!isOnInteractableEvent && value > 0.002f)
+                return;
+
+            float maximumValue = 0.2f;
+            float normValue = Mathf.Clamp(value, 0f, maximumValue);
+
+            switch (grabType)
+            {
+                case GrabbingType.None:
+                    break;
+                case GrabbingType.FingerGrab:
+                        anim.SetFloat("TriggerFingerGrab", normValue);
+                    break;
+                case GrabbingType.HandGrab:
+                    anim.SetFloat("TriggerHandGrab", normValue);
+                    break;
+                    
+            }
         }
 
     }
