@@ -72,8 +72,9 @@ public class MoveWithJoystick : MonoBehaviour
 
         grabInteractable.onSelectExit.AddListener((interactor) => {
             rigidbody.velocity = Vector3.zero;
-            
-            if(isRayInteractor)
+            grabInteractable.trackPosition = startsTrackedPosition;
+
+            if (isRayInteractor)
             {
                 interactor.GetComponent<XRRayInteractor>().maxRaycastDistance = lineLength;
             }
@@ -154,7 +155,7 @@ public class MoveWithJoystick : MonoBehaviour
 
     private void AdjustMovements()
     {
-        if (!startsTrackedPosition)
+        if (!startsTrackedPosition && !grabInteractable.trackPosition)
         {
             grabInteractable.trackPosition = (Vector3.Distance(gameObject.transform.position, controllerTransform.position) <= minDistanceToAttach);
         }
