@@ -217,6 +217,6 @@ public class MoveWithJoystick : MonoBehaviour
         if (states == machineStates.translading)
             rigidbody.velocity += vectorDirection *  walk.translationSpeed/2 * Time.deltaTime;
         else
-            rigidbody.velocity = vectorDirection * walk.translationSpeed / 2 * Time.deltaTime;
+            rigidbody.velocity = vectorDirection * walk.translationSpeed/2 * Time.deltaTime;
     }
 }
