@@ -5,7 +5,6 @@ public class Walk : MonoBehaviour
     public short translationSpeed = 250;
     public short rotationSpeed = 50;
     public Transform cameraTransform;
-    // Update is called once per frame
 
     private Rigidbody rigidbody;
 
@@ -13,7 +12,7 @@ public class Walk : MonoBehaviour
     {
         rigidbody = gameObject.GetComponent<Rigidbody>();
     }
-    void Update()
+    void FixedUpdate()
     {
          rigidbody.velocity = DirectionVector() * Time.deltaTime * translationSpeed *
            OculusInput.LeftHandVerticalAxis;
@@ -30,6 +29,6 @@ public class Walk : MonoBehaviour
 
     private void OnDisable()
     {
-        rigidbody.velocity = new Vector3(0,0,0);
+        rigidbody.velocity = Vector3.zero;
     }
 }
