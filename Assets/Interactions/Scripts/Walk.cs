@@ -5,6 +5,7 @@ public class Walk : MonoBehaviour
     public short translationSpeed = 250;
     public short rotationSpeed = 50;
     public Transform cameraTransform;
+    public Transform[] handsTransforms;
 
     private Rigidbody rigidbody;
 
@@ -19,6 +20,14 @@ public class Walk : MonoBehaviour
 
         transform.eulerAngles += Vector3.up * Time.deltaTime * rotationSpeed *
             OculusInput.LeftHandHorizontalAxis;
+    }
+
+    private void Update()
+    {
+        foreach (var handTransform in handsTransforms)
+        {
+            handTransform.localPosition = new Vector3(0, 0, -0.05f);
+        }
     }
 
     Vector3 DirectionVector()
