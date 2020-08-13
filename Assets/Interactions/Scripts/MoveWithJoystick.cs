@@ -79,7 +79,7 @@ public class MoveWithJoystick : MonoBehaviour
                 interactor.GetComponent<XRRayInteractor>().maxRaycastDistance = lineLength;
             }
 
-            SetInteractions(true);      
+            SetInteractions(true);
         });
     }
 
