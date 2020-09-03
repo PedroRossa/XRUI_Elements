@@ -93,12 +93,16 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  milissecondsToValidateClick: 500
   buttonBackground: {fileID: 8510283511374090264}
   buttonObject: {fileID: 8510283511324639598}
   buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
   isPressed: 0
   isClicked: 0
+  isOn: 0
+  buttonMesh: {fileID: 8510283511324639593}
   backgroundFeedback: 1
+  othersButtons: []
   buttonColor: {r: 1, g: 1, b: 1, a: 1}
   buttonDisabledColor: {r: 1, g: 1, b: 1, a: 1}
   iconSprite: {fileID: 8510283511319827434}
@@ -379,6 +383,8 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 1
   xrUIColors: {fileID: 8510283511047527963}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!1 &8510283511374090267
 GameObject:
   m_ObjectHideFlags: 0

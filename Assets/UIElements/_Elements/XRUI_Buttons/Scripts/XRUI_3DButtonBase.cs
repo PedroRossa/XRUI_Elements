@@ -16,8 +16,11 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
     public bool isPressed;
 
     public bool isClicked = false;
+    [HideInInspector]
+    public bool isOn;
 
-    protected MeshRenderer buttonMesh;
+    [HideInInspector]
+    public MeshRenderer buttonMesh;
     protected Rigidbody buttonRigidBody;
 
     protected override void OnValidate()
@@ -31,9 +34,33 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
         base.Awake();
         ConfigureButtonMaterial();
 
-        onClickDown.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true; });
-        onClickUp.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false; });
+        EventConfiguration();
         xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor interactor) => { SimulateClick(); });
+    }
+
+    protected virtual void EventConfiguration()
+    {
+        onClickDown.AddListener(() => {
+            if (canActiveButton)
+            {
+                buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true;
+                StartCoroutine(resetCanActiveButton());
+            }
+        });
+        onClickUp.AddListener(() => {
+            if (canActiveButton)
+            {
+                buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false;
+                StartCoroutine(resetCanActiveButton());
+            }
+        });
+    }
+
+    protected IEnumerator resetCanActiveButton()
+    {
+        yield return new WaitForEndOfFrame();
+        canActiveButton = false;
+
     }
 
     private void FixedUpdate()
