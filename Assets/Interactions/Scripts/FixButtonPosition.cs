@@ -6,13 +6,13 @@
 public class FixButtonPosition : MonoBehaviour
 {
     /// <summary>
-    /// Maximum button position
+    /// Value to sum with button position
     /// </summary>
-    public float maxValue;
+    public float sumMaxValue;
     /// <summary>
-    /// Minimum button position
+    /// Value to subtract with button position
     /// </summary>
-    private float minValue;
+    public float subtractMinValue;
 
     /// <summary>
     /// Z axis, because button just translate in "Z"
@@ -25,19 +25,17 @@ public class FixButtonPosition : MonoBehaviour
 
     private void Start()
     {
-        //Its initial position
-        minValue = gameObject.transform.position.z;
+        subtractMinValue = gameObject.transform.position.z - subtractMinValue;
 
-        isButtonAtNorth = maxValue < 0;
-        maxValue = gameObject.transform.position.z + maxValue;
+        isButtonAtNorth = sumMaxValue < 0;
+        sumMaxValue = gameObject.transform.position.z + sumMaxValue;
     }
     private void FixedUpdate()
     {
-        if(isButtonAtNorth)
-            z_Axis = Mathf.Clamp(gameObject.transform.position.z, maxValue, minValue);
+        if (isButtonAtNorth)
+            z_Axis = Mathf.Clamp(gameObject.transform.position.z, sumMaxValue, subtractMinValue);
         else
-            z_Axis = Mathf.Clamp(gameObject.transform.position.z, minValue, maxValue);
-        print(z_Axis);
+            z_Axis = Mathf.Clamp(gameObject.transform.position.z, subtractMinValue, sumMaxValue);
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, z_Axis);
     }
 }

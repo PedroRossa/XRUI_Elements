@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
@@ -13,7 +12,13 @@ public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
     /// The proper object's rigidbody
     /// </summary>
     private Rigidbody rb;
+    /// <summary>
+    /// The compass time for translation coroutine
+    /// </summary>
     private const float secondsCompass = 0.2f;
+    /// <summary>
+    /// The object has started being kinematic?
+    /// </summary>
     private bool isKinematic;
 
     /// <summary>
@@ -28,6 +33,11 @@ public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
         StartCoroutine(ComeBack(waitSeconds));
     }
 
+    /// <summary>
+    /// Coroutine to translate the object back to its original position
+    /// </summary>
+    /// <param name="waitSeconds"></param>
+    /// <returns></returns>
     private IEnumerator ComeBack(float waitSeconds)
     {
         rb.isKinematic = true;
