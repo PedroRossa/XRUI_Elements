@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
-using System.Threading;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class XRUI_ButtonBase : XRUI_Base
@@ -10,16 +11,12 @@ public class XRUI_ButtonBase : XRUI_Base
     /// <summary>
     /// Time in seconds to wait to validate click next time
     /// </summary>
-    public int milissecondsToValidateClick = 500;
+    public float secondsToValidateClick = 0.2f;
 
-    /// <summary>
-    /// Thread to count time to wait to validate click
-    /// </summary>
-    protected static Thread timer;
     /// <summary>
     /// Can I active the button action?
     /// </summary>
-    protected bool canActiveButton = true;
+    public bool canActiveButton = true;
 
     protected override void OnValidate()
     {
@@ -38,8 +35,7 @@ public class XRUI_ButtonBase : XRUI_Base
 
     protected void Start()
     {
-        timer = new Thread(TimerTick);
-        timer.Start();
+        StartCoroutine(TimerTick());
     }
 
     [Button]
@@ -53,15 +49,9 @@ public class XRUI_ButtonBase : XRUI_Base
         onClickUp.Invoke();
     }
 
-    private void TimerTick()
+    public IEnumerator TimerTick()
     {
-        while (true)
-        {
-            if (!canActiveButton)
-            {
-                Thread.Sleep(milissecondsToValidateClick);
-                canActiveButton = true;
-            }
-        }
+        yield return new WaitForSeconds(secondsToValidateClick);
+        canActiveButton = true;
     }
 }

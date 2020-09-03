@@ -507,7 +507,8 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
-  milissecondsToValidateClick: 500
+  secondsToValidateClick: 0.2
+  canActiveButton: 1
   buttonBackground: {fileID: 6351440270485320790}
   buttonObject: {fileID: 6351440271073142048}
   buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}

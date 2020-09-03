@@ -1,6 +1,5 @@
 ﻿using NaughtyAttributes;
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -44,23 +43,21 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
             if (canActiveButton)
             {
                 buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true;
-                StartCoroutine(resetCanActiveButton());
             }
         });
         onClickUp.AddListener(() => {
             if (canActiveButton)
             {
                 buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false;
-                StartCoroutine(resetCanActiveButton());
             }
         });
     }
 
-    protected IEnumerator resetCanActiveButton()
+    public IEnumerator resetCanActiveButton()
     {
         yield return new WaitForEndOfFrame();
         canActiveButton = false;
-
+        StartCoroutine(TimerTick());
     }
 
     private void FixedUpdate()

@@ -9,7 +9,7 @@ public class XRUI_3DButtonCollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.Equals(buttonCollider))
+        if (other.Equals(buttonCollider) && xrUIButton.canActiveButton)
         {
             isColliding = true;
             xrUIButton.onClickDown?.Invoke();
@@ -22,6 +22,12 @@ public class XRUI_3DButtonCollisionDetection : MonoBehaviour
         {
             isColliding = false;
             xrUIButton.onClickUp?.Invoke();
+
+            try
+            {
+                StartCoroutine((xrUIButton as XRUI_3DButtonBase).resetCanActiveButton());
+            }
+            catch (System.Exception) { }
         }
     }
 }

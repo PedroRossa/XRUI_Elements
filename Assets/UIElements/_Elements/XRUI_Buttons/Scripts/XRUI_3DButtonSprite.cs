@@ -1,5 +1,4 @@
 ﻿using NaughtyAttributes;
-using System.Threading;
 using UnityEngine;
 
 public class XRUI_3DButtonSprite : XRUI_3DButtonBase
@@ -90,7 +89,6 @@ public class XRUI_3DButtonSprite : XRUI_3DButtonBase
                                 }
                             }
                         }
-                        StartCoroutine(resetCanActiveButton());
                     }
                 });
     }
