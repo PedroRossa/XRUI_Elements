@@ -2,41 +2,122 @@
 using UnityEngine.XR.Interaction.Toolkit;
 using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 
+/// <summary>
+/// Class used to move a XRGrabInteractable with the joysticks
+/// </summary>
 public class MoveWithJoystick : MonoBehaviour
 {
+    /// <summary>
+    /// vertical movement speed
+    /// </summary>
     public float speedVertical = 10f;
+    /// <summary>
+    /// horizontal movement speed
+    /// </summary>
     public float speedHorizontal = 10f;
+    /// <summary>
+    /// rotation object speed
+    /// </summary>
     public float rotationSpeed = 10f;
+    /// <summary>
+    /// scaling object speed
+    /// </summary>
     public float scalingSpeed = 10f;
+    /// <summary>
+    /// XRRig snap turn provider reference
+    /// </summary>
     public SnapTurnProvider snap;
+    /// <summary>
+    /// XRRig snap turn provider reference
+    /// </summary>
     public Walk walk;
+    /// <summary>
+    /// The minimum distance to attach the object to controller
+    /// </summary>
     public float minDistanceToAttach = 0.1f;
+    /// <summary>
+    /// The minimum possible scale of the object
+    /// </summary>
     public float minScale = 0.5f;
+    /// <summary>
+    /// The maximum possible scale of the object
+    /// </summary>
     public float maxScale = 5f;
     
+    /// <summary>
+    /// Interaction states of the object enum
+    /// </summary>
     [flags]
     public enum machineStates{
         translading = 0,
         rotating = 1,
         scaling = 2,
     };
+    /// <summary>
+    /// Interaction states of the object enum instance
+    /// </summary>
     private machineStates states = 0;
 
+    /// <summary>
+    /// Proper XRGrabInteractable of the object
+    /// </summary>
     private XRGrabInteractable grabInteractable;
+    /// <summary>
+    /// The joystick transform which interact with the object
+    /// </summary>
     private Transform controllerTransform;
+    /// <summary>
+    /// Is the left joystick which interact with the object?
+    /// </summary>
     private bool isInputLeft;
+    /// <summary>
+    /// The vertical axis of the controller
+    /// </summary>
     private float verticalAxis;
+    /// <summary>
+    /// The horizontal axis of the controller
+    /// </summary>
     private float horizontalAxis;
+    /// <summary>
+    /// Is the interactor a ray interactor?
+    /// </summary>
     private bool isRayInteractor;
+    /// <summary>
+    /// The current movement type of the object
+    /// </summary>
     private MovementType movementType;
+    /// <summary>
+    /// A memory variable to take the line length of a xr ray interactor
+    /// </summary>
     private float lineLength;
+    /// <summary>
+    /// Starts the object's position tracked?
+    /// </summary>
     private bool startsTrackedPosition;
+    /// <summary>
+    /// The starter scale of the object
+    /// </summary>
     private Vector3 starterScale;
+    /// <summary>
+    /// A directional vector where goes the object
+    /// </summary>
     private Vector3 vectorDirection;
+    /// <summary>
+    /// The controller position at the moment the object is selected
+    /// </summary>
     private Vector3 controllerPositionOnSelect;
+    /// <summary>
+    /// The object position at the moment it is selected
+    /// </summary>
     private Vector3 transformPositionOnSelect;
+    /// <summary>
+    /// The proper object's rigidbody
+    /// </summary>
     private Rigidbody rigidbody;
 
+    /// <summary>
+    /// Setup of the components and callbacks
+    /// </summary>
     void Start()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
@@ -61,7 +142,7 @@ public class MoveWithJoystick : MonoBehaviour
             if(isRayInteractor)
             {
                 if(!startsTrackedPosition)
-                    SetInteractions(false);
+                    SetMovements(false);
 
                 var ray = interactor.GetComponent<XRRayInteractor>();
                 lineLength = ray.maxRaycastDistance;
@@ -79,10 +160,13 @@ public class MoveWithJoystick : MonoBehaviour
                 interactor.GetComponent<XRRayInteractor>().maxRaycastDistance = lineLength;
             }
 
-            SetInteractions(true);
+            SetMovements(true);
         });
     }
 
+    /// <summary>
+    /// Interpolate the object position when it needs
+    /// </summary>
     private void FixedUpdate()
     {
         if(grabInteractable.isSelected && isRayInteractor)
@@ -91,7 +175,10 @@ public class MoveWithJoystick : MonoBehaviour
         }
     }
 
-    void Update()
+    /// <summary>
+    /// Determines the object's interaction 
+    /// </summary>
+    private void Update()
     {
         if (Input.GetKeyDown(OculusInput.RightHandThumbstick))
         {
@@ -104,6 +191,9 @@ public class MoveWithJoystick : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Make the interactions and adjust the movements
+    /// </summary>
     void LateUpdate() {
 
         if (grabInteractable.isSelected) {
@@ -141,6 +231,9 @@ public class MoveWithJoystick : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Translading object interaction
+    /// </summary>
     private void TransladingInteraction()
     {
         float xrRigY = controllerTransform.eulerAngles.y * Mathf.Deg2Rad;
@@ -153,6 +246,9 @@ public class MoveWithJoystick : MonoBehaviour
             Mathf.Cos(xrRigY)) * horizontalAxis * speedHorizontal;
     }
 
+    /// <summary>
+    /// Adjust the controller movements
+    /// </summary>
     private void AdjustMovements()
     {
         if (!startsTrackedPosition && !grabInteractable.trackPosition)
@@ -160,9 +256,12 @@ public class MoveWithJoystick : MonoBehaviour
             grabInteractable.trackPosition = (Vector3.Distance(gameObject.transform.position, controllerTransform.position) <= minDistanceToAttach);
         }
 
-        SetInteractions(grabInteractable.trackPosition && states == machineStates.translading);
+        SetMovements(grabInteractable.trackPosition && states == machineStates.translading);
     }
 
+    /// <summary>
+    /// Rotating object interaction
+    /// </summary>
     private void RotatingInteraction()
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x,
@@ -170,6 +269,9 @@ public class MoveWithJoystick : MonoBehaviour
             transform.eulerAngles.z +  rotationSpeed * verticalAxis);
     } 
 
+    /// <summary>
+    /// Scale object interaction
+    /// </summary>
     private void ScaleInteraction()
     {
         if(verticalAxis < 0)
@@ -194,7 +296,11 @@ public class MoveWithJoystick : MonoBehaviour
         }
     }
 
-    private void SetInteractions(bool state)
+    /// <summary>
+    /// Set the XR rig movements
+    /// </summary>
+    /// <param name="state"></param>
+    private void SetMovements(bool state)
     {
         if(isInputLeft)
         {
@@ -206,6 +312,9 @@ public class MoveWithJoystick : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the object velocity direction in relation to the controller position direction
+    /// </summary>
     void InterpolatePosition()
     {
         //Calculando vetor direção

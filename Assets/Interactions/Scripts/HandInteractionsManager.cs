@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Class used to manage the interactions used in hands
+/// </summary>
 public class HandInteractionsManager : MonoBehaviour
-{
+{   /// <summary>
+    /// A memory variable to keep a destroyed line visual 
+    /// </summary>
     private XRInteractorLineVisual destroyedLine;
 
+    /// <summary>
+    /// Possible commands to do in next frame enum
+    /// </summary>
     public enum nextFrameCommands
     {
         nothing = 0,
@@ -12,13 +20,25 @@ public class HandInteractionsManager : MonoBehaviour
         addDirect = 2
     };
 
+    /// <summary>
+    /// Possible commands to do in next frame enum instance
+    /// </summary>
     nextFrameCommands machineStates;
+    /// <summary>
+    /// Selected xr grab interactables quantity
+    /// </summary>
     public static short selectedObjetcs;
 
+    /// <summary>
+    /// Main setup
+    /// </summary>
     private void Start()
     {
         eventConfiguration();
     }
+    /// <summary>
+    /// Function to swap both hands xr base interactors
+    /// </summary>
     void SwapInteraction()
     {
         XRRayInteractor ray = gameObject.GetComponent<XRRayInteractor>();
@@ -48,7 +68,7 @@ public class HandInteractionsManager : MonoBehaviour
                     break;
 
                 case nextFrameCommands.addRay:
-                    addRay();                
+                    addRayAndLineVisual();                
                     break;
 
                 default:
@@ -65,6 +85,9 @@ public class HandInteractionsManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Callbacks setup
+    /// </summary>
     private void eventConfiguration()
     {
         GetComponent<XRBaseInteractor>().onSelectEnter.AddListener(i =>
@@ -78,7 +101,10 @@ public class HandInteractionsManager : MonoBehaviour
         });
     }
 
-    private void addRay()
+    /// <summary>
+    /// Add a ray interactor and a line visual
+    /// </summary>
+    private void addRayAndLineVisual()
     {
         gameObject.AddComponent<XRRayInteractor>();
 
@@ -93,6 +119,9 @@ public class HandInteractionsManager : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;
     }
 
+    /// <summary>
+    /// Add a direct interactor
+    /// </summary>
     private void addDirect()
     {
         gameObject.AddComponent<XRDirectInteractor>();
