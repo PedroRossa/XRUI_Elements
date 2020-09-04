@@ -364,7 +364,10 @@ public class XRManipulable_OneHand : MonoBehaviour
         if (feedbackType.Equals("Mesh"))
             xRUIFeedbackColor.feedbackType = XRUI_FeedbackColor.VisualFeedbackType.MeshRenderer;
         else
+        {
+            go.AddComponent<Outline>();
             xRUIFeedbackColor.feedbackType = XRUI_FeedbackColor.VisualFeedbackType.Outline;
+        }
 
         //after configure all components re-active gameObject so all the awake calls gona occurs
         go.SetActive(true);
