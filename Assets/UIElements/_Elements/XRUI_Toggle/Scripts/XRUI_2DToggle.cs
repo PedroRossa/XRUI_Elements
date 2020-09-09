@@ -17,7 +17,12 @@ public class XRUI_2DToggle : XRUI_ToggleBase
     protected override void UpdateColors()
     {
         if (bodySprite != null)
-            bodySprite.color = xrUIColors.normalColor;
+        {
+            if (IsSelected)
+                bodySprite.color = changeBGColor ? selectedBGColor : xrUIColors.normalColor;
+            else
+                bodySprite.color = changeBGColor ? unselectedBGColor : xrUIColors.normalColor;
+        }
 
         if (selectSprite != null)
         {

@@ -481,6 +481,13 @@ MonoBehaviour:
   unselectedColor:
     serializedVersion: 2
     rgba: 4286611584
+  changeBGColor: 0
+  selectedBGColor:
+    serializedVersion: 2
+    rgba: 4278255360
+  unselectedBGColor:
+    serializedVersion: 2
+    rgba: 4286611584
   animationSpeed: 3
   isSelected: 1
   unselectPos: {x: 0, y: 0.5, z: 0}

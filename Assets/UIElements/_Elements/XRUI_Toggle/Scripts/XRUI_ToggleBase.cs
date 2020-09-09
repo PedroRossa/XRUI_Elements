@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +14,13 @@ public abstract class XRUI_ToggleBase : XRUI_Base
     [Header("Prefab Color Properties")]
     public Color32 selectedColor = Color.green;
     public Color32 unselectedColor = Color.gray;
+
+    [Header("Prefab Background Color Properties")]
+    public bool changeBGColor = false;
+    [ShowIf("changeBGColor")]
+    public Color32 selectedBGColor = Color.green;
+    [ShowIf("changeBGColor")]
+    public Color32 unselectedBGColor = Color.gray;
 
     [Header("General Properties")]
     public float animationSpeed = 0.1f;
@@ -73,7 +81,7 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         SetRenderers();
         UpdateColors();
-        
+
         if (xrFeedback.XRInteractable != null)
             xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
     }
