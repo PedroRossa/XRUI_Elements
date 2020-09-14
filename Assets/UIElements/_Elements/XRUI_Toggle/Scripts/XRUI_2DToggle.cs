@@ -18,10 +18,13 @@ public class XRUI_2DToggle : XRUI_ToggleBase
     {
         if (bodySprite != null)
         {
-            if (IsSelected)
-                bodySprite.color = changeBGColor ? selectedBGColor : xrUIColors.normalColor;
+            if (changeBGColor)
+            {
+                xrUIColors.normalColor = IsSelected ? selectedBGColor : unselectedBGColor;
+                bodySprite.color = IsSelected ? selectedBGColor : unselectedBGColor;
+            }
             else
-                bodySprite.color = changeBGColor ? unselectedBGColor : xrUIColors.normalColor;
+                bodySprite.color = xrUIColors.normalColor;
         }
 
         if (selectSprite != null)

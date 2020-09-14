@@ -49,13 +49,13 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         isSelected = value;
         SetTogglePosition();
-        UpdateColors();
         onToggleChange?.Invoke(value);
-
         if (IsSelected)
             onToggleSelect?.Invoke();
         else
             onToggleUnselect?.Invoke();
+
+        UpdateColors();
     }
 
     protected override void OnValidate()
@@ -105,6 +105,11 @@ public abstract class XRUI_ToggleBase : XRUI_Base
             t += Time.deltaTime / animationSpeed;
             selectObject.transform.localPosition = Vector3.Lerp(selectObject.transform.localPosition, newPos, t);
             yield return null;
+        }
+        if (changeBGColor)
+        {
+            yield return new WaitForSeconds(0.3f);
+            UpdateColors();
         }
     }
 
