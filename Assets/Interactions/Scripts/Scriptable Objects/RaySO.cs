@@ -6,4 +6,9 @@ public class RaySO : ScriptableObject
 {
     public XRInteractorLineVisual line;
     public XRRayInteractor ray;
+
+    public RaySO clone()
+    {
+        return (RaySO) MemberwiseClone();
+    }
 }

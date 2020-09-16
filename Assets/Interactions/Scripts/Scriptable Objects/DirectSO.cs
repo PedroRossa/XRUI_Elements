@@ -5,4 +5,9 @@ using UnityEngine;
 public class DirectSO : ScriptableObject
 {
     public XRDirectInteractor direct;
+
+    public DirectSO clone()
+    {
+        return (DirectSO) MemberwiseClone();
+    }
 }

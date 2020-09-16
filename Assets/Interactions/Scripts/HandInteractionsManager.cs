@@ -28,6 +28,11 @@ public class HandInteractionsManager : MonoBehaviour
     /// Selected xr grab interactables quantity
     /// </summary>
     public static short selectedObjetcs;
+    /// <summary>
+    /// The objects' name that spam when swap interaction
+    /// </summary>
+    public string[] spamObjectsName;
+
 
     /// <summary>
     /// Main setup
@@ -35,6 +40,7 @@ public class HandInteractionsManager : MonoBehaviour
     private void Start()
     {
         eventConfiguration();
+        machineStates = nextFrameCommands.nothing;
     }
     /// <summary>
     /// Function to swap both hands xr base interactors
@@ -64,18 +70,15 @@ public class HandInteractionsManager : MonoBehaviour
         {
             switch (machineStates)
             {
-                case nextFrameCommands.nothing:
+                case nextFrameCommands.addDirect:
+                    addDirect();
                     break;
 
                 case nextFrameCommands.addRay:
                     addRayAndLineVisual();                
                     break;
-
-                default:
-                    addDirect();
-                    break;
-
             }
+
             machineStates = nextFrameCommands.nothing;
             eventConfiguration();
         }
@@ -106,17 +109,18 @@ public class HandInteractionsManager : MonoBehaviour
     /// </summary>
     private void addRayAndLineVisual()
     {
-        gameObject.AddComponent<XRRayInteractor>();
+        var prefab = gameObject.GetComponent<RayAndDirect>().cloneRay();
+        var ray = gameObject.AddComponent<XRRayInteractor>();
+        ray = prefab.ray;
 
-        gameObject.AddComponent<XRInteractorLineVisual>();
-        XRInteractorLineVisual line = gameObject.GetComponent<RayAndDirect>().raySo.line;
-
-        XRInteractorLineVisual goLine = gameObject.GetComponent<XRInteractorLineVisual>();
-        goLine.validColorGradient = line.validColorGradient;
-        goLine.invalidColorGradient = line.invalidColorGradient;
-        goLine.smoothMovement = line.smoothMovement;
+        var line = gameObject.AddComponent<XRInteractorLineVisual>();
+        line = prefab.line;
 
         GetComponent<SphereCollider>().enabled = false;
+
+        foreach(var spam in spamObjectsName) {
+            Destroy(GameObject.Find(spam));
+        }
     }
 
     /// <summary>
@@ -124,7 +128,9 @@ public class HandInteractionsManager : MonoBehaviour
     /// </summary>
     private void addDirect()
     {
-        gameObject.AddComponent<XRDirectInteractor>();
+        var prefab = gameObject.GetComponent<RayAndDirect>().cloneDirect();
+        var direct = gameObject.AddComponent<XRDirectInteractor>();
+        direct = prefab.direct;
 
         GetComponent<SphereCollider>().enabled = true;
     }

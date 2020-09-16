@@ -65,7 +65,6 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
         XRUI_Helper.ConstraintVelocityLocally(transform, buttonRigidBody, true, true, false);
         XRUI_Helper.ConstraintPositionLocally(transform, buttonRigidBody, true, true, false);
         buttonRigidBody.transform.localRotation = Quaternion.identity;
-        buttonObject.localPosition = new Vector3(0, 0, buttonObject.localPosition.z);
     }
 
     protected virtual void ConfigureButtonMaterial()

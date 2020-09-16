@@ -25,7 +25,7 @@ public class DisableWalkOnCollision : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         walk.enabled = physicalHandsControl.enabled = false;
-        ghostHand.active = true;
+        ghostHand.SetActive(true);
     }
 
     /// <summary>
@@ -35,6 +35,6 @@ public class DisableWalkOnCollision : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         walk.enabled = physicalHandsControl.enabled = true;
-        ghostHand.active = false;
+        ghostHand.SetActive(false);
     }
 }

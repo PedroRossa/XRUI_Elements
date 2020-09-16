@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Class used only for buttons don't exceed their position
@@ -6,36 +7,33 @@
 public class FixButtonPosition : MonoBehaviour
 {
     /// <summary>
-    /// Value to sum with button position
+    /// The initial position locally
     /// </summary>
-    public float sumMaxValue;
-    /// <summary>
-    /// Value to subtract with button position
-    /// </summary>
-    public float subtractMinValue;
+    private Vector3 initialLocalPosition;
 
     /// <summary>
-    /// Z axis, because button just translate in "Z"
+    /// Time in seconds to wait till verify position again
     /// </summary>
-    private float z_Axis;
+    private const float waitSeconds = 0.1f;
     /// <summary>
-    /// Is the button at North at the player?
+    /// The tolerance range of button position. Has this value because this is the distance in 'Z' between the mesh and the background;
     /// </summary>
-    private bool isButtonAtNorth;
+    private const float backgroundLocalPosition = 0.0274f;
+    private const float toleranceRange = backgroundLocalPosition + 0.050f;
 
     private void Start()
     {
-        subtractMinValue = gameObject.transform.position.z - subtractMinValue;
-
-        isButtonAtNorth = sumMaxValue < 0;
-        sumMaxValue = gameObject.transform.position.z + sumMaxValue;
+        initialLocalPosition = gameObject.transform.localPosition;
     }
-    private void FixedUpdate()
+
+    private void Update()
     {
-        if (isButtonAtNorth)
-            z_Axis = Mathf.Clamp(gameObject.transform.position.z, sumMaxValue, subtractMinValue);
-        else
-            z_Axis = Mathf.Clamp(gameObject.transform.position.z, subtractMinValue, sumMaxValue);
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, z_Axis);
+        gameObject.transform.localPosition = initialLocalPosition + new Vector3(0, 0,
+            Mathf.Clamp(gameObject.transform.localPosition.z,
+            -toleranceRange,
+            toleranceRange)
+            );
+        if (gameObject.transform.localPosition.z >= backgroundLocalPosition)
+            gameObject.transform.localPosition = initialLocalPosition;
     }
 }
