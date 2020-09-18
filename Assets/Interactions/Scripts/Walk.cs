@@ -1,76 +1,82 @@
 ﻿using UnityEngine;
+
 /// <summary>
-/// Class used for locomotion with the left joystick
+/// Class that permits a locomotion system with one of the joysticks thumbstick
 /// </summary>
 public class Walk : MonoBehaviour
 {
     /// <summary>
-    /// Translation speed movement
+    /// Speed for translation movement
     /// </summary>
     public short translationSpeed = 250;
     /// <summary>
-    /// Rotation speed movement
+    /// Speed for rotation movement
     /// </summary>
     public short rotationSpeed = 50;
     /// <summary>
-    /// The camera transform from direction reference
+    /// The transform of the xrRig camera
     /// </summary>
     public Transform cameraTransform;
+    /// <summary>
+    /// Do you wanna use left thumbstick? If it is false, use right thumbstick
+    /// </summary>
+    public bool useLeftThumbstick;
 
     /// <summary>
-    /// the proper rigidbody
+    /// The xrRig rigidbody
     /// </summary>
     private Rigidbody rigidbody;
 
-    /// <summary>
-    /// Get the rigidbody component
-    /// </summary>
     private void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody>();
     }
-    /// <summary>
-    /// Calculate rigidbody's velocity and rotate transform direction
-    /// </summary>
-    private void FixedUpdate()
+    void Update()
     {
-        CalculateVelocity();
-        RotateDirection();
+        if (useLeftThumbstick)
+        {
+            rigidbody.velocity = CalculateVelocityMultiplicationFactor() * OculusInput.LeftHandVerticalAxis;
+
+            transform.eulerAngles += CalculateMaxAngleToMoveInFrame() * OculusInput.LeftHandHorizontalAxis;
+        }
+        else
+        {
+            rigidbody.velocity = CalculateVelocityMultiplicationFactor() * OculusInput.RightHandVerticalAxis;
+
+            transform.eulerAngles += CalculateMaxAngleToMoveInFrame() * OculusInput.RightHandHorizontalAxis;
+        }
     }
 
     /// <summary>
-    /// Function used to calculate rigidbody's velocity
-    /// </summary>
-    private void CalculateVelocity()
-    {
-        rigidbody.velocity = DirectionVector() * Time.deltaTime * translationSpeed *
-            OculusInput.LeftHandVerticalAxis;
-    }
-
-    /// <summary>
-    /// Function used to rotate transform direction with the left joystick horizontal axis
-    /// </summary>
-    private void RotateDirection()
-    {
-        transform.eulerAngles += Vector3.up * Time.deltaTime * rotationSpeed *
-            OculusInput.LeftHandHorizontalAxis;
-    }
-
-    /// <summary>
-    /// Function to return a directional vector acording to cameraTransform which every vector member has a value to 0 from 1
+    /// The vector direction pointed according to y euler angle of the camera transform
     /// </summary>
     /// <returns></returns>
-    private Vector3 DirectionVector()
+    Vector3 DirectionVector()
     {
-        return new Vector3(Mathf.Sin(cameraTransform.eulerAngles.y * Mathf.Deg2Rad), 0, 
+        return new Vector3(Mathf.Sin(cameraTransform.eulerAngles.y * Mathf.Deg2Rad), 0,
             Mathf.Cos(cameraTransform.eulerAngles.y * Mathf.Deg2Rad));
     }
 
-    /// <summary>
-    /// Set the rigidbody's velocity to 0 when the script is disabled
-    /// </summary>
     private void OnDisable()
     {
-        rigidbody.velocity = Vector3.zero;
+        rigidbody.velocity = new Vector3(0, 0, 0);
+    }
+
+    /// <summary>
+    /// Calculate the factor to multiplicate with rigidbody's velocity
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 CalculateVelocityMultiplicationFactor()
+    {
+        return DirectionVector() * Time.deltaTime * translationSpeed;
+    }
+
+    /// <summary>
+    /// Calculate the max angle that a single frame can rotate
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 CalculateMaxAngleToMoveInFrame()
+    {
+        return Vector3.up * Time.deltaTime * rotationSpeed;
     }
 }

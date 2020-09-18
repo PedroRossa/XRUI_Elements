@@ -36,8 +36,9 @@ public class XRUI_2DButtonSprite : XRUI_2DButtonBase
 
         SetSpriteColors();
     }
- 
-    protected override void Initialize() {
+
+    protected override void Initialize()
+    {
         SetSpriteColors();
     }
     private void SetSpriteColors()

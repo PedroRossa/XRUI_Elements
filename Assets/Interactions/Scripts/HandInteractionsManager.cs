@@ -2,16 +2,16 @@
 using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
-/// Class used to manage the interactions used in hands
+/// Class that permits the swap from a XRDirectInteractor in to a XRRayInteractor of a hand
 /// </summary>
 public class HandInteractionsManager : MonoBehaviour
-{   /// <summary>
-    /// A memory variable to keep a destroyed line visual 
-    /// </summary>
-    private XRInteractorLineVisual destroyedLine;
-
+{
     /// <summary>
-    /// Possible commands to do in next frame enum
+    /// Is the object the left hand?
+    /// </summary>
+    public bool isLeftHand;
+    /// <summary>
+    /// Enum of possible commands to execute in the next frame
     /// </summary>
     public enum nextFrameCommands
     {
@@ -21,36 +21,35 @@ public class HandInteractionsManager : MonoBehaviour
     };
 
     /// <summary>
-    /// Possible commands to do in next frame enum instance
+    /// The instance of nextFrameCommands enum
     /// </summary>
-    nextFrameCommands machineStates;
+    private nextFrameCommands machineStates;
     /// <summary>
-    /// Selected xr grab interactables quantity
+    /// Is the hand selecting an object?
     /// </summary>
-    public static short selectedObjetcs;
+    private bool isSelectingAnObject;
+
     /// <summary>
     /// The objects' name that spam when swap interaction
     /// </summary>
     public string[] spamObjectsName;
 
-
-    /// <summary>
-    /// Main setup
-    /// </summary>
     private void Start()
     {
         eventConfiguration();
-        machineStates = nextFrameCommands.nothing;
     }
+
     /// <summary>
-    /// Function to swap both hands xr base interactors
+    /// The setup to swap hand interaction type. Destroy current components of XRBaseInteractor
     /// </summary>
-    void SwapInteraction()
+    private void SwapInteraction()
     {
         XRRayInteractor ray = gameObject.GetComponent<XRRayInteractor>();
 
         if (ray != null)
         {
+            Transform attachTrans = ray.attachTransform;
+            Destroy(attachTrans.gameObject);
             Destroy(ray);
             Destroy(gameObject.GetComponent<XRInteractorLineVisual>());
             machineStates = nextFrameCommands.addDirect;
@@ -75,62 +74,74 @@ public class HandInteractionsManager : MonoBehaviour
                     break;
 
                 case nextFrameCommands.addRay:
-                    addRayAndLineVisual();                
+                    addRay();
+                    foreach (var spam in spamObjectsName)
+                    {
+                        Destroy(GameObject.Find(spam));
+                    }
+
                     break;
             }
 
+
             machineStates = nextFrameCommands.nothing;
             eventConfiguration();
+
         }
-        
-        if (Input.GetKeyDown(OculusInput.ButtonA) && selectedObjetcs == 0) {
-            SwapInteraction();
+
+        if (isLeftHand)
+        {
+            if (Input.GetKeyDown(OculusInput.ButtonX) && !isSelectingAnObject)
+            {
+                SwapInteraction();
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(OculusInput.ButtonA) && !isSelectingAnObject)
+            {
+                SwapInteraction();
+            }
         }
     }
 
     /// <summary>
-    /// Callbacks setup
+    /// Callbacks configuration to XRBaseInteractors
     /// </summary>
     private void eventConfiguration()
     {
         GetComponent<XRBaseInteractor>().onSelectEnter.AddListener(i =>
         {
-            ++selectedObjetcs;
+            isSelectingAnObject = true;
         });
 
         GetComponent<XRBaseInteractor>().onSelectExit.AddListener(i =>
         {
-            --selectedObjetcs;
+            isSelectingAnObject = false;
         });
     }
 
     /// <summary>
-    /// Add a ray interactor and a line visual
+    /// Setup to add a XRRayInteraction and a XRLineInteraction component
     /// </summary>
-    private void addRayAndLineVisual()
+    private void addRay()
     {
-        var prefab = gameObject.GetComponent<RayAndDirect>().cloneRay();
-        var ray = gameObject.AddComponent<XRRayInteractor>();
-        ray = prefab.ray;
-
-        var line = gameObject.AddComponent<XRInteractorLineVisual>();
-        line = prefab.line;
-
+        XRRayInteractor ray = gameObject.AddComponent<XRRayInteractor>();
+        gameObject.AddComponent<XRInteractorLineVisual>();
+        XRInteractorLineVisual line = gameObject.GetComponent<RayAndDirect>().raySo.line;
+        XRInteractorLineVisual goLine = gameObject.GetComponent<XRInteractorLineVisual>();
+        goLine.validColorGradient = line.validColorGradient;
+        goLine.invalidColorGradient = line.invalidColorGradient;
+        goLine.smoothMovement = line.smoothMovement;
         GetComponent<SphereCollider>().enabled = false;
-
-        foreach(var spam in spamObjectsName) {
-            Destroy(GameObject.Find(spam));
-        }
     }
 
     /// <summary>
-    /// Add a direct interactor
+    /// Setup to add a XRDirectInteraction component
     /// </summary>
     private void addDirect()
     {
-        var prefab = gameObject.GetComponent<RayAndDirect>().cloneDirect();
-        var direct = gameObject.AddComponent<XRDirectInteractor>();
-        direct = prefab.direct;
+        gameObject.AddComponent<XRDirectInteractor>();
 
         GetComponent<SphereCollider>().enabled = true;
     }
