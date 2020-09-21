@@ -21,6 +21,16 @@ public class HandInteractionsManager : MonoBehaviour
     };
 
     /// <summary>
+    /// The point transform to attach the ray
+    /// </summary>
+    public Transform attachRayTransform;
+
+    /// <summary>
+    /// The current transform where ray is attached
+    /// </summary>
+    private Transform currAttachTransform = null;
+
+    /// <summary>
     /// The instance of nextFrameCommands enum
     /// </summary>
     private nextFrameCommands machineStates;
@@ -48,8 +58,7 @@ public class HandInteractionsManager : MonoBehaviour
 
         if (ray != null)
         {
-            Transform attachTrans = ray.attachTransform;
-            Destroy(attachTrans.gameObject);
+            Destroy(ray.attachTransform.gameObject);
             Destroy(ray);
             Destroy(gameObject.GetComponent<XRInteractorLineVisual>());
             machineStates = nextFrameCommands.addDirect;
@@ -134,6 +143,15 @@ public class HandInteractionsManager : MonoBehaviour
         goLine.invalidColorGradient = line.invalidColorGradient;
         goLine.smoothMovement = line.smoothMovement;
         GetComponent<SphereCollider>().enabled = false;
+
+        if (currAttachTransform != null)
+            Destroy(currAttachTransform.gameObject);
+        currAttachTransform = ray.attachTransform;
+        if (attachRayTransform != null)
+        {
+            currAttachTransform.position = attachRayTransform.position;
+            currAttachTransform.rotation = attachRayTransform.rotation;
+        }
     }
 
     /// <summary>
