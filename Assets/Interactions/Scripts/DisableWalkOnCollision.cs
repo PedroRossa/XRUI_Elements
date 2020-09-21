@@ -10,10 +10,6 @@ public class DisableWalkOnCollision : MonoBehaviour
     /// </summary>
     public Walk walk;
     /// <summary>
-    /// The proper Physical hands control script
-    /// </summary>
-    public PhysicalHandsControl physicalHandsControl;
-    /// <summary>
     /// A ghost hand game object
     /// </summary>
     public GameObject ghostHand;
@@ -24,7 +20,7 @@ public class DisableWalkOnCollision : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        walk.enabled = physicalHandsControl.enabled = false;
+        walk.enabled = false;
         ghostHand.SetActive(true);
     }
 
@@ -34,7 +30,7 @@ public class DisableWalkOnCollision : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionExit(Collision collision)
     {
-        walk.enabled = physicalHandsControl.enabled = true;
+        walk.enabled = true;
         ghostHand.SetActive(false);
     }
 }

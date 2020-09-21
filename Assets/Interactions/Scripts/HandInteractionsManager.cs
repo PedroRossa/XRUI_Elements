@@ -26,11 +26,6 @@ public class HandInteractionsManager : MonoBehaviour
     public Transform attachRayTransform;
 
     /// <summary>
-    /// The current transform where ray is attached
-    /// </summary>
-    private Transform currAttachTransform = null;
-
-    /// <summary>
     /// The instance of nextFrameCommands enum
     /// </summary>
     private nextFrameCommands machineStates;
@@ -58,7 +53,6 @@ public class HandInteractionsManager : MonoBehaviour
 
         if (ray != null)
         {
-            Destroy(ray.attachTransform.gameObject);
             Destroy(ray);
             Destroy(gameObject.GetComponent<XRInteractorLineVisual>());
             machineStates = nextFrameCommands.addDirect;
@@ -84,11 +78,6 @@ public class HandInteractionsManager : MonoBehaviour
 
                 case nextFrameCommands.addRay:
                     addRay();
-                    foreach (var spam in spamObjectsName)
-                    {
-                        Destroy(GameObject.Find(spam));
-                    }
-
                     break;
             }
 
@@ -96,6 +85,10 @@ public class HandInteractionsManager : MonoBehaviour
             machineStates = nextFrameCommands.nothing;
             eventConfiguration();
 
+            foreach (var spam in spamObjectsName)
+            {
+                Destroy(GameObject.Find(spam));
+            }
         }
 
         if (isLeftHand)
@@ -144,13 +137,10 @@ public class HandInteractionsManager : MonoBehaviour
         goLine.smoothMovement = line.smoothMovement;
         GetComponent<SphereCollider>().enabled = false;
 
-        if (currAttachTransform != null)
-            Destroy(currAttachTransform.gameObject);
-        currAttachTransform = ray.attachTransform;
         if (attachRayTransform != null)
         {
-            currAttachTransform.position = attachRayTransform.position;
-            currAttachTransform.rotation = attachRayTransform.rotation;
+            ray.attachTransform.position = attachRayTransform.position;
+            ray.attachTransform.rotation = attachRayTransform.rotation;
         }
     }
 

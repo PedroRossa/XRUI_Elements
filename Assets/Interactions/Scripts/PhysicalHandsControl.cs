@@ -1,55 +1,39 @@
-﻿using UnityEngine.XR.Interaction.Toolkit;
-using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A script that possibilty physical interactions with the xr rig hands
 /// </summary>
 public class PhysicalHandsControl : MonoBehaviour
 {
-    /// <summary>
-    /// The transforms of the hands
-    /// </summary>
-    public Transform[] handsTransforms;
+    private bool isColliding;
 
-    /// <summary>
-    /// The xr base interactors of the hands
-    /// </summary>
-    private XRBaseInteractor[] xrBaseInteractors;
-    /// <summary>
-    /// The hands' rigidbodies
-    /// </summary>
-    private Rigidbody[] handsRigidbodies;
-
-    /// <summary>
-    /// Main setup
-    /// </summary>
-    void Start()
+    private void Update()
     {
-        xrBaseInteractors = new XRBaseInteractor[handsTransforms.Length];
-        handsRigidbodies = new Rigidbody[handsTransforms.Length];
-
-        for (int i = 0; i < handsTransforms.Length; i++)
-        {
-            xrBaseInteractors[i] = handsTransforms[i].GetComponentInParent<XRBaseInteractor>();
-            handsRigidbodies[i] = handsTransforms[i].GetComponent<Rigidbody>();
+        if(!isColliding) {
+            transform.localPosition = new Vector3(0, 0, -0.05f);
         }
     }
 
-    /// <summary>
-    /// If a hand is selecting something, control its position and turns non-kinematic, else turn its kinematic
-    /// </summary>
-    private void Update()
+    private void OnCollisionStay(Collision collision)
     {
-        for (int i = 0; i < handsTransforms.Length; i++)
-        {
-            if (!xrBaseInteractors[i].isSelectActive)
-            {
-                handsTransforms[i].localPosition = new Vector3(0, 0, -0.05f);
-                handsRigidbodies[i].isKinematic = false;
-            }
-            else
-                handsRigidbodies[i].isKinematic = true;
-        }
+        isColliding = true;
+        /*this.transform.localPosition = new Vector3(
+                    Mathf.Clamp(transform.localPosition.x,
+                        -0.1f,
+                        0.1f)
+                        ,
+                    Mathf.Clamp(transform.localPosition.y,
+                        -0.1f,
+                        0.1f)
+                        ,
+                    Mathf.Clamp(transform.localPosition.z,
+                        -0.15f,
+                        0.15f)
+                        );*/
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isColliding = false;
     }
 }
