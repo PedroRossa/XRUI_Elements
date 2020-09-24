@@ -1,11 +1,11 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using Vizlab.Package.Support;
 
 public class ScaleNotification : MonoBehaviour
 {
-    #region Variables
     [Tooltip("Notification Text Prefab")]
     public GameObject notification;
     /// <summary>
@@ -78,11 +78,28 @@ public class ScaleNotification : MonoBehaviour
     private float oririnalSizeZ;
 
     private bool isShowing = false;
-    #endregion
-    // Start is called before the first frame update
-    void Start()
+
+    private XRGrabInteractable grabInteractable;
+
+    private void Start()
     {
+        InitializeAll();
+        grabInteractable = target.GetComponent<XRGrabInteractable>();
+        grabInteractable.onSelectEnter.AddListener((grabInteractable) =>
+        {
+            SetShowInfos(true);
+        });
+        grabInteractable.onSelectExit.AddListener((grabInteractable) =>
+        {
+            SetShowInfos(false);
+        });
     }
+    private void Update()
+    {
+        if (grabInteractable.isSelected)
+            UpdateInfos();
+    }
+
     public void InitializeAll()
     {
         try
@@ -91,7 +108,7 @@ public class ScaleNotification : MonoBehaviour
             InitializeNotification();
             InitializeRenderer();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //VRDebug.Instance.Log("Initialize Scale script::" + ex, LogType.Error);
         }
@@ -189,15 +206,8 @@ public class ScaleNotification : MonoBehaviour
 
         SetShowInfos(false);
     }
-    // Update is called once per frame
-    void Update()
-    {
-    }
     public void UpdateInfos()
     {
-        if (!isShowing)
-            SetShowInfos(true);
-
         Vector3 start = target.transform.position - (target.transform.forward * bounds.extents.z);
         start = start - (target.transform.right * bounds.extents.x);
 
@@ -260,5 +270,4 @@ public class ScaleNotification : MonoBehaviour
         notificationTextZ.transform.rotation = target.transform.rotation;
         notificationTextZ.transform.Rotate(0f, -90f, 0f, Space.Self);
     }
-
 }
