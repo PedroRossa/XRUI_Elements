@@ -23,14 +23,4 @@ public class DisableWalkOnCollision : MonoBehaviour
         walk.enabled = false;
         ghostHand.SetActive(true);
     }
-
-    /// <summary>
-    /// Deactive the ghost hand and active the walk
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionExit(Collision collision)
-    {
-        walk.enabled = true;
-        ghostHand.SetActive(false);
-    }
 }
