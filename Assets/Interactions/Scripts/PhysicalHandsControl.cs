@@ -14,7 +14,7 @@ public class PhysicalHandsControl : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         isColliding = true;
         /*this.transform.localPosition = new Vector3(

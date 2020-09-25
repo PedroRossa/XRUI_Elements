@@ -25,7 +25,11 @@ public class Walk : MonoBehaviour
     /// <summary>
     /// The xrRig rigidbody
     /// </summary>
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
+    public Vector3 RigidbodyVelocity()
+    {
+        return rigidbody.velocity;
+    }
 
     private void Start()
     {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 
@@ -101,9 +102,9 @@ public class MoveWithJoystick : MonoBehaviour
     /// </summary>
     private Vector3 vectorDirection;
     /// <summary>
-    /// The position of the controller when the object is selected
+    /// The position of the controller at the start of frame
     /// </summary>
-    private Vector3 controllerPositionOnSelect;
+    private Vector3 controllerPositionOnStartOfFrame;
     /// <summary>
     /// The position of the object when it is selected
     /// </summary>
@@ -111,7 +112,8 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// The proper object's rigidbody
     /// </summary>
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
+    private bool isInterpolatingPosition;
 
     void Start()
     {
@@ -125,7 +127,6 @@ public class MoveWithJoystick : MonoBehaviour
 
         grabInteractable.onSelectEnter.AddListener((interactor) => {
             controllerTransform = interactor.transform;
-            controllerPositionOnSelect = controllerTransform.position;
             transformPositionOnSelect = transform.position;
 
             isRayInteractor = interactor as XRRayInteractor;
@@ -147,7 +148,7 @@ public class MoveWithJoystick : MonoBehaviour
         });
 
         grabInteractable.onSelectExit.AddListener((interactor) => {
-            rigidbody.velocity = Vector3.zero;
+
             grabInteractable.trackPosition = startsTrackedPosition;
 
             if (isRayInteractor)
@@ -161,9 +162,12 @@ public class MoveWithJoystick : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (grabInteractable.isSelected && isRayInteractor)
+        if(controllerTransform != null && !isInterpolatingPosition)
+            controllerPositionOnStartOfFrame = controllerTransform.position;
+
+        if (grabInteractable.isSelected && isRayInteractor && !isInterpolatingPosition)
         {
-            InterpolatePosition();
+            StartCoroutine(InterpolatePosition());
         }
     }
 
@@ -217,6 +221,8 @@ public class MoveWithJoystick : MonoBehaviour
             AdjustMovements();
         }
 
+        else
+            rigidbody.velocity = Vector3.zero;
     }
 
     /// <summary>
@@ -311,17 +317,16 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// Make the object mirror the controller movements
     /// </summary>
-    void InterpolatePosition()
+    private IEnumerator InterpolatePosition()
     {
+        isInterpolatingPosition = true;
+        yield return new WaitForEndOfFrame();
+
         //Calculando vetor direção
-        vectorDirection = controllerTransform.position - controllerPositionOnSelect;
+        vectorDirection = controllerTransform.position - controllerPositionOnStartOfFrame;
 
+        transform.position += vectorDirection * 1.5f;
 
-        //Transladando o objeto na direção do vetor
-        //Soma a velocidade se estiver transladando, se não, seta diretamente
-        if (states == machineStates.translading)
-            rigidbody.velocity += vectorDirection * walk.translationSpeed / 2 * Time.deltaTime;
-        else
-            rigidbody.velocity = vectorDirection * walk.translationSpeed / 2 * Time.deltaTime;
+        isInterpolatingPosition = false;
     }
 }
