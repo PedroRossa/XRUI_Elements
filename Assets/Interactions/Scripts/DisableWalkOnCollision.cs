@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
 /// Class used for disable a Walk script when a hand collide with a collider
@@ -14,13 +15,21 @@ public class DisableWalkOnCollision : MonoBehaviour
     /// </summary>
     public GameObject ghostHand;
 
+    private XRBaseInteractor grabInteractor;
+
+    private void Start()
+    {
+        grabInteractor = gameObject.GetComponentInParent<XRBaseInteractor>();
+    }
     /// <summary>
     /// Active the ghost hand and deactive the walk
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        walk.enabled = false;
-        ghostHand.SetActive(true);
+        if(!grabInteractor.isSelectActive) { 
+            walk.enabled = false;
+            ghostHand.SetActive(true);
+        }
     }
 }

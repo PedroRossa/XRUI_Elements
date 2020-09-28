@@ -26,7 +26,7 @@ public class RealocateToScene : MonoBehaviour
     /// <summary>
     /// The proper object's rigidbody
     /// </summary>
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
 
     /// <summary>
     /// Main setup
