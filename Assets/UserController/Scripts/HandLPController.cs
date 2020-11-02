@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using InputManager;
-using System.Runtime.CompilerServices;
 
 namespace UserController
 {
@@ -19,7 +16,7 @@ namespace UserController
         private XRBaseControllerInteractor xRBaseController;
         private bool isOnInteractableEvent = false;
         private GrabbingType grabType = GrabbingType.HandGrab;
-        // Start is called before the first frame update
+
         void Start()
         {
             if (anim == null)

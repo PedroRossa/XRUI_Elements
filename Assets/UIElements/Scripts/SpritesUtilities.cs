@@ -1,22 +1,30 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class of utilities for sprites of a SpriteRenderer
+/// </summary>
+[RequireComponent(typeof(SpriteRenderer))]
 public class SpritesUtilities : MonoBehaviour
 {
+    /// <summary>
+    /// Possible sprites to be used
+    /// </summary>
     public Sprite[] sprites;
 
-    private XRUI_3DButtonSprite Button_mainSprite;
-    private int index = 0;
+    private SpriteRenderer spriteRenderer;
+    private int spriteIndex = 0;
 
     private void Start()
     {
-        Button_mainSprite = gameObject.GetComponent<XRUI_3DButtonSprite>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
+
+    /// <summary>
+    /// Set the sprite to the next one in sprites array
+    /// </summary>
     public void changeSprite()
     {
-        if (Button_mainSprite.canActiveButton)
-        {
-            Button_mainSprite.iconSprite.sprite = sprites[index];
-            index = (index + 1) % sprites.Length;
-        }
+        spriteIndex = (spriteIndex + 1) % sprites.Length;
+        spriteRenderer.sprite = sprites[spriteIndex];
     }
 }

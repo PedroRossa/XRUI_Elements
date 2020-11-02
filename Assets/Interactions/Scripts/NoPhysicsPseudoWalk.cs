@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Class that permits a locomotion system with one of the joysticks thumbstick
+/// Class that permits a locomotion system with one of the joysticks thumbstick through changing xr rig transform.position
 /// </summary>
 public class NoPhysicsPseudoWalk : MonoBehaviour
 {

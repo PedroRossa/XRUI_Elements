@@ -32,4 +32,10 @@ public class DisableWalkOnCollision : MonoBehaviour
             ghostHand.SetActive(true);
         }
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        walk.enabled = true;
+        ghostHand.SetActive(false);
+    }
 }

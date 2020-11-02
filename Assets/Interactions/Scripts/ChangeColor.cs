@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// ONLY TEST CLASS... MY FIRST PLAY IN VR - GUILHERME
+/// </summary>
 public class ChangeColor : MonoBehaviour
 {
     XRGrabInteractable grabInteractable;

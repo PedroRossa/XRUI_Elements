@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Class to translate an gameObject to its original position after "waitSeconds" seconds
+/// </summary>
 public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
 {
     public float waitSeconds = 1;

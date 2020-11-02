@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Class used only for buttons don't exceed their position
@@ -33,7 +32,5 @@ public class FixButtonPosition : MonoBehaviour
             -toleranceRange,
             toleranceRange)
             );
-        if (gameObject.transform.localPosition.z >= backgroundLocalPosition)
-            gameObject.transform.localPosition = initialLocalPosition;
     }
 }
