@@ -4,6 +4,6 @@
     {
         None,
         Primary2DAxis,
-        Secundary2DAxis
+        Secondary2DAxis
     }
 }

@@ -10,6 +10,7 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
     public Transform buttonObject;
 
     public Material buttonMaterial;
+    public XRUI_3DButtonBase[] buttonsToDisableOnClickUp;
 
     [ReadOnly]
     public bool isPressed;

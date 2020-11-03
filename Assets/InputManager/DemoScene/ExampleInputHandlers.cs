@@ -2,7 +2,10 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class ExemploInputHandlers : MonoBehaviour
+/// <summary>
+/// Class to set text in TextMeshProUGUI according to Oculus Input events
+/// </summary>
+public class ExampleInputHandlers : MonoBehaviour
 {
     public TextMeshProUGUI textButton;
     public TextMeshProUGUI textAxis;
@@ -10,7 +13,7 @@ public class ExemploInputHandlers : MonoBehaviour
     public TextMeshProUGUI textSecAxis2D;
     public InputManager.ButtonHandler primaryClickHandler = null;
     public InputManager.AxisHandler2D primaryAxisHandler = null;
-    public InputManager.AxisHandler2D secundaryAxisHandler = null;
+    public InputManager.AxisHandler2D secondaryAxisHandler = null;
     public InputManager.AxisHandler triggerHandler = null;
     public InputManager.ButtonHandler AxisClickHandler = null;
 
@@ -19,7 +22,7 @@ public class ExemploInputHandlers : MonoBehaviour
         primaryClickHandler.OnButtonDown += PrintPrimaryButtonDown;
         primaryClickHandler.OnButtonUp += PrintPrimaryButtonUp;
         primaryAxisHandler.OnValueChange += PrintPrimaryAxis;
-        secundaryAxisHandler.OnValueChange += PrintSecundaryAxis;
+        secondaryAxisHandler.OnValueChange += PrintSecondaryAxis;
         triggerHandler.OnValueChange += PrintTrigger;
         AxisClickHandler.OnButtonDown += PrintAxisClickDown;
         AxisClickHandler.OnButtonUp += PrintAxisClickUp;
@@ -66,7 +69,7 @@ public class ExemploInputHandlers : MonoBehaviour
         Debug.Log("Left axis:" + value);
         textAxis2D.text = "Left axis 2d" + value.ToString();
     }
-    private void PrintSecundaryAxis(XRController controller, Vector2 value)
+    private void PrintSecondaryAxis(XRController controller, Vector2 value)
     {
         print("Right axis 2d:" + value);
         Debug.Log("Right axis:" + value);

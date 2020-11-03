@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Class to manage collisions with XRUI_3DButtonBase instances
+/// </summary>
+[RequireComponent(typeof(XRUI_3DButtonBase))]
 public class XRUI_3DButtonCollisionDetection : MonoBehaviour
 {
     public bool isColliding;
     public Collider buttonCollider;
 
-    public XRUI_ButtonBase xrUIButton;
+    public XRUI_3DButtonBase xrUIButton;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +31,9 @@ public class XRUI_3DButtonCollisionDetection : MonoBehaviour
             {
                 StartCoroutine((xrUIButton as XRUI_3DButtonBase).resetCanActiveButton());
             }
-            catch (System.Exception) { }
+            catch (System.Exception e) {
+                Debug.LogError(e);
+            }
         }
     }
 }

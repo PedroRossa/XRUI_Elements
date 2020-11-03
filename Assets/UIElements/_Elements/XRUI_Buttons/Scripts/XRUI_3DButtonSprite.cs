@@ -5,7 +5,6 @@ public class XRUI_3DButtonSprite : XRUI_3DButtonBase
 {
     [Header("Feedback Properties")]
     public bool backgroundFeedback = true;
-    public XRUI_3DButtonBase[] othersButtons;
 
     [HideIf("backgroundFeedback")]
     public Color buttonColor = Color.white;
@@ -59,7 +58,10 @@ public class XRUI_3DButtonSprite : XRUI_3DButtonBase
         {
             feedbackColor = GetComponentInChildren<XRUI_FeedbackColor>();
         }
-        catch (System.NullReferenceException) { }
+        catch (System.NullReferenceException) {
+            Debug.LogError("Feedback color missing in: " + gameObject.name + "\nYou need to put a XRUI_FeedbackColor component" +
+                " in a child game object");
+        }
     }
 
     protected override void EventConfiguration()
@@ -80,7 +82,7 @@ public class XRUI_3DButtonSprite : XRUI_3DButtonBase
                             if (feedbackColor != null)
                                 feedbackColor.memoryColor = buttonMesh.sharedMaterial.color;
 
-                            foreach (var button in othersButtons)
+                            foreach (var button in buttonsToDisableOnClickUp)
                             {
                                 if (button.isEnabled)
                                 {

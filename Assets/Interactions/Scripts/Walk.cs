@@ -3,6 +3,7 @@
 /// <summary>
 /// Class that permits a locomotion system with one of the joysticks thumbstick through xr rig rigidbody's speed
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class Walk : MonoBehaviour
 {
     /// <summary>
