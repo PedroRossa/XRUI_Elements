@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 3D toggle XRUI component
+/// </summary>
 public class XRUI_3DToggle : XRUI_ToggleBase
 {
     public Material bodyMaterial;

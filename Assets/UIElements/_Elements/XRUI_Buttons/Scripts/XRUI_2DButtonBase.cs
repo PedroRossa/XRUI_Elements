@@ -1,9 +1,10 @@
-﻿using NaughtyAttributes;
-using System.Collections;
-using TMPro;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Base class of XRUI 2DButtons
+/// </summary>
 public class XRUI_2DButtonBase : XRUI_ButtonBase
 {
     public SpriteRenderer backgroundSprite;

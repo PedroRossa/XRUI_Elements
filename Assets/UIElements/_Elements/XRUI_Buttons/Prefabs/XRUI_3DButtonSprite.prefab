@@ -98,12 +98,12 @@ MonoBehaviour:
   buttonBackground: {fileID: 8510283511374090264}
   buttonObject: {fileID: 8510283511324639598}
   buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
+  buttonsToDisableOnClickUp: []
   isPressed: 0
   isClicked: 0
   isOn: 0
   buttonMesh: {fileID: 8510283511324639593}
   backgroundFeedback: 1
-  othersButtons: []
   buttonColor: {r: 1, g: 1, b: 1, a: 1}
   buttonDisabledColor: {r: 1, g: 1, b: 1, a: 1}
   iconSprite: {fileID: 8510283511319827434}

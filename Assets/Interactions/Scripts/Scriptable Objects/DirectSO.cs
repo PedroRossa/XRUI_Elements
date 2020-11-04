@@ -1,6 +1,9 @@
 ﻿using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object to instance XRDirectInteractors
+/// </summary>
 [CreateAssetMenu]
 public class DirectSO : ScriptableObject
 {

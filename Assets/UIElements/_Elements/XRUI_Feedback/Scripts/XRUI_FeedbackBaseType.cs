@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Abstract class that modelate touch, near and select events
+/// </summary>
 [RequireComponent(typeof(XRUI_Feedback))]
 public abstract class XRUI_FeedbackBaseType : MonoBehaviour
 {

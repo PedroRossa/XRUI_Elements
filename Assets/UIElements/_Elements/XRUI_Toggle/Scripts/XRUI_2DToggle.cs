@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 2D toggle XRUI component
+/// </summary>
 public class XRUI_2DToggle : XRUI_ToggleBase
 {
     private SpriteRenderer bodySprite;

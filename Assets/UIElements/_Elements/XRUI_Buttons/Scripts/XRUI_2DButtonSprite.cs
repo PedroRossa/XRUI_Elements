@@ -1,7 +1,9 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// XRUI 2DButton identified by a Sprite
+/// </summary>
 public class XRUI_2DButtonSprite : XRUI_2DButtonBase
 {
     public bool backgroundFeedback;

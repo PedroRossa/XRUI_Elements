@@ -2,6 +2,9 @@
 
 namespace Vizlab.Package.Support
 {
+    /// <summary>
+    /// Central utilities class
+    /// </summary>
     public class Helper : MonoBehaviour
     {
         /// <summary>

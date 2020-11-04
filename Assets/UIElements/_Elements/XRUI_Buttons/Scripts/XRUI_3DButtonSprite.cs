@@ -1,6 +1,9 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
+/// <summary>
+/// XRUI 3DButton identified by a Sprite
+/// </summary>
 public class XRUI_3DButtonSprite : XRUI_3DButtonBase
 {
     [Header("Feedback Properties")]

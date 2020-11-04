@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+///Visual feedback with color changes derived from XRUI_FeedbackBaseType
+/// </summary>
 public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
 {
     public enum VisualFeedbackType
@@ -16,6 +19,10 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
 
     private MeshRenderer meshRenderer;
     private SpriteRenderer spriteRenderer;
+
+    /// <summary>
+    /// Color of the object instantly before OnNearEnter event be triggered
+    /// </summary>
     [HideInInspector]
     public Color memoryColor;
 

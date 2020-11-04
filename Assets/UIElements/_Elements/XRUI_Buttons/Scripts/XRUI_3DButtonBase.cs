@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Base class of XRUI 3DButtons
+/// </summary>
 public class XRUI_3DButtonBase : XRUI_ButtonBase
 {
     [Header("Internal Properties")]
@@ -10,6 +13,9 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
     public Transform buttonObject;
 
     public Material buttonMaterial;
+    /// <summary>
+    /// Others buttons to deselect when this one is selected 
+    /// </summary>
     public XRUI_3DButtonBase[] buttonsToDisableOnClickUp;
 
     [ReadOnly]

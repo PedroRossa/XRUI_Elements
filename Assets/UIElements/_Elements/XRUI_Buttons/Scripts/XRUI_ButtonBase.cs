@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Base class of XRUI Buttons
+/// </summary>
 public class XRUI_ButtonBase : XRUI_Base
 {
     public UnityEvent onClickDown;
@@ -49,6 +52,10 @@ public class XRUI_ButtonBase : XRUI_Base
         onClickUp.Invoke();
     }
 
+    /// <summary>
+    /// Coroutine to reset wait time to can active the button again
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator TimerTick()
     {
         yield return new WaitForSeconds(secondsToValidateClick);

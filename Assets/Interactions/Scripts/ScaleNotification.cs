@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using Vizlab.Package.Support;
 
+/// <summary>
+/// Class to give a visual notification of the scale of an element in their axis X,Y and Z
+/// </summary>
 public class ScaleNotification : MonoBehaviour
 {
     [Tooltip("Notification Text Prefab")]
@@ -108,9 +111,9 @@ public class ScaleNotification : MonoBehaviour
             InitializeNotification();
             InitializeRenderer();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //VRDebug.Instance.Log("Initialize Scale script::" + ex, LogType.Error);
+            Debug.LogError("Initialize Scale script::" + ex + " -- " + LogType.Error);
         }
     }
     private void InitializeLines()
@@ -181,7 +184,6 @@ public class ScaleNotification : MonoBehaviour
     }
     private void InitializeRenderer()
     {
-        //bounds = target.GetComponent<Renderer>()?.bounds?? target.GetComponentInChildren<Renderer>()?.bounds ?? target.GetComponent<MeshRenderer>()?.bounds ?? target.GetComponentInChildren<MeshRenderer>().bounds;
         Renderer rend = target.GetComponent<Renderer>() ?? target.GetComponentInChildren<Renderer>();
         if (rend)
             bounds = rend.bounds;

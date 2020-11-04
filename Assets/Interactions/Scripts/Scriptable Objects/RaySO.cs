@@ -1,6 +1,9 @@
 ﻿using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable Object to instance XRRayInteractors containing XRInteractorLineVisuals
+/// </summary>
 [CreateAssetMenu]
 public class RaySO : ScriptableObject
 {

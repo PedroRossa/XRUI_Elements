@@ -3,6 +3,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRUI_NearDetectionLocked
 {
+    /// <summary>
+    /// Class to configurate a near detection in a XRUI element
+    /// </summary>
     public class XRUI_NearDetection : MonoBehaviour
     {
         private XRUI_Feedback feedbackBase;

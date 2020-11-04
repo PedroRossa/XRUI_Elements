@@ -4,6 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace InputManager
 {
+    /// <summary>
+    /// Manager of Oculus inputs
+    /// </summary>
     public class InputManager : MonoBehaviour
     {
         public List<ButtonHandler> allButtonsHandlers = new List<ButtonHandler>();

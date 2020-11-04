@@ -512,6 +512,7 @@ MonoBehaviour:
   buttonBackground: {fileID: 6351440270485320790}
   buttonObject: {fileID: 6351440271073142048}
   buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
+  buttonsToDisableOnClickUp: []
   isPressed: 0
   isClicked: 0
   isOn: 0

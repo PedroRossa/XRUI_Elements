@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Loud feedbacks derived from XRUI_FeedbackBaseType
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class XRUI_FeedbackSound : XRUI_FeedbackBaseType
 {

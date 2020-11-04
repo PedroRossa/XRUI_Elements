@@ -3,8 +3,10 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Abstract and base class of XRUI toggle components
+/// </summary>
 public abstract class XRUI_ToggleBase : XRUI_Base
 {
     [Header("Prefab References")]

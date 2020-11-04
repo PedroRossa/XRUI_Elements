@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+///Haptics triggered on Oculus controll derived from XRUI_FeedbackBaseType
+/// </summary>
 public class XRUI_FeedbackHaptics : XRUI_FeedbackBaseType
 {
     [Header("Near Haptics")]

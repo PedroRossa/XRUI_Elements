@@ -1,6 +1,9 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
+/// <summary>
+/// Base class of XRUI elements
+/// </summary>
 [RequireComponent(typeof(XRUI_Colors))]
 public abstract class XRUI_Base : MonoBehaviour
 {
