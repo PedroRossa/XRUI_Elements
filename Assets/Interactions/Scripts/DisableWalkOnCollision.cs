@@ -9,7 +9,7 @@ public class DisableWalkOnCollision : MonoBehaviour
     /// <summary>
     /// The XR rig walk instance
     /// </summary>
-    public Walk walk;
+    public XRRigRigidbodyWalk walk;
     /// <summary>
     /// A ghost hand game object
     /// </summary>

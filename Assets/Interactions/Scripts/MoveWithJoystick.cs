@@ -31,7 +31,7 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// A Walk reference from XRRig
     /// </summary>
-    public Walk walk;
+    public XRRigRigidbodyWalk walk;
     /// <summary>
     /// The minimum distance to attach an object in a controller
     /// </summary>

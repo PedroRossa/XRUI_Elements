@@ -8,7 +8,7 @@ public class EnableWalkOnDecolision : MonoBehaviour
     /// <summary>
     /// The XR rig walk instance
     /// </summary>
-    public Walk walk;
+    public XRRigRigidbodyWalk walk;
 
     private void OnCollisionExit(Collision collision)
     {
