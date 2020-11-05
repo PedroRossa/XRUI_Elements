@@ -507,11 +507,16 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  secondsToValidateClick: 0.2
+  canActiveButton: 1
   buttonBackground: {fileID: 6351440270485320790}
   buttonObject: {fileID: 6351440271073142048}
   buttonMaterial: {fileID: 2100000, guid: 71d08d3a91dcbc3418cfa1cab96ea695, type: 2}
+  buttonsToDisableOnClickUp: []
   isPressed: 0
   isClicked: 0
+  isOn: 0
+  buttonMesh: {fileID: 6351440271073142055}
 --- !u!1 &6351440271073142063
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,3 +709,5 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 1
   xrUIColors: {fileID: 6351440270829582933}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}

@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+///Visual feedback with color changes derived from XRUI_FeedbackBaseType
+/// </summary>
 public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
 {
     public enum VisualFeedbackType
@@ -10,14 +13,25 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
         SpriteRenderer = 2,
         Outline = 3
     }
-
     public VisualFeedbackType feedbackType = VisualFeedbackType.Outline;
 
     public XRUI_Colors xrUIColors;
 
     private MeshRenderer meshRenderer;
     private SpriteRenderer spriteRenderer;
-    private Outline outline;
+
+    /// <summary>
+    /// Color of the object instantly before OnNearEnter event be triggered
+    /// </summary>
+    [HideInInspector]
+    public Color memoryColor;
+
+    private bool isOutLineType = true;
+    private bool nearEnter;
+
+    [ShowIf("isOutLineType")]
+    [ValidateInput("ValideteOutLine")]
+    public Outline outline;
 
     private void OnValidate()
     {
@@ -28,6 +42,10 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
         CheckTargetType();
         RefreshElementColor();
     }
+    private bool ValideteOutLine(Outline _outline)
+    {
+        return (!isOutLineType || _outline != null);
+    }
 
     protected override void Awake()
     {
@@ -37,8 +55,9 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             xrFeedback = GetComponent<XRUI_Feedback>();
 
         LookForXRUIColor();
-        RefreshElementColor(); 
+        RefreshElementColor();
         CheckTargetType();
+        LookForOutline();
     }
 
     private void LookForXRUIColor()
@@ -52,17 +71,24 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             throw new System.Exception("XR Feedback Color needs a XRUIColor reference to work properly.");
     }
 
-   
+    private void LookForOutline()
+    {
+        if (outline != null || !isOutLineType)
+            return;
+
+        outline = GetComponentInChildren<Outline>();
+    }
     private void CheckTargetType()
     {
         if (xrUIColors == null)
             return;
 
+        isOutLineType = false;
         if (feedbackType == VisualFeedbackType.Outline)
         {
-            outline = xrUIColors.target.GetComponent<Outline>();
-            if (outline == null)
-                outline = xrUIColors.target.gameObject.AddComponent<Outline>();
+            isOutLineType = true;
+            if (outline == null && xrUIColors != null)
+                outline = xrUIColors.target.GetComponent<Outline>();
 
             return;
         }
@@ -74,7 +100,7 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             return;
         }
 
-        spriteRenderer = xrUIColors.target.GetComponent<SpriteRenderer>(); 
+        spriteRenderer = xrUIColors.target.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             feedbackType = VisualFeedbackType.SpriteRenderer;
@@ -85,6 +111,10 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
 
     public void RefreshElementColor()
     {
+        //its here because of running on editor its not updated on awake
+        if (xrFeedback == null)
+            xrFeedback = GetComponent<XRUI_Feedback>();
+
         switch (feedbackType)
         {
             case VisualFeedbackType.MeshRenderer:
@@ -118,36 +148,56 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
             Debug.Log("You already have a XRUIColors on your game object or a child of it");
     }
 
+    [Button]
+    public void CreateOutline()
+    {
+        if (!isOutLineType || outline != null)
+            return;
+        if (outline == null && xrUIColors != null)
+            outline = xrUIColors.target.gameObject.AddComponent<Outline>();
+    }
     protected override void OnNearEnterFeedbackFunction(XRController controller)
     {
         switch (feedbackType)
         {
             case VisualFeedbackType.MeshRenderer:
+                if (!nearEnter)
+                    memoryColor = meshRenderer.material.color;
                 meshRenderer.material.color = xrUIColors.nearColor;
                 break;
             case VisualFeedbackType.SpriteRenderer:
+                if (!nearEnter)
+                    memoryColor = spriteRenderer.color;
                 spriteRenderer.color = xrUIColors.nearColor;
                 break;
             case VisualFeedbackType.Outline:
-                outline.OutlineColor = xrUIColors.nearColor;
+                if (outline != null && xrUIColors != null)
+                {
+                    if (!nearEnter)
+                        memoryColor = outline.OutlineColor;
+                    outline.OutlineColor = xrUIColors.nearColor;
+                }
                 break;
             default:
                 break;
         }
+        nearEnter = true;
     }
 
     protected override void OnNearExitFeedbackFunction(XRController controller)
     {
+        nearEnter = false;
         switch (feedbackType)
         {
             case VisualFeedbackType.MeshRenderer:
-                meshRenderer.material.color = xrUIColors.normalColor;
+                meshRenderer.material.color = memoryColor;
                 break;
             case VisualFeedbackType.SpriteRenderer:
-                spriteRenderer.color = xrUIColors.normalColor;
+                spriteRenderer.color = memoryColor;
                 break;
             case VisualFeedbackType.Outline:
-                outline.OutlineColor = xrUIColors.normalColor;
+                if (outline != null && xrUIColors != null)
+                    outline.OutlineColor = memoryColor;
                 break;
             default:
                 break;
@@ -165,7 +215,8 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 spriteRenderer.color = xrUIColors.touchColor;
                 break;
             case VisualFeedbackType.Outline:
-                outline.OutlineColor = xrUIColors.touchColor;
+                if (outline != null && xrUIColors != null)
+                    outline.OutlineColor = xrUIColors.touchColor;
                 break;
             default:
                 break;
@@ -181,7 +232,7 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 if (runOnNear && xrFeedback.IsNear)
                     meshRenderer.material.color = xrUIColors.nearColor;
                 else
-                    meshRenderer.material.color = xrUIColors.normalColor;
+                    meshRenderer.material.color = memoryColor;
 
                 break;
             case VisualFeedbackType.SpriteRenderer:
@@ -189,16 +240,18 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 if (runOnNear && xrFeedback.IsNear)
                     spriteRenderer.color = xrUIColors.nearColor;
                 else
-                    spriteRenderer.color = xrUIColors.normalColor;
+                    spriteRenderer.color = memoryColor;
 
                 break;
             case VisualFeedbackType.Outline:
 
-                if (runOnNear && xrFeedback.IsNear)
-                    outline.OutlineColor = xrUIColors.nearColor;
-                else
-                    outline.OutlineColor = xrUIColors.normalColor;
-
+                if (outline != null && xrUIColors != null)
+                {
+                    if (runOnNear && xrFeedback.IsNear)
+                        outline.OutlineColor = xrUIColors.nearColor;
+                    else
+                        outline.OutlineColor = memoryColor;
+                }
                 break;
             default:
                 break;
@@ -216,7 +269,8 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 spriteRenderer.color = xrUIColors.selectColor;
                 break;
             case VisualFeedbackType.Outline:
-                outline.OutlineColor = xrUIColors.selectColor;
+                if (outline != null && xrUIColors != null)
+                    outline.OutlineColor = xrUIColors.selectColor;
                 break;
             default:
                 break;
@@ -234,7 +288,7 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 else if (runOnNear && xrFeedback.IsNear)
                     meshRenderer.material.color = xrUIColors.nearColor;
                 else
-                    meshRenderer.material.color = xrUIColors.normalColor;
+                    meshRenderer.material.color = memoryColor;
 
                 break;
             case VisualFeedbackType.SpriteRenderer:
@@ -244,18 +298,20 @@ public class XRUI_FeedbackColor : XRUI_FeedbackBaseType
                 else if (runOnNear && xrFeedback.IsNear)
                     spriteRenderer.color = xrUIColors.nearColor;
                 else
-                    spriteRenderer.color = xrUIColors.normalColor;
+                    spriteRenderer.color = memoryColor;
 
                 break;
             case VisualFeedbackType.Outline:
 
-                if (runOnTouch && xrFeedback.IsTouching)
-                    outline.OutlineColor = xrUIColors.touchColor;
-                else if (runOnNear && xrFeedback.IsNear)
-                    outline.OutlineColor = xrUIColors.nearColor;
-                else
-                    outline.OutlineColor = xrUIColors.normalColor;
-
+                if (outline != null && xrUIColors != null)
+                {
+                    if (runOnTouch && xrFeedback.IsTouching)
+                        outline.OutlineColor = xrUIColors.touchColor;
+                    else if (runOnNear && xrFeedback.IsNear)
+                        outline.OutlineColor = xrUIColors.nearColor;
+                    else
+                        outline.OutlineColor = memoryColor;
+                }
                 break;
             default:
                 break;

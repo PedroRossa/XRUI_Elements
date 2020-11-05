@@ -1,9 +1,25 @@
-﻿using UnityEngine.Events;
+﻿using NaughtyAttributes;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// Base class of XRUI Buttons
+/// </summary>
 public class XRUI_ButtonBase : XRUI_Base
 {
     public UnityEvent onClickDown;
     public UnityEvent onClickUp;
+
+    /// <summary>
+    /// Time in seconds to wait to validate click next time
+    /// </summary>
+    public float secondsToValidateClick = 0.2f;
+
+    /// <summary>
+    /// Can I active the button action?
+    /// </summary>
+    public bool canActiveButton = true;
 
     protected override void OnValidate()
     {
@@ -18,5 +34,31 @@ public class XRUI_ButtonBase : XRUI_Base
 
         if (!isEnabled)
             return;
+    }
+
+    protected void Start()
+    {
+        StartCoroutine(TimerTick());
+    }
+
+    [Button]
+    public void OnClickDown()
+    {
+        onClickDown.Invoke();
+    }
+    [Button]
+    public void OnClickUp()
+    {
+        onClickUp.Invoke();
+    }
+
+    /// <summary>
+    /// Coroutine to reset wait time to can active the button again
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator TimerTick()
+    {
+        yield return new WaitForSeconds(secondsToValidateClick);
+        canActiveButton = true;
     }
 }

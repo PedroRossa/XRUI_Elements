@@ -1,9 +1,11 @@
 ﻿using NaughtyAttributes;
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Base class of XRUI 3DButtons
+/// </summary>
 public class XRUI_3DButtonBase : XRUI_ButtonBase
 {
     [Header("Internal Properties")]
@@ -11,13 +13,20 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
     public Transform buttonObject;
 
     public Material buttonMaterial;
+    /// <summary>
+    /// Others buttons to deselect when this one is selected 
+    /// </summary>
+    public XRUI_3DButtonBase[] buttonsToDisableOnClickUp;
 
     [ReadOnly]
     public bool isPressed;
 
     public bool isClicked = false;
+    [HideInInspector]
+    public bool isOn;
 
-    protected MeshRenderer buttonMesh;
+    [HideInInspector]
+    public MeshRenderer buttonMesh;
     protected Rigidbody buttonRigidBody;
 
     protected override void OnValidate()
@@ -31,9 +40,31 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
         base.Awake();
         ConfigureButtonMaterial();
 
-        onClickDown.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true; });
-        onClickUp.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false; });
+        EventConfiguration();
         xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor interactor) => { SimulateClick(); });
+    }
+
+    protected virtual void EventConfiguration()
+    {
+        onClickDown.AddListener(() => {
+            if (canActiveButton)
+            {
+                buttonMesh.sharedMaterial.color = xrUIColors.selectColor; isClicked = true;
+            }
+        });
+        onClickUp.AddListener(() => {
+            if (canActiveButton)
+            {
+                buttonMesh.sharedMaterial.color = xrUIColors.normalColor; isClicked = false;
+            }
+        });
+    }
+
+    public IEnumerator resetCanActiveButton()
+    {
+        yield return new WaitForEndOfFrame();
+        canActiveButton = false;
+        StartCoroutine(TimerTick());
     }
 
     private void FixedUpdate()
@@ -41,7 +72,6 @@ public class XRUI_3DButtonBase : XRUI_ButtonBase
         XRUI_Helper.ConstraintVelocityLocally(transform, buttonRigidBody, true, true, false);
         XRUI_Helper.ConstraintPositionLocally(transform, buttonRigidBody, true, true, false);
         buttonRigidBody.transform.localRotation = Quaternion.identity;
-        buttonObject.localPosition = new Vector3(0, 0, buttonObject.localPosition.z);
     }
 
     protected virtual void ConfigureButtonMaterial()

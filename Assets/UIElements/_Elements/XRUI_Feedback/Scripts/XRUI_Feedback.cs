@@ -1,11 +1,12 @@
 ﻿using NaughtyAttributes;
 using System;
-using System.Reflection;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// XRUI Element that gives a feedback for user on touch, near and select events trigger
+/// </summary>
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class XRUI_Feedback : MonoBehaviour
 {

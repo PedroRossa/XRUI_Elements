@@ -1,7 +1,9 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// XRUI 2DButton identified by Text
+/// </summary>
 public class XRUI_2DButtonText : XRUI_2DButtonBase
 {
     [Header("Text Properties")]

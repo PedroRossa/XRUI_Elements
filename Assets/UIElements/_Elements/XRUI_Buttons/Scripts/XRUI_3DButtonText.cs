@@ -1,6 +1,8 @@
-﻿using NaughtyAttributes;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// XRUI 3DButton identified by Text
+/// </summary>
 public class XRUI_3DButtonText : XRUI_3DButtonBase
 {
     protected override void OnValidate()

@@ -83,6 +83,13 @@ MonoBehaviour:
   unselectedColor:
     serializedVersion: 2
     rgba: 4286611584
+  changeBGColor: 0
+  selectedBGColor:
+    serializedVersion: 2
+    rgba: 4278255360
+  unselectedBGColor:
+    serializedVersion: 2
+    rgba: 4286611584
   animationSpeed: 0.1
   isSelected: 0
   unselectPos: {x: -0.25, y: 0, z: 0}
@@ -347,3 +354,5 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 2
   xrUIColors: {fileID: 8800360918565456909}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}

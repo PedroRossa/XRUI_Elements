@@ -292,6 +292,8 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 1
   xrUIColors: {fileID: 5905469458481601778}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!1 &5905469458481601772
 GameObject:
   m_ObjectHideFlags: 0

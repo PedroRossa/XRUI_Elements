@@ -396,6 +396,8 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 1
   xrUIColors: {fileID: 611349041749565372}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!1 &611349041749565371
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +479,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4278255360
   unselectedColor:
+    serializedVersion: 2
+    rgba: 4286611584
+  changeBGColor: 0
+  selectedBGColor:
+    serializedVersion: 2
+    rgba: 4278255360
+  unselectedBGColor:
     serializedVersion: 2
     rgba: 4286611584
   animationSpeed: 3

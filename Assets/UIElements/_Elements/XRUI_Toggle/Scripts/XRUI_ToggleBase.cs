@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Abstract and base class of XRUI toggle components
+/// </summary>
 public abstract class XRUI_ToggleBase : XRUI_Base
 {
     [Header("Prefab References")]
@@ -13,6 +16,13 @@ public abstract class XRUI_ToggleBase : XRUI_Base
     [Header("Prefab Color Properties")]
     public Color32 selectedColor = Color.green;
     public Color32 unselectedColor = Color.gray;
+
+    [Header("Prefab Background Color Properties")]
+    public bool changeBGColor = false;
+    [ShowIf("changeBGColor")]
+    public Color32 selectedBGColor = Color.green;
+    [ShowIf("changeBGColor")]
+    public Color32 unselectedBGColor = Color.gray;
 
     [Header("General Properties")]
     public float animationSpeed = 0.1f;
@@ -41,13 +51,13 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         isSelected = value;
         SetTogglePosition();
-        UpdateColors();
         onToggleChange?.Invoke(value);
-
         if (IsSelected)
             onToggleSelect?.Invoke();
         else
             onToggleUnselect?.Invoke();
+
+        UpdateColors();
     }
 
     protected override void OnValidate()
@@ -73,7 +83,7 @@ public abstract class XRUI_ToggleBase : XRUI_Base
 
         SetRenderers();
         UpdateColors();
-        
+
         if (xrFeedback.XRInteractable != null)
             xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
     }
@@ -97,6 +107,11 @@ public abstract class XRUI_ToggleBase : XRUI_Base
             t += Time.deltaTime / animationSpeed;
             selectObject.transform.localPosition = Vector3.Lerp(selectObject.transform.localPosition, newPos, t);
             yield return null;
+        }
+        if (changeBGColor)
+        {
+            yield return new WaitForSeconds(0.3f);
+            UpdateColors();
         }
     }
 

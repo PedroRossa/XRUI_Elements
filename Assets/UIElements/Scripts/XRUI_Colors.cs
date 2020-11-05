@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Component to be used together with XRUI_FeedbackColor. Set the colors of each event feedback.
+/// </summary>
 public class XRUI_Colors : MonoBehaviour
 {
     [Tooltip("If don't have a target, apply on attached gameobject")]

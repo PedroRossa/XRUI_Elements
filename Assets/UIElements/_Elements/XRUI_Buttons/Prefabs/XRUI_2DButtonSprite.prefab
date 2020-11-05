@@ -522,6 +522,8 @@ MonoBehaviour:
   runOnSelect: 0
   feedbackType: 2
   xrUIColors: {fileID: 7741509650942510757}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!114 &7741509650942510747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +544,8 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  secondsToValidateClick: 0.2
+  canActiveButton: 1
   backgroundSprite: {fileID: 7741509650718162313}
   backgroundFeedback: 1
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
