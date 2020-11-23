@@ -53,4 +53,3 @@ public class XRUI_Prefabs : ScriptableObject
     #endregion
 
 }
-

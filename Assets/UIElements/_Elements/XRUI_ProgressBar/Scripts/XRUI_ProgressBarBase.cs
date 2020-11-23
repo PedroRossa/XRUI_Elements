@@ -3,6 +3,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class to controll Progress Bars
+/// </summary>
 public abstract class XRUI_ProgressBarBase : XRUI_Base
 {
     [Header("Prefab References")]
@@ -65,7 +68,7 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
         else if (dragInteractable != null)
         {
             dragInteractable.interactable.onSelectEnter.AddListener((XRBaseInteractor) => { StartCoroutine(UpdateInfos()); });
-            dragInteractable.interactable.onSelectEnter.AddListener((XRBaseInteractor) => { StopCoroutine(UpdateInfos()); });
+            dragInteractable.interactable.onSelectExit.AddListener((XRBaseInteractor) => { StopCoroutine(UpdateInfos()); });
         }
     }
 
@@ -96,7 +99,8 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
 
     private void SetProgress(float value)
     {
-        if (progress == value) return;
+        if (progress == value)
+            return;
 
         //limit the value between 0 and 1
         progress = Mathf.Clamp01(value);
@@ -112,7 +116,7 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
 
         if (tmpProgress != null)
         {
-            float currentProgress = (float)(minRange + (Progress * (maxRange - minRange)));
+            float currentProgress = (minRange + (Progress * (maxRange - minRange)));
 
             tmpProgress.text = currentProgress.ToString("F" + decimalPlaces) + symbol;
         }

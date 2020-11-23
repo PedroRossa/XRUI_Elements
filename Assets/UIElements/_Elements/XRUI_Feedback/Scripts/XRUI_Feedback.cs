@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
-/// XRUI Element that gives a feedback for user on touch, near and select events trigger
+/// Component to assign an object as a feedback element
 /// </summary>
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class XRUI_Feedback : MonoBehaviour
@@ -16,7 +16,7 @@ public class XRUI_Feedback : MonoBehaviour
     public bool useTouchEvents = false;
     [Tooltip("To use the Select Events, it's necessary to have a XRInteractable attached to gameobject.")]
     public bool useSelectEvents = false;
-    
+
     /// <summary>
     /// its allow to control all ui elements with ray interactor and its always true and hide until it is decided whether it's useful 
     /// </summary>
@@ -52,8 +52,14 @@ public class XRUI_Feedback : MonoBehaviour
         Sphere = 1
     }
 
-    private bool IsNearBoxCollider() { return nearColliderType == NearColliderType.Box ? true : false; }
-    private bool IsNearSphereCollider() { return nearColliderType == NearColliderType.Sphere ? true : false; }
+    private bool IsNearBoxCollider()
+    {
+        return nearColliderType == NearColliderType.Box;
+    }
+    private bool IsNearSphereCollider()
+    {
+        return nearColliderType == NearColliderType.Sphere;
+    }
 
     [Header("Near Collider")]
     public NearColliderType nearColliderType;
@@ -70,9 +76,9 @@ public class XRUI_Feedback : MonoBehaviour
     private Vector3 worldNearColliderOffset;
     private Collider nearCollider;
     private XRUI_NearDetectionLocked.XRUI_NearDetection xrNearDetection;
-    
+
     private XRBaseInteractable xrInteractable;
-    public XRBaseInteractable XRInteractable { get => xrInteractable; } 
+    public XRBaseInteractable XRInteractable { get => xrInteractable; }
     private bool isTouching;
     private bool isSelected;
 
@@ -80,26 +86,29 @@ public class XRUI_Feedback : MonoBehaviour
     public bool IsTouching { get => isTouching; }
     public bool IsSelected { get => isSelected; }
     public bool AllowDistanceEvents { get => allowDistanceEvents; }
-    
+
+    public XRUI_FeedbackColor feedbackColor;
     private void OnValidate()
     {
         worldNearColliderOffset = transform.TransformDirection(nearColliderOffset) + transform.position;
         ManageEvents();
 
         //Check if the uicolor is used with a Feedback Color script. If it's, refresh the normal color on target
-        XRUI_FeedbackColor feedbackColor = GetComponentInChildren<XRUI_FeedbackColor>();
+        feedbackColor = GetComponentInChildren<XRUI_FeedbackColor>();
         if (feedbackColor != null)
             feedbackColor.RefreshElementColor();
     }
 
     protected virtual void Awake()
     {
+        if (feedbackColor == null)
+            feedbackColor = GetComponentInChildren<XRUI_FeedbackColor>();
+
         xrInteractable = transform.GetComponent<XRBaseInteractable>();
         if (xrInteractable == null)
             xrInteractable = gameObject.AddComponent<XRSimpleInteractable>();
 
-        if (xrInteractable != null)
-            ConfigureSelectListeners();
+        ConfigureSelectListeners();
 
         CreateNearCollider();
     }
@@ -194,6 +203,9 @@ public class XRUI_Feedback : MonoBehaviour
     }
     private void OnEnterInteraction(XRBaseInteractor interactor)
     {
+        if (!isEnabled)
+            return;
+
         XRController controller = interactor.GetComponent<XRController>();
         if (controller != null)
         {
@@ -203,6 +215,9 @@ public class XRUI_Feedback : MonoBehaviour
     }
     private void OnExitInteraction(XRBaseInteractor interactor)
     {
+        if (!isEnabled)
+            return;
+
         XRController controller = interactor.GetComponent<XRController>();
         if (controller != null)
         {
@@ -213,6 +228,9 @@ public class XRUI_Feedback : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (!isEnabled)
+            return;
+
         //if the near trigger is not activated yet, isn't the touch trigger enter yet
         if (!xrNearDetection.IsNear)
             return;
@@ -231,6 +249,9 @@ public class XRUI_Feedback : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        if (!isEnabled)
+            return;
+
         XRController controller = other.GetComponent<XRController>();
         if (controller == null)
             controller = other.GetComponentInParent<XRController>();

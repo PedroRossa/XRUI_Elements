@@ -1,5 +1,4 @@
-﻿using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Class to reference a RaySO and a DirectSO

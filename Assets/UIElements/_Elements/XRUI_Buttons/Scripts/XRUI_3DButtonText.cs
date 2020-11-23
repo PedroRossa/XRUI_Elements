@@ -18,8 +18,22 @@ public class XRUI_3DButtonText : XRUI_3DButtonBase
 
         ConfigureButtonMaterial();
 
-        onClickDown.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.selectColor; });
-        onClickUp.AddListener(() => { buttonMesh.sharedMaterial.color = xrUIColors.normalColor; });
+        onClickDown.AddListener(() =>
+        {
+            if (!isEnabled)
+                return;
+
+            buttonMesh.sharedMaterial.color = xrUIColors.selectColor;
+        }
+        );
+        onClickUp.AddListener(() =>
+        {
+            if (!isEnabled)
+                return;
+
+            buttonMesh.sharedMaterial.color = xrUIColors.normalColor;
+        }
+        );
     }
 
 

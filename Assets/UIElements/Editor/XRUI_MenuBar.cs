@@ -119,7 +119,7 @@ public class XRUI_MenuBar : MonoBehaviour
 
         return PrefabUtility.IsPartOfPrefabAsset(go);
     }
- 
+
     [MenuItem("GameObject/XRUI_Elements/3DElements/ProgressBar 3D", false, 0)]
     static void ProgressBar3D()
     {
@@ -181,7 +181,7 @@ public class XRUI_MenuBar : MonoBehaviour
         GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle3D) as GameObject;
         go.transform.parent = Selection.activeTransform;
         go.transform.localPosition = Vector3.zero;
-        
+
     }
 
     [MenuItem("GameObject/XRUI_Elements/3DElements/Toggle 3D", true)]

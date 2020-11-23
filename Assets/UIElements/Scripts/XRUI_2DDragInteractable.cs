@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -30,7 +31,7 @@ public class XRUI_2DDragInteractable : MonoBehaviour
         worldEndPos = transform.parent.TransformVector(localEndPos) + transform.parent.position;
     }
 
-    private void Start()
+    private void Awake()
     {
         originalParent = transform.parent;
         interactable = gameObject.GetComponent<XRBaseInteractable>();

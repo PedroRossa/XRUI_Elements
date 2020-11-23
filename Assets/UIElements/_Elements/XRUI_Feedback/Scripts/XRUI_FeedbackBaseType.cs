@@ -2,7 +2,7 @@
 using UnityEngine.XR.Interaction.Toolkit;
 
 /// <summary>
-/// Abstract class that modelate touch, near and select events
+/// Abstract class to implement events of OnTouch, OnNear and OnSelect based on input controllers
 /// </summary>
 [RequireComponent(typeof(XRUI_Feedback))]
 public abstract class XRUI_FeedbackBaseType : MonoBehaviour
@@ -21,50 +21,142 @@ public abstract class XRUI_FeedbackBaseType : MonoBehaviour
             return;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-          if (!xrFeedback.isEnabled)
-            return;
-
         if (runOnNear)
         {
-            xrFeedback.onNearEnter.AddListener(OnNearEnterFeedbackFunction);
-            xrFeedback.onNearExit.AddListener(OnNearExitFeedbackFunction);
+            xrFeedback.onNearEnter.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
 
+                    OnNearEnterFeedbackFunction(controller);
+                }
+            );
+            xrFeedback.onNearExit.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    OnNearExitFeedbackFunction(controller);
+                }
+            );
             if (xrFeedback.AllowDistanceEvents)
             {
                 if (xrFeedback.XRInteractable != null)
                 {
-                    xrFeedback.XRInteractable.onHoverEnter.AddListener((XRBaseInteractor) => { OnNearEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    xrFeedback.XRInteractable.onHoverExit.AddListener((XRBaseInteractor) => { OnNearExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverEnter.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnNearEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
+                    xrFeedback.XRInteractable.onHoverExit.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnNearExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
                 }
             }
         }
 
         if (runOnTouch)
         {
-            xrFeedback.onTouchEnter.AddListener(OnTouchEnterFeedbackFunction);
-            xrFeedback.onTouchExit.AddListener(OnTouchExitFeedbackFunction);
+            xrFeedback.onTouchEnter.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    OnTouchEnterFeedbackFunction(controller);
+                }
+            );
+            xrFeedback.onTouchExit.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    OnTouchExitFeedbackFunction(controller);
+                }
+            );
             if (xrFeedback.AllowDistanceEvents)
             {
                 if (xrFeedback.XRInteractable != null)
                 {
-                    xrFeedback.XRInteractable.onHoverEnter.AddListener((XRBaseInteractor) => { OnTouchEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    xrFeedback.XRInteractable.onHoverExit.AddListener((XRBaseInteractor) => { OnTouchExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onHoverEnter.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnTouchEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
+                    xrFeedback.XRInteractable.onHoverExit.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnTouchExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
                 }
             }
         }
 
         if (runOnSelect)
         {
-            xrFeedback.onSelectEnter.AddListener(OnSelectEnterFeedbackFunction);
-            xrFeedback.onSelectExit.AddListener(OnSelectExitFeedbackFunction);
+            xrFeedback.onSelectEnter.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    OnSelectEnterFeedbackFunction(controller);
+                }
+            );
+            xrFeedback.onSelectExit.AddListener(
+                (controller) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    OnSelectExitFeedbackFunction(controller);
+                }
+            );
             if (xrFeedback.AllowDistanceEvents)
             {
                 if (xrFeedback.XRInteractable != null)
                 {
-                    xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { OnSelectEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
-                    xrFeedback.XRInteractable.onSelectExit.AddListener((XRBaseInteractor) => { OnSelectExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>()); });
+                    xrFeedback.XRInteractable.onSelectEnter.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnSelectEnterFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
+                    xrFeedback.XRInteractable.onSelectExit.AddListener(
+                        (XRBaseInteractor) =>
+                        {
+                            if (!xrFeedback.isEnabled)
+                                return;
+
+                            OnSelectExitFeedbackFunction(XRBaseInteractor.GetComponent<XRController>());
+                        }
+                    );
                 }
             }
         }

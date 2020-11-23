@@ -85,7 +85,15 @@ public abstract class XRUI_ToggleBase : XRUI_Base
         UpdateColors();
 
         if (xrFeedback.XRInteractable != null)
-            xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { SetToggleValue(!isSelected); });
+            xrFeedback.XRInteractable.onSelectEnter.AddListener(
+                (XRBaseInteractor) =>
+                {
+                    if (!isEnabled)
+                        return;
+
+                    SetToggleValue(!isSelected);
+                }
+            );
     }
 
     private void SetTogglePosition()

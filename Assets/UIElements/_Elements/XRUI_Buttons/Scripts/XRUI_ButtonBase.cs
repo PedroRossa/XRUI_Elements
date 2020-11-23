@@ -3,13 +3,26 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Base class of XRUI Buttons
-/// </summary>
 public class XRUI_ButtonBase : XRUI_Base
 {
+    /// <summary>
+    /// On Click Down of the button callback
+    /// </summary>
     public UnityEvent onClickDown;
+    /// <summary>
+    /// On Click Up of the button callback
+    /// </summary>
     public UnityEvent onClickUp;
+
+    /// <summary>
+    /// Others buttons to deselect when this one is selected 
+    /// </summary>
+    public XRUI_ButtonBase[] buttonsToDisableOnClickUp;
+    /// <summary>
+    /// Is the button action triggered?
+    /// </summary>
+    [HideInInspector]
+    public bool isOn;
 
     /// <summary>
     /// Time in seconds to wait to validate click next time
@@ -31,29 +44,31 @@ public class XRUI_ButtonBase : XRUI_Base
     {
         base.Awake();
         xrFeedback.isEnabled = isEnabled;
-
-        if (!isEnabled)
-            return;
     }
 
-    protected void Start()
+    protected void OnEnable()
     {
-        StartCoroutine(TimerTick());
+        canActiveButton = true;
     }
 
+    /// <summary>
+    /// Invoke on Click Down callback
+    /// </summary>
     [Button]
     public void OnClickDown()
     {
         onClickDown.Invoke();
     }
+    /// <summary>
+    /// Invoke On Click Up callback
+    /// </summary>
     [Button]
     public void OnClickUp()
     {
         onClickUp.Invoke();
     }
-
     /// <summary>
-    /// Coroutine to reset wait time to can active the button again
+    /// After a constant time in seconds, set that the button can be active again
     /// </summary>
     /// <returns></returns>
     public IEnumerator TimerTick()

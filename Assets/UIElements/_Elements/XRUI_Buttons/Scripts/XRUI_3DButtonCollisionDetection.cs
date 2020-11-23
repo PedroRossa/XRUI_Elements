@@ -1,16 +1,28 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Class to manage collisions with XRUI_3DButtonBase instances
+/// Manager of XRUI 3D buttons collisions
 /// </summary>
-[RequireComponent(typeof(XRUI_3DButtonBase))]
 public class XRUI_3DButtonCollisionDetection : MonoBehaviour
 {
+    /// <summary>
+    /// Is the button colliding with the collisor?
+    /// </summary>
     public bool isColliding;
+    /// <summary>
+    /// The collider of the button
+    /// </summary>
     public Collider buttonCollider;
 
+    /// <summary>
+    /// The XRUI_3DButtonBase reference component
+    /// </summary>
     public XRUI_3DButtonBase xrUIButton;
 
+    /// <summary>
+    /// Callback called when the collider enter in trigger
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.Equals(buttonCollider) && xrUIButton.canActiveButton)
@@ -20,18 +32,23 @@ public class XRUI_3DButtonCollisionDetection : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Callback called when the collider exit trigger state
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
-        if (other.Equals(buttonCollider) && isColliding)
+        if (other.Equals(buttonCollider) && isColliding && xrUIButton.canActiveButton)
         {
             isColliding = false;
             xrUIButton.onClickUp?.Invoke();
 
             try
             {
-                StartCoroutine((xrUIButton as XRUI_3DButtonBase).resetCanActiveButton());
+                StartCoroutine(xrUIButton.ResetCanActiveButton());
             }
-            catch (System.Exception e) {
+            catch (System.Exception e)
+            {
                 Debug.LogError(e);
             }
         }

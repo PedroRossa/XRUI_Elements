@@ -13,11 +13,20 @@ public class XRUI_2DButtonBase : XRUI_ButtonBase
     {
         base.Awake();
         Initialize();
+        EventConfiguration();
 
         xrFeedback.onTouchEnter.AddListener((XRController controller) => { onClickDown?.Invoke(); });
         xrFeedback.onTouchExit.AddListener((XRController controller) => { onClickUp?.Invoke(); });
         if (xrFeedback.XRInteractable != null)
-            xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { onClickDown?.Invoke(); });
+            xrFeedback.XRInteractable.onSelectEnter.AddListener(
+                (XRBaseInteractor) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    onClickDown?.Invoke();
+                }
+            );
     }
 
     /// <summary>
@@ -32,4 +41,21 @@ public class XRUI_2DButtonBase : XRUI_ButtonBase
     }
 
     protected virtual void Initialize() { }
+
+    protected virtual void EventConfiguration()
+    {
+        onClickDown.AddListener(() => {
+            if (canActiveButton && isEnabled)
+            {
+                backgroundSprite.color = xrUIColors.selectColor;
+            }
+        });
+        onClickUp.AddListener(() => {
+            if (canActiveButton && isEnabled)
+            {
+                backgroundSprite.color = xrUIColors.normalColor;
+            }
+        });
+    }
+
 }

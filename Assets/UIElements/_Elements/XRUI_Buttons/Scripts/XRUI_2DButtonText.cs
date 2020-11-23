@@ -17,7 +17,15 @@ public class XRUI_2DButtonText : XRUI_2DButtonBase
         Initialize();
 
         if (xrFeedback.XRInteractable != null)
-            xrFeedback.XRInteractable.onSelectEnter.AddListener((XRBaseInteractor) => { onClickDown?.Invoke(); });
+            xrFeedback.XRInteractable.onSelectEnter.AddListener(
+                (XRBaseInteractor) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    onClickDown?.Invoke();
+                }
+            );
     }
 
     protected override void Initialize()

@@ -319,6 +319,8 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  buttonsToDisableOnClickUp: []
+  isOn: 0
   secondsToValidateClick: 0.2
   canActiveButton: 1
   backgroundSprite: {fileID: 6742236279728133619}

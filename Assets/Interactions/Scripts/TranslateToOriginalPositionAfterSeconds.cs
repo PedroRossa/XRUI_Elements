@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// Class to translate an gameObject to its original position after "waitSeconds" seconds
-/// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
 {
+    /// <summary>
+    /// Time in seconds to wait until translate again
+    /// </summary>
     public float waitSeconds = 1;
     /// <summary>
     /// The initial position of the object
@@ -16,13 +17,17 @@ public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
     /// </summary>
     private Rigidbody rb;
     /// <summary>
-    /// The compass time for translation coroutine
+    /// Time compass in seconds to translate back
     /// </summary>
     private const float secondsCompass = 0.2f;
     /// <summary>
-    /// The object has started being kinematic?
+    /// Starts the object being kinematic?
     /// </summary>
     private bool isKinematic;
+    /// <summary>
+    /// Can the object translate now?
+    /// </summary>
+    private bool canTranslate = true;
 
     /// <summary>
     /// Main setup
@@ -30,32 +35,46 @@ public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        initialPosition = transform.position;
+        initialPosition = gameObject.transform.localPosition;
         isKinematic = rb.isKinematic;
 
         StartCoroutine(ComeBack(waitSeconds));
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        canTranslate = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        canTranslate = true;
+    }
+
     /// <summary>
     /// Coroutine to translate the object back to its original position
     /// </summary>
-    /// <param name="waitSeconds"></param>
+    /// <param name="waitSeconds"> Time in seconds to wait to execute coroutine again </param>
     /// <returns></returns>
     private IEnumerator ComeBack(float waitSeconds)
     {
-        rb.isKinematic = true;
-        float elapsedTime = 0;
-        Vector3 actualPos = gameObject.transform.position;
-        Vector3 direction = (actualPos - initialPosition).normalized;
-
-        while (elapsedTime < secondsCompass)
+        if (canTranslate)
         {
-            gameObject.transform.position = Vector3.Lerp(actualPos, initialPosition, (elapsedTime / secondsCompass));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+            rb.isKinematic = true;
+            float elapsedTime = 0;
+            Vector3 actualPos = gameObject.transform.localPosition;
+            Vector3 direction = (actualPos - initialPosition).normalized;
 
-        rb.isKinematic = isKinematic;
+            while (elapsedTime < secondsCompass)
+            {
+                gameObject.transform.localPosition = Vector3.Lerp(actualPos, initialPosition, (elapsedTime / secondsCompass));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            gameObject.transform.localPosition = initialPosition;
+
+            rb.isKinematic = isKinematic;
+        }
         yield return new WaitForSeconds(waitSeconds);
 
         StartCoroutine(ComeBack(waitSeconds));
