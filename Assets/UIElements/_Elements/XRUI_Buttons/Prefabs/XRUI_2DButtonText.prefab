@@ -136,6 +136,7 @@ MonoBehaviour:
   nearColliderScale: {x: 0.3, y: 0.1, z: 0.1}
   nearColliderRadius: 1.5
   nearColliderOffset: {x: 0, y: 0, z: -0.05}
+  feedbackColor: {fileID: 6742236279392719994}
 --- !u!82 &6742236279392719991
 AudioSource:
   m_ObjectHideFlags: 0
@@ -312,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 6742236279392719989}
   xrFeedback: {fileID: 6742236279392719990}
   onClickDown:
     m_PersistentCalls:

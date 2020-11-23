@@ -275,6 +275,7 @@ MonoBehaviour:
   nearColliderScale: {x: 2, y: 2, z: 2}
   nearColliderRadius: 1.5
   nearColliderOffset: {x: 0, y: 0, z: 0}
+  feedbackColor: {fileID: 5905469458464168622}
 --- !u!114 &5905469458464168622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 5905469458481601778}
   xrFeedback: {fileID: 5905469458464168621}
   background: {fileID: 5905469459633282769}
   totalProgress: {fileID: 0}

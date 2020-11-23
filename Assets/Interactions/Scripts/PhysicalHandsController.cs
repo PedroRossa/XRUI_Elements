@@ -3,7 +3,7 @@
 /// <summary>
 /// A script that possibilty physical interactions with the xr rig hands
 /// </summary>
-public class PhysicalHandsControl : MonoBehaviour
+public class PhysicalHandsController : MonoBehaviour
 {
     private bool isColliding;
 

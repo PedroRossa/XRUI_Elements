@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 9166759388679252885}
   xrFeedback: {fileID: 9166759389405492193}
   background: {fileID: 9166759389875492465}
   totalProgress: {fileID: 9166759389284082403}
@@ -573,6 +574,7 @@ MonoBehaviour:
   nearColliderScale: {x: 1, y: 1, z: 1}
   nearColliderRadius: 0.5
   nearColliderOffset: {x: 0, y: 0, z: -0.01}
+  feedbackColor: {fileID: 9166759389405492198}
 --- !u!114 &9166759389405492198
 MonoBehaviour:
   m_ObjectHideFlags: 0

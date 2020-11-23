@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 8510283511047527963}
   xrFeedback: {fileID: 8510283511324639599}
   onClickDown:
     m_PersistentCalls:
@@ -103,6 +104,7 @@ MonoBehaviour:
   isPressed: 0
   isClicked: 0
   buttonMesh: {fileID: 8510283511324639593}
+  isMoving: 0
   backgroundFeedback: 1
   buttonColor: {r: 1, g: 1, b: 1, a: 1}
   buttonDisabledColor: {r: 1, g: 1, b: 1, a: 1}
@@ -111,6 +113,7 @@ MonoBehaviour:
   iconDisabledColor: {r: 1, g: 1, b: 1, a: 1}
   icon: {fileID: 21300000, guid: fc71bb0166b4ead40be93cc2e2139a2a, type: 3}
   iconScale: 0.621
+  feedbackColor: {fileID: 0}
 --- !u!1 &8510283511319827436
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +370,7 @@ MonoBehaviour:
   nearColliderScale: {x: 1, y: 1, z: 1.5}
   nearColliderRadius: 1.5
   nearColliderOffset: {x: 0, y: 0, z: -1.25}
+  feedbackColor: {fileID: 8510283511324639596}
 --- !u!114 &8510283511324639596
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 /// <summary>
 /// Class that permits a bunch of interactions with a joystick in an object
 /// </summary>
+[RequireComponent(typeof(XRGrabInteractable))]
 public class MoveWithJoystick : MonoBehaviour
 {
     /// <summary>
@@ -322,7 +323,7 @@ public class MoveWithJoystick : MonoBehaviour
         isInterpolatingPosition = true;
         yield return new WaitForEndOfFrame();
 
-        //Calculando vetor direção
+        //Calculating vector direction
         vectorDirection = controllerTransform.position - controllerPositionOnStartOfFrame;
 
         transform.position += vectorDirection * 1.5f;

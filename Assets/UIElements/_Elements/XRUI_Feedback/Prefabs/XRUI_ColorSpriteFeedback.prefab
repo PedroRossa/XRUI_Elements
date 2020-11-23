@@ -256,6 +256,7 @@ MonoBehaviour:
   nearColliderScale: {x: 1.5, y: 1.5, z: 1.5}
   nearColliderRadius: 1.2
   nearColliderOffset: {x: 0, y: 0, z: 0}
+  feedbackColor: {fileID: 2009542499330440363}
 --- !u!114 &2009542499330440363
 MonoBehaviour:
   m_ObjectHideFlags: 0
