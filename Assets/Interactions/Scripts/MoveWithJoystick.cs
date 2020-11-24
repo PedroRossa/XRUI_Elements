@@ -32,7 +32,7 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// A Walk reference from XRRig
     /// </summary>
-    public XRRigRigidbodyWalk walk;
+    public WalkSystemBase walk;
     /// <summary>
     /// The minimum distance to attach an object in a controller
     /// </summary>
@@ -301,17 +301,31 @@ public class MoveWithJoystick : MonoBehaviour
     {
         if (isInputLeft)
         {
-            if (walk.useLeftThumbstick)
-                walk.enabled = state;
-            else
+            if (walk)
+            {
+                if (walk.useLeftThumbstick)
+                    walk.enabled = state;
+                else if (snap)
+                    snap.enabled = state;
+            }
+            else if (snap)
+            {
                 snap.enabled = state;
+            }
         }
         else
         {
-            if (walk.useLeftThumbstick)
+            if (walk)
+            {
+                if (walk.useLeftThumbstick && snap != null)
+                    snap.enabled = state;
+                else
+                    walk.enabled = state;
+            }
+            else if (snap)
+            {
                 snap.enabled = state;
-            else
-                walk.enabled = state;
+            }
         }
     }
 

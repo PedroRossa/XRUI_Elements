@@ -3,24 +3,9 @@
 /// <summary>
 /// Class that permits a locomotion system with one of the joysticks thumbstick through changing xr rig transform.position
 /// </summary>
-public class NoPhysicsPseudoWalk : MonoBehaviour
+public class NoPhysicsPseudoWalk : WalkSystemBase
 {
-    /// <summary>
-    /// Speed for translation movement
-    /// </summary>
-    public short translationSpeed = 250;
-    /// <summary>
-    /// Speed for rotation movement
-    /// </summary>
-    public short rotationSpeed = 50;
-    /// <summary>
-    /// The transform of the xrRig camera
-    /// </summary>
-    public Transform cameraTransform;
-    /// <summary>
-    /// Do you wanna use left thumbstick? If it is false, use right thumbstick
-    /// </summary>
-    public bool useLeftThumbstick;
+   
 
     void Update()
     {
