@@ -9,6 +9,14 @@ using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 [RequireComponent(typeof(XRGrabInteractable))]
 public class MoveWithJoystick : MonoBehaviour
 {
+    private enum AxisToRotate
+    {
+        x,
+        y,
+        z
+    };
+    private AxisToRotate axisToRotate = AxisToRotate.x;
+
     /// <summary>
     /// Speed of vertical translation
     /// </summary>
@@ -49,12 +57,11 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// Enum of possible interactions types
     /// </summary>
-    [flags]
     public enum machineStates
     {
-        translading = 0,
-        rotating = 1,
-        scaling = 2,
+        translading,
+        rotating,
+        scaling,
     };
     private machineStates states = 0;
 
@@ -174,6 +181,9 @@ public class MoveWithJoystick : MonoBehaviour
 
     void Update()
     {
+        if (!grabInteractable.isSelected)
+            return;
+
         if (Input.GetKeyDown(OculusInput.RightHandThumbstick))
         {
             states = (states == machineStates.rotating ? machineStates.translading : machineStates.rotating);
@@ -259,9 +269,29 @@ public class MoveWithJoystick : MonoBehaviour
     /// </summary>
     private void RotatingInteraction()
     {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x,
-            transform.eulerAngles.y + rotationSpeed * horizontalAxis,
-            transform.eulerAngles.z + rotationSpeed * verticalAxis);
+        if (!grabInteractable.isSelected)
+            return;
+
+        switch (axisToRotate)
+        {
+            case AxisToRotate.x:
+                transform.eulerAngles += new Vector3(rotationSpeed * horizontalAxis, 0, 0);
+                break;
+            case AxisToRotate.y:
+                transform.eulerAngles += new Vector3(0, rotationSpeed * horizontalAxis, 0);
+                break;
+            case AxisToRotate.z:
+                transform.eulerAngles += new Vector3(0, 0, rotationSpeed * horizontalAxis);
+                break;
+        }
+
+        if (Input.GetKeyDown(OculusInput.ButtonA))
+        {
+            if (axisToRotate == AxisToRotate.z)
+                axisToRotate = AxisToRotate.x;
+            else
+                axisToRotate++;
+        }
     }
 
     /// <summary>
