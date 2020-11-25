@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Class to translate an object after it's original position after a parameter time in seconds
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class TranslateToOriginalPositionAfterSeconds : MonoBehaviour
 {

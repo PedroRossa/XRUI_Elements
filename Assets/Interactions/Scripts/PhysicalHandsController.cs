@@ -5,6 +5,9 @@
 /// </summary>
 public class PhysicalHandsController : MonoBehaviour
 {
+    /// <summary>
+    /// Is the hand colliding?
+    /// </summary>
     private bool isColliding;
 
     private void Update()

@@ -9,12 +9,18 @@ using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 [RequireComponent(typeof(XRGrabInteractable))]
 public class MoveWithJoystick : MonoBehaviour
 {
+    /// <summary>
+    /// Enum of possible angles to rotate an object
+    /// </summary>
     private enum AxisToRotate
     {
         x,
         y,
         z
     };
+    /// <summary>
+    /// Represents the axis to rotate an object on RotationInteraction()
+    /// </summary>
     private AxisToRotate axisToRotate = AxisToRotate.x;
 
     /// <summary>
@@ -121,6 +127,9 @@ public class MoveWithJoystick : MonoBehaviour
     /// The proper object's rigidbody
     /// </summary>
     private new Rigidbody rigidbody;
+    /// <summary>
+    /// Is the object position interpolating between it's original position and the controller at now?
+    /// </summary>
     private bool isInterpolatingPosition;
 
     void Start()
@@ -215,13 +224,13 @@ public class MoveWithJoystick : MonoBehaviour
             if (states == machineStates.translading)
             {
                 if (isRayInteractor)
-                    TransladingInteraction();
+                    TranslationInteraction();
             }
 
             else if (states == machineStates.rotating)
             {
 
-                RotatingInteraction();
+                RotationInteraction();
             }
 
             else
@@ -239,7 +248,7 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// Set rigidbody's velocity
     /// </summary>
-    private void TransladingInteraction()
+    private void TranslationInteraction()
     {
         float xrRigY = controllerTransform.eulerAngles.y * Mathf.Deg2Rad;
 
@@ -267,7 +276,7 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// Set transform's euler angles
     /// </summary>
-    private void RotatingInteraction()
+    private void RotationInteraction()
     {
         if (!grabInteractable.isSelected)
             return;

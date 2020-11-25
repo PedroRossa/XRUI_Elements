@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 /// <summary>
 /// Class that permits the swap from a XRDirectInteractor in to a XRRayInteractor of a hand
 /// </summary>
+[RequireComponent(typeof(RayAndDirect))]
 public class HandInteractionsManager : MonoBehaviour
 {
     /// <summary>
@@ -24,6 +25,10 @@ public class HandInteractionsManager : MonoBehaviour
     /// The point transform to attach the ray
     /// </summary>
     public Transform attachRayTransform;
+    /// <summary>
+    /// The objects' name that spam when swap interaction
+    /// </summary>
+    public string[] spamObjectsName;
 
     /// <summary>
     /// The instance of nextFrameCommands enum
@@ -33,11 +38,6 @@ public class HandInteractionsManager : MonoBehaviour
     /// Is the hand selecting an object?
     /// </summary>
     private bool isSelectingAnObject;
-
-    /// <summary>
-    /// The objects' name that spam when swap interaction
-    /// </summary>
-    public string[] spamObjectsName;
 
     private void Start()
     {
@@ -81,7 +81,6 @@ public class HandInteractionsManager : MonoBehaviour
                     break;
             }
 
-
             machineStates = nextFrameCommands.nothing;
             eventConfiguration();
 
@@ -112,12 +111,12 @@ public class HandInteractionsManager : MonoBehaviour
     /// </summary>
     private void eventConfiguration()
     {
-        GetComponent<XRBaseInteractor>().onSelectEnter.AddListener(i =>
+        GetComponent<XRBaseInteractor>().onSelectEnter.AddListener(interactable =>
         {
             isSelectingAnObject = true;
         });
 
-        GetComponent<XRBaseInteractor>().onSelectExit.AddListener(i =>
+        GetComponent<XRBaseInteractor>().onSelectExit.AddListener(interactable =>
         {
             isSelectingAnObject = false;
         });

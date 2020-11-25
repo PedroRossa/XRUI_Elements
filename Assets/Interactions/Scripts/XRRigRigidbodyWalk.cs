@@ -39,7 +39,7 @@ public class XRRigRigidbodyWalk : WalkSystemBase
     /// The vector direction pointed according to y euler angle of the camera transform
     /// </summary>
     /// <returns></returns>
-    Vector3 DirectionVector()
+    private Vector3 DirectionVector()
     {
         return new Vector3(Mathf.Sin(cameraTransform.eulerAngles.y * Mathf.Deg2Rad), 0,
             Mathf.Cos(cameraTransform.eulerAngles.y * Mathf.Deg2Rad));
@@ -53,7 +53,7 @@ public class XRRigRigidbodyWalk : WalkSystemBase
     /// <summary>
     /// Calculate the factor to multiplicate with rigidbody's velocity
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The factor calculated </returns>
     private Vector3 CalculateVelocityMultiplicationFactor()
     {
         return DirectionVector() * Time.deltaTime * translationSpeed;
@@ -62,7 +62,7 @@ public class XRRigRigidbodyWalk : WalkSystemBase
     /// <summary>
     /// Calculate the max angle that a single frame can rotate
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The angle calculated </returns>
     private Vector3 CalculateMaxAngleToMoveInFrame()
     {
         return Vector3.up * Time.deltaTime * rotationSpeed;
