@@ -38,9 +38,14 @@ public class HandInteractionsManager : MonoBehaviour
     /// Is the hand selecting an object?
     /// </summary>
     private bool isSelectingAnObject;
+    /// <summary>
+    /// Ray and Direct instance
+    /// </summary>
+    private RayAndDirect rayAndDirect;
 
     private void Start()
     {
+        rayAndDirect = gameObject.GetComponent<RayAndDirect>();
         eventConfiguration();
     }
 
@@ -128,12 +133,11 @@ public class HandInteractionsManager : MonoBehaviour
     private void addRay()
     {
         XRRayInteractor ray = gameObject.AddComponent<XRRayInteractor>();
-        gameObject.AddComponent<XRInteractorLineVisual>();
-        XRInteractorLineVisual line = gameObject.GetComponent<RayAndDirect>().raySo.line;
-        XRInteractorLineVisual goLine = gameObject.GetComponent<XRInteractorLineVisual>();
-        goLine.validColorGradient = line.validColorGradient;
-        goLine.invalidColorGradient = line.invalidColorGradient;
-        goLine.smoothMovement = line.smoothMovement;
+        XRInteractorLineVisual line = gameObject.AddComponent<XRInteractorLineVisual>();
+        RaySO raySO = rayAndDirect.raySo.clone();
+        ray = raySO.ray;
+        line = raySO.line;
+
         GetComponent<SphereCollider>().enabled = false;
 
         if (attachRayTransform != null)
@@ -148,7 +152,8 @@ public class HandInteractionsManager : MonoBehaviour
     /// </summary>
     private void addDirect()
     {
-        gameObject.AddComponent<XRDirectInteractor>();
+        XRDirectInteractor direct = gameObject.AddComponent<XRDirectInteractor>();
+        direct = rayAndDirect.directSo.clone().direct;
 
         GetComponent<SphereCollider>().enabled = true;
     }
