@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
@@ -6,39 +7,62 @@ using static UnityEngine.XR.Interaction.Toolkit.XRBaseInteractable;
 /// <summary>
 /// Class that permits a bunch of interactions with a joystick in an object
 /// </summary>
-[RequireComponent(typeof(XRGrabInteractable))]
+[RequireComponent(typeof(XRGrabInteractable), typeof(Rigidbody))]
 public class MoveWithJoystick : MonoBehaviour
 {
-    /// <summary>
-    /// Enum of possible angles to rotate an object
-    /// </summary>
     private enum AxisToRotate
     {
         x,
         y,
         z
     };
+    private AxisToRotate axisToRotate = AxisToRotate.y;
+
     /// <summary>
-    /// Represents the axis to rotate an object on RotationInteraction()
+    /// Will you use the translation interaction?
     /// </summary>
-    private AxisToRotate axisToRotate = AxisToRotate.x;
+    public bool useTranslationInteraction;
+    /// <summary>
+    /// Will you use the rotation interaction?
+    /// </summary>
+    public bool useRotationInteraction;
+    /// <summary>
+    /// Will you use the scale interaction?
+    /// </summary>
+    public bool useScaleInteraction;
 
     /// <summary>
     /// Speed of vertical translation
     /// </summary>
+    [ShowIf("useTranslationInteraction")]
     public float speedVertical = 10f;
     /// <summary>
     /// Speed of horizontal translation
     /// </summary>
+    [ShowIf("useTranslationInteraction")]
     public float speedHorizontal = 10f;
     /// <summary>
     /// Speed of rotation
     /// </summary>
+    [ShowIf("useRotationInteraction")]
     public float rotationSpeed = 10f;
     /// <summary>
     /// Speed to scale
     /// </summary>
+    [ShowIf("useScaleInteraction")]
     public float scalingSpeed = 10f;
+
+    /// <summary>
+    /// The minimum scale magnitude of the object
+    /// </summary>
+    [ShowIf("useScaleInteraction")]
+    public float minScaleMagnitude = 0.5f;
+    /// <summary>
+    /// The maximum scale magnitude of the object 
+    /// </summary>
+    [ShowIf("useScaleInteraction")]
+    public float maxScaleMagnitude = 5f;
+
     /// <summary>
     /// A SnapTurnProvider reference from XRRig
     /// </summary>
@@ -47,29 +71,23 @@ public class MoveWithJoystick : MonoBehaviour
     /// A Walk reference from XRRig
     /// </summary>
     public WalkSystemBase walk;
+
     /// <summary>
     /// The minimum distance to attach an object in a controller
     /// </summary>
     public float minDistanceToAttach = 0.1f;
-    /// <summary>
-    /// The minimum scale magnitude of the object
-    /// </summary>
-    public float minScaleMagnitude = 0.5f;
-    /// <summary>
-    /// The maximum scale magnitude of the object 
-    /// </summary>
-    public float maxScaleMagnitude = 5f;
 
     /// <summary>
     /// Enum of possible interactions types
     /// </summary>
-    public enum machineStates
+    public enum InteractionStates
     {
         translading,
         rotating,
         scaling,
+        any
     };
-    private machineStates states = 0;
+    private InteractionStates states = 0;
 
     /// <summary>
     /// The controller XRGrabInteractable reference
@@ -127,13 +145,19 @@ public class MoveWithJoystick : MonoBehaviour
     /// The proper object's rigidbody
     /// </summary>
     private new Rigidbody rigidbody;
-    /// <summary>
-    /// Is the object position interpolating between it's original position and the controller at now?
-    /// </summary>
     private bool isInterpolatingPosition;
 
     void Start()
     {
+        if (useTranslationInteraction)
+            states = InteractionStates.translading;
+        else if (useRotationInteraction)
+            states = InteractionStates.rotating;
+        else if (useScaleInteraction)
+            states = InteractionStates.scaling;
+        else
+            states = InteractionStates.any;
+
         grabInteractable = GetComponent<XRGrabInteractable>();
         movementType = grabInteractable.movementType;
 
@@ -179,7 +203,7 @@ public class MoveWithJoystick : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(controllerTransform != null && !isInterpolatingPosition)
+        if (controllerTransform != null && !isInterpolatingPosition)
             controllerPositionOnStartOfFrame = controllerTransform.position;
 
         if (grabInteractable.isSelected && isRayInteractor && !isInterpolatingPosition)
@@ -195,12 +219,28 @@ public class MoveWithJoystick : MonoBehaviour
 
         if (Input.GetKeyDown(OculusInput.RightHandThumbstick))
         {
-            states = (states == machineStates.rotating ? machineStates.translading : machineStates.rotating);
+            if (useRotationInteraction && useTranslationInteraction)
+                states = (states == InteractionStates.rotating ? InteractionStates.translading : InteractionStates.rotating);
+            //At here until 'else' is just in case the flags change in runtime futurely
+            else if (useRotationInteraction)
+                states = InteractionStates.rotating;
+            else if (useTranslationInteraction)
+                states = InteractionStates.translading;
+            else
+                states = InteractionStates.any;
         }
 
         else if (Input.GetKeyDown(OculusInput.LeftHandThumbstick))
         {
-            states = (states == machineStates.scaling ? machineStates.translading : machineStates.scaling);
+            if (useScaleInteraction && useTranslationInteraction)
+                states = (states == InteractionStates.scaling ? InteractionStates.translading : InteractionStates.scaling);
+            //At here until 'else' is just in case the flags change in runtime futurely
+            else if (useScaleInteraction)
+                states = InteractionStates.scaling;
+            else if (useTranslationInteraction)
+                states = InteractionStates.translading;
+            else
+                states = InteractionStates.any;
         }
     }
 
@@ -221,19 +261,19 @@ public class MoveWithJoystick : MonoBehaviour
                 horizontalAxis = OculusInput.RightHandHorizontalAxis;
             }
 
-            if (states == machineStates.translading)
+            if (states == InteractionStates.translading)
             {
                 if (isRayInteractor)
-                    TranslationInteraction();
+                    TransladingInteraction();
             }
 
-            else if (states == machineStates.rotating)
+            else if (states == InteractionStates.rotating)
             {
 
-                RotationInteraction();
+                RotatingInteraction();
             }
 
-            else
+            else if (states == InteractionStates.scaling)
             {
                 ScaleInteraction();
             }
@@ -248,11 +288,11 @@ public class MoveWithJoystick : MonoBehaviour
     /// <summary>
     /// Set rigidbody's velocity
     /// </summary>
-    private void TranslationInteraction()
+    private void TransladingInteraction()
     {
         float xrRigY = controllerTransform.eulerAngles.y * Mathf.Deg2Rad;
 
-        rigidbody.velocity = new Vector3(Mathf.Sin(xrRigY), -Mathf.Sin(controllerTransform.eulerAngles.x * Mathf.Deg2Rad),
+        rigidbody.velocity = new Vector3(Mathf.Sin(xrRigY), -Mathf.Sin(controllerTransform.eulerAngles.x * Mathf.Deg2Rad) / 3.3333333f,
             Mathf.Cos(xrRigY)) * verticalAxis * speedVertical;
 
         xrRigY += 90;
@@ -270,13 +310,13 @@ public class MoveWithJoystick : MonoBehaviour
             grabInteractable.trackPosition = (Vector3.Distance(gameObject.transform.position, controllerTransform.position) <= minDistanceToAttach);
         }
 
-        SetInteractions(grabInteractable.trackPosition && states == machineStates.translading);
+        SetInteractions(grabInteractable.trackPosition && states == InteractionStates.translading);
     }
 
     /// <summary>
     /// Set transform's euler angles
     /// </summary>
-    private void RotationInteraction()
+    private void RotatingInteraction()
     {
         if (!grabInteractable.isSelected)
             return;
