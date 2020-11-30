@@ -1,33 +1,34 @@
-﻿using NaughtyAttributes;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRUI_2DButtonText : XRUI_ButtonBase
+/// <summary>
+/// XRUI 2DButton identified by Text
+/// </summary>
+public class XRUI_2DButtonText : XRUI_2DButtonBase
 {
-    public SpriteRenderer backgroundSprite;
     [Header("Text Properties")]
     public string txtValue;
     public int fontSize = 20;
-
-    private TextMeshPro tmpField;
+    protected TextMeshPro tmpField;
 
     protected override void OnValidate()
     {
         base.OnValidate();
         Initialize();
+
+        if (xrFeedback.XRInteractable != null)
+            xrFeedback.XRInteractable.onSelectEnter.AddListener(
+                (XRBaseInteractor) =>
+                {
+                    if (!xrFeedback.isEnabled)
+                        return;
+
+                    onClickDown?.Invoke();
+                }
+            );
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        Initialize();
-
-        xrFeedback.onTouchEnter.AddListener((XRController controller) => { onClickDown?.Invoke(); });
-        xrFeedback.onTouchExit.AddListener((XRController controller) => { onClickUp?.Invoke(); });
-    }
-
-    private void Initialize()
+    protected override void Initialize()
     {
         if (tmpField == null)
             tmpField = GetComponentInChildren<TextMeshPro>();

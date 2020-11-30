@@ -1,17 +1,27 @@
 ﻿using NaughtyAttributes;
 using UnityEngine;
 
+/// <summary>
+/// Base class of XRUI elements
+/// </summary>
 [RequireComponent(typeof(XRUI_Colors))]
 public abstract class XRUI_Base : MonoBehaviour
 {
+    /// <summary>
+    /// Is the button enabled?
+    /// </summary>
     public bool isEnabled = true;
 
-    protected XRUI_Colors xrUIColors;
+    /// <summary>
+    /// The xrUIColors object's reference
+    /// </summary>
+    [HideInInspector]
+    public XRUI_Colors xrUIColors;
     public XRUI_Feedback xrFeedback;
 
-    //TODO: Se não tiver xrFeedback setado, dar um warning de que tu precisa ter um xrFeedback
-    //TODO: Criar naughty attributes button pra criar automatico um xrfeedback
-
+    /// <summary>
+    /// Callback called when the button action is validated
+    /// </summary>
     protected virtual void OnValidate()
     {
         xrUIColors = GetComponent<XRUI_Colors>();
@@ -31,11 +41,11 @@ public abstract class XRUI_Base : MonoBehaviour
         LookForXRFeedback();
 
         xrFeedback.isEnabled = isEnabled;
-
-        if (!isEnabled)
-            return;
     }
 
+    /// <summary>
+    /// If it is null, try to set xrFeedback reference to the XRUI_Feedback with a component in children
+    /// </summary>
     private void LookForXRFeedback()
     {
         if (xrFeedback != null)
@@ -46,6 +56,9 @@ public abstract class XRUI_Base : MonoBehaviour
             throw new System.Exception("XRUIBase needs a XRFeedback reference to work properly.");
     }
 
+    /// <summary>
+    /// Create a XRUIFeedback component in the button if it hasn't
+    /// </summary>
     [Button]
     public void CreateXRUIFeedback()
     {

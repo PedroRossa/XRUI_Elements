@@ -1,12 +1,11 @@
 ﻿using NaughtyAttributes;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRUI_2DDragInteractable : MonoBehaviour
 {
-    [HideInInspector]
-    public bool canPush = true;
-
     [ReadOnly]
     public bool isHover = false;
     [ReadOnly]
@@ -38,50 +37,39 @@ public class XRUI_2DDragInteractable : MonoBehaviour
         interactable = gameObject.GetComponent<XRBaseInteractable>();
         interactableRigidbody = interactable.GetComponent<Rigidbody>();
 
-        interactableRigidbody.isKinematic = !canPush;
+        interactableRigidbody.isKinematic = true;
 
-        if (canPush)
+        interactable.onHoverEnter.AddListener((XRBaseInteractor) => { isHover = true; });
+        interactable.onHoverExit.AddListener((XRBaseInteractor) => { isHover = false; });
+
+        interactable.onSelectEnter.AddListener((XRBaseInteractor) =>
         {
-            interactable.onFirstHoverEnter.AddListener((XRBaseInteractor) => { isHover = true; });
-            interactable.onLastHoverExit.AddListener((XRBaseInteractor) => { isHover = false; });
-        }
-
-        interactable.onSelectEnter.AddListener((XRBaseInteractor) => { isSelected = true; });
+            isSelected = true;
+            XRUI_Helper.ConstraintVelocityLocally(transform, interactableRigidbody, false, true, true);
+            StartCoroutine(UpdateInfos());
+        });
         interactable.onSelectExit.AddListener((XRBaseInteractor) =>
         {
             isSelected = false;
             interactableRigidbody.velocity = Vector3.zero;
+            StopCoroutine(UpdateInfos());
         });
     }
-
-    private void FixedUpdate()
+    private IEnumerator UpdateInfos()
     {
-        XRUI_Helper.ConstraintVelocityLocally(transform, interactableRigidbody, false, true, true);
-        transform.localPosition = new Vector3(transform.localPosition.x, 0, 0);
+        UpdateByMovement();
+        yield return new WaitForFixedUpdate();
+        transform.localPosition = new Vector3(Mathf.Clamp01(transform.localPosition.x), 0, 0);
+        StartCoroutine(UpdateInfos());
     }
-
-    private void Update()
-    {
-        if (isHover || isSelected)
-        {
-            UpdateByMovement();
-        }
-    }
-
     private void UpdateByMovement()
     {
         if (transform.parent == null)
             transform.SetParent(originalParent);
-
         //Get x position that represents the current local slider object position
-        float posX = transform.localPosition.x;
-        posX = posX > 1 ? 1 : posX;
-        posX = posX < 0 ? 0 : posX;
-
-        //transform.localPosition = new Vector3(posX, 0, 0);
+        float posX = Mathf.Clamp01(transform.localPosition.x);
         normalizedValue = (posX - localInitPos.x) / (localEndPos.x - localInitPos.x);
     }
-
 
     private void OnDrawGizmosSelected()
     {

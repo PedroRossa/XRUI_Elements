@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// 2D Progress Bar controller
+/// </summary>
 public class XRUI_2DProgressBar : XRUI_ProgressBarBase
 {
     private SpriteRenderer backgroundSprite;

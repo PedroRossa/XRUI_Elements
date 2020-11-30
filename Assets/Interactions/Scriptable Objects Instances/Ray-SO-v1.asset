@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7e9804fb7136a4ea56d1921c9ff206, type: 3}
+  m_Name: Ray-SO-v1
+  m_EditorClassIdentifier: 
+  line: {fileID: 3084435354476586651, guid: 0dd9a39227a410142b8690c286369fd7, type: 3}
+  ray: {fileID: 7573331843220811747, guid: 0dd9a39227a410142b8690c286369fd7, type: 3}

@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// 3D Progress Bar controller
+/// </summary>
 public class XRUI_3DProgressBar : XRUI_ProgressBarBase
 {
     private MeshRenderer backgroundMesh;

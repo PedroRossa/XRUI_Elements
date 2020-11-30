@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 2D toggle XRUI component
+/// </summary>
 public class XRUI_2DToggle : XRUI_ToggleBase
 {
     private SpriteRenderer bodySprite;
@@ -17,7 +20,15 @@ public class XRUI_2DToggle : XRUI_ToggleBase
     protected override void UpdateColors()
     {
         if (bodySprite != null)
-            bodySprite.color = xrUIColors.normalColor;
+        {
+            if (changeBGColor)
+            {
+                xrUIColors.normalColor = IsSelected ? selectedBGColor : unselectedBGColor;
+                bodySprite.color = IsSelected ? selectedBGColor : unselectedBGColor;
+            }
+            else
+                bodySprite.color = xrUIColors.normalColor;
+        }
 
         if (selectSprite != null)
         {

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 3D Slider controller
+/// </summary>
 public class XRUI_3DSlider : XRUI_ProgressBarBase
 {
     private MeshRenderer backgroundMesh;

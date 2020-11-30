@@ -8,7 +8,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/2DElements/Button Sprite 2D", false, 0)]
     static void ButtonSprite2D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonSprite2D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonSprite2D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/2DElements/Button Sprite 2D", true)]
@@ -24,7 +26,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/2DElements/Button Text 2D", false, 0)]
     static void ButtonText2D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonText2D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonText2D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/2DElements/Button Text 2D", true)]
@@ -40,7 +44,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/2DElements/Progress Bar 2D", false, 0)]
     static void ButtonProgressBar2D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ProgressBar2D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ProgressBar2D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/2DElements/Progress Bar 2D", true)]
@@ -56,7 +62,10 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/2DElements/Toggle 2D", false, 0)]
     static void Toggle2D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle2D );
+        GameObject go = (PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle2D)) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
+        //Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle2D );
     }
 
     [MenuItem("GameObject/XRUI_Elements/2DElements/Toggle 2D", true)]
@@ -73,10 +82,51 @@ public class XRUI_MenuBar : MonoBehaviour
 
     #region 3D Elements
 
+    [MenuItem("GameObject/XRUI_Elements/3DElements/ButtonSprite 3D", false, 0)]
+    static void ButtonSprite3D()
+    {
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonSprite3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
+
+    }
+
+    [MenuItem("GameObject/XRUI_Elements/3DElements/ButtonSprite 3D", true)]
+    static bool ValidateButtonSprite3D()
+    {
+        GameObject go = XRUI_Prefabs.Instance.ButtonSprite3D;
+        if (go == null)
+            return false;
+
+        return PrefabUtility.IsPartOfPrefabAsset(go);
+    }
+
+    [MenuItem("GameObject/XRUI_Elements/3DElements/ButtonText 3D", false, 0)]
+    static void ButtonText3D()
+    {
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ButtonText3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
+
+    }
+
+    [MenuItem("GameObject/XRUI_Elements/3DElements/ButtonText 3D", true)]
+    static bool ValidateButtonText3D()
+    {
+        GameObject go = XRUI_Prefabs.Instance.ButtonSprite3D;
+        if (go == null)
+            return false;
+
+        return PrefabUtility.IsPartOfPrefabAsset(go);
+    }
+
     [MenuItem("GameObject/XRUI_Elements/3DElements/ProgressBar 3D", false, 0)]
     static void ProgressBar3D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ProgressBar3D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.ProgressBar3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
+
     }
 
     [MenuItem("GameObject/XRUI_Elements/3DElements/ProgressBar 3D", true)]
@@ -92,7 +142,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/3DElements/Slider 3D", false, 0)]
     static void Slider3D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Slider3D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Slider3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/3DElements/Slider 3D", true)]
@@ -108,7 +160,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/3DElements/SliderBox 3D", false, 0)]
     static void SliderBox3D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.SliderBox3D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.SliderBox3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/3DElements/SliderBox 3D", true)]
@@ -124,7 +178,10 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/3DElements/Toggle 3D", false, 0)]
     static void Toggle3D()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle3D);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Toggle3D) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
+
     }
 
     [MenuItem("GameObject/XRUI_Elements/3DElements/Toggle 3D", true)]
@@ -144,7 +201,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Manipulable", false, 0)]
     static void Manipulable()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Manipulable);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.Manipulable) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Manipulable", true)]
@@ -160,7 +219,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Sprite", false, 0)]
     static void FeedbackColorSprite()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorSprite);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorSprite) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Sprite", true)]
@@ -176,7 +237,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Mesh", false, 0)]
     static void FeedbackColorMesh()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorMesh);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorMesh) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Mesh", true)]
@@ -192,7 +255,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Outline", false, 0)]
     static void FeedbackColorOutline()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorOutline);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackColorOutline) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Color Outline", true)]
@@ -208,7 +273,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Sound", false, 0)]
     static void FeedbackSound()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackSound);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackSound) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Sound", true)]
@@ -224,7 +291,9 @@ public class XRUI_MenuBar : MonoBehaviour
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Haptics", false, 0)]
     static void FeedbackHaptics()
     {
-        Selection.activeObject = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackHaptics);
+        GameObject go = PrefabUtility.InstantiatePrefab(XRUI_Prefabs.Instance.FeedbackHaptics) as GameObject;
+        go.transform.parent = Selection.activeTransform;
+        go.transform.localPosition = Vector3.zero;
     }
 
     [MenuItem("GameObject/XRUI_Elements/GeneralElements/Feedback Haptics", true)]
@@ -236,6 +305,6 @@ public class XRUI_MenuBar : MonoBehaviour
 
         return PrefabUtility.IsPartOfPrefabAsset(go);
     }
-    
+
     #endregion
 }

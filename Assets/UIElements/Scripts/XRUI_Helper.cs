@@ -81,7 +81,7 @@ public class XRUI_Helper
     public static void ConstraintPositionLocally(Transform transformTarget, Rigidbody rigidbody, bool freezeX = true, bool freezeY = true, bool freezeZ = true)
     {
         Vector3 localPosition = transformTarget.InverseTransformPoint(rigidbody.position);
-        
+
         if (freezeX)
             localPosition.x = 0;
         if (freezeY)

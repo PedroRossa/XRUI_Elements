@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 9166759388679252885}
   xrFeedback: {fileID: 9166759389405492193}
   background: {fileID: 9166759389875492465}
   totalProgress: {fileID: 9166759389284082403}
@@ -208,6 +209,10 @@ MonoBehaviour:
   showProgressPoint: 1
   showProgressText: 1
   progress: 0.759
+  minRange: 0
+  maxRange: 100
+  symbol: '%'
+  decimalPlaces: 0
   onProgressChange:
     m_PersistentCalls:
       m_Calls: []
@@ -434,7 +439,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9166759389405492197}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.2}
@@ -525,7 +530,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befe1922c3713714ca488498f09dce6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPush: 1
   isHover: 0
   isSelected: 0
   normalizedValue: 0
@@ -570,6 +574,7 @@ MonoBehaviour:
   nearColliderScale: {x: 1, y: 1, z: 1}
   nearColliderRadius: 0.5
   nearColliderOffset: {x: 0, y: 0, z: -0.01}
+  feedbackColor: {fileID: 9166759389405492198}
 --- !u!114 &9166759389405492198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,6 +592,8 @@ MonoBehaviour:
   runOnSelect: 1
   feedbackType: 2
   xrUIColors: {fileID: 9166759388679252885}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!1 &9166759389556069951
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +707,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 75 %
+  m_text: 76%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

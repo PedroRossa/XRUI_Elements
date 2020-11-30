@@ -136,6 +136,7 @@ MonoBehaviour:
   nearColliderScale: {x: 0.3, y: 0.1, z: 0.1}
   nearColliderRadius: 1.5
   nearColliderOffset: {x: 0, y: 0, z: -0.05}
+  feedbackColor: {fileID: 6742236279392719994}
 --- !u!82 &6742236279392719991
 AudioSource:
   m_ObjectHideFlags: 0
@@ -297,6 +298,8 @@ MonoBehaviour:
   runOnSelect: 0
   feedbackType: 2
   xrUIColors: {fileID: 6742236279392719989}
+  memoryColor: {r: 0, g: 0, b: 0, a: 0}
+  outline: {fileID: 0}
 --- !u!114 &6742236279392719995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  xrUIColors: {fileID: 6742236279392719989}
   xrFeedback: {fileID: 6742236279392719990}
   onClickDown:
     m_PersistentCalls:
@@ -317,6 +321,10 @@ MonoBehaviour:
   onClickUp:
     m_PersistentCalls:
       m_Calls: []
+  buttonsToDisableOnClickUp: []
+  isOn: 0
+  secondsToValidateClick: 0.2
+  canActiveButton: 1
   backgroundSprite: {fileID: 6742236279728133619}
   txtValue: my special button
   fontSize: 28

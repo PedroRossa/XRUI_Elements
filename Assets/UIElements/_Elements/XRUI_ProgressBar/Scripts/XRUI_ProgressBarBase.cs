@@ -1,7 +1,11 @@
 ﻿using NaughtyAttributes;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class to controll Progress Bars
+/// </summary>
 public abstract class XRUI_ProgressBarBase : XRUI_Base
 {
     [Header("Prefab References")]
@@ -33,6 +37,11 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
         set => SetProgress(value);
     }
 
+    public float minRange = 0f;
+    public float maxRange = 100f;
+    public string symbol = "%";
+    public int decimalPlaces = 0;
+
     public XRUI_Helper.UnityFloatEvent onProgressChange;
 
     private XRUI_2DDragInteractable dragInteractable;
@@ -47,35 +56,34 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
         UpdateColors();
     }
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-
         SetElementReferences();
         SetElementsVisibility();
         UpdateColors();
 
         dragInteractable = GetComponentInChildren<XRUI_2DDragInteractable>();
-
-        if (dragInteractable != null)
-            dragInteractable.canPush = canPush;
-
         if (!isEnabled)
             dragInteractable.GetComponent<Collider>().enabled = false;
-    }
-
-    protected virtual void Update()
-    {
-        if (!isEnabled)
-            return;
-
-        if (dragInteractable.isSelected || (canPush && xrFeedback.IsTouching))
+        else if (dragInteractable != null)
         {
-            SetProgress(dragInteractable.normalizedValue);
-            UpdateProgress();
+            dragInteractable.interactable.onSelectEnter.AddListener((XRBaseInteractor) => { StartCoroutine(UpdateInfos()); });
+            dragInteractable.interactable.onSelectExit.AddListener((XRBaseInteractor) => { StopCoroutine(UpdateInfos()); });
         }
     }
 
+    private IEnumerator UpdateInfos()
+    {
+        SelectedEvent();
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(UpdateInfos());
+    }
+
+    private void SelectedEvent()
+    {
+        SetProgress(dragInteractable.normalizedValue);
+        UpdateProgress();
+    }
 
     private void SetElementsVisibility()
     {
@@ -91,7 +99,8 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
 
     private void SetProgress(float value)
     {
-        if (progress == value) return;
+        if (progress == value)
+            return;
 
         //limit the value between 0 and 1
         progress = Mathf.Clamp01(value);
@@ -107,15 +116,15 @@ public abstract class XRUI_ProgressBarBase : XRUI_Base
 
         if (tmpProgress != null)
         {
-            int currentProgress = (int)(Progress * 100);
-            tmpProgress.text = currentProgress.ToString() + " %";
+            float currentProgress = (minRange + (Progress * (maxRange - minRange)));
+
+            tmpProgress.text = currentProgress.ToString("F" + decimalPlaces) + symbol;
         }
 
         //Get child object that is containered between 0 - 1
         if (progressPointElement != null && progressPointElement.childCount > 0)
             progressPointElement.GetChild(0).transform.localPosition = new Vector3(Progress, 0, 0);
     }
-
 
     protected abstract void UpdateColors();
     protected abstract void SetElementReferences();

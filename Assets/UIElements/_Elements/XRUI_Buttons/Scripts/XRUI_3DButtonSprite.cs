@@ -1,12 +1,12 @@
 ﻿using NaughtyAttributes;
+using System.Collections;
 using UnityEngine;
 
-public class XRUI_3DButtonSprite : XRUI_ButtonBase
+/// <summary>
+/// XRUI 3DButton identified by a Sprite
+/// </summary>
+public class XRUI_3DButtonSprite : XRUI_3DButtonBase
 {
-    [Header("Internal Properties")]
-    public Transform buttonBackground;
-    public Transform buttonObject;
-
     [Header("Feedback Properties")]
     public bool backgroundFeedback = true;
 
@@ -28,15 +28,17 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
     [Range(0.001f, 1.0f)]
     public float iconScale = 0.1f;
 
-    public bool HasIconSet() { return icon != null ? true : false; }
+    /// <summary>
+    /// Return if the button has an icon attached to it
+    /// </summary>
+    /// <returns></returns>
+    public bool HasIconSet()
+    {
+        return icon != null;
+    }
 
-    public Material buttonMaterial;
-
-    [ReadOnly]
-    public bool isPressed;
-
-    private MeshRenderer buttonMesh;
-    private Rigidbody buttonRigidBody;
+    [HideInInspector]
+    public XRUI_FeedbackColor feedbackColor;
 
     protected override void OnValidate()
     {
@@ -46,7 +48,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
             buttonMesh = buttonObject.GetComponent<MeshRenderer>();
 
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
-        
+
         ConfigureButtonMaterial();
         SetColors();
     }
@@ -57,34 +59,106 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
 
         buttonMesh = buttonObject.GetComponent<MeshRenderer>();
         buttonRigidBody = buttonObject.GetComponent<Rigidbody>();
-        
+
         ConfigureButtonMaterial();
 
         SetColors();
-
-        onClickDown.AddListener(() =>
+        try
         {
-            if (backgroundFeedback)
-                buttonMesh.sharedMaterial.color = xrUIColors.selectColor;
-            else
-                iconSprite.color = xrUIColors.selectColor;
-        });
-
-        onClickUp.AddListener(() =>
+            feedbackColor = GetComponentInChildren<XRUI_FeedbackColor>();
+        }
+        catch (System.NullReferenceException)
         {
-            if (backgroundFeedback)
-                buttonMesh.sharedMaterial.color = xrUIColors.normalColor;
-            else
-                iconSprite.color = xrUIColors.normalColor;
-        });
+            Debug.LogError("Feedback color missing in: " + gameObject.name + "\nYou need to put a XRUI_FeedbackColor component" +
+                " in a child game object");
+        }
     }
 
-    private void FixedUpdate()
+    protected override void EventConfiguration()
     {
-        XRUI_Helper.ConstraintVelocityLocally(transform, buttonRigidBody, true, true, false);
-        XRUI_Helper.ConstraintPositionLocally(transform, buttonRigidBody, true, true, false);
-        buttonRigidBody.transform.localRotation = Quaternion.identity;
-        buttonObject.localPosition = new Vector3(0, 0, buttonObject.localPosition.z);
+        onClickDown.AddListener(
+            () =>
+            {
+                ButtonsListener(this);
+            }
+        );
+    }
+
+    protected void ButtonsListener(XRUI_ButtonBase currentButton)
+    {
+        //If the button is enabled and it can be active, then it toggle between xrUIColors.selectColor and xrUI.normalColor
+        //The others enabled buttons will be set to xrUI.normalColor
+        if (currentButton.canActiveButton)
+        {
+            if (currentButton.isEnabled)
+            {
+                StartCoroutine(ButtonsListenerCoroutine(currentButton));
+            }
+        }
+    }
+
+    protected IEnumerator ButtonsListenerCoroutine(XRUI_ButtonBase currentButton)
+    {
+        //I HATE parallel programming ;-;
+        XRUI_3DButtonSprite xRUI_3DButtonSprite = currentButton as XRUI_3DButtonSprite;
+        if (xRUI_3DButtonSprite)
+        {
+            while (xRUI_3DButtonSprite.isMoving)
+                yield return null;
+        }
+
+        currentButton.isOn = !currentButton.isOn;
+
+        if (xRUI_3DButtonSprite)
+        {
+            if (xRUI_3DButtonSprite.backgroundFeedback)
+                xRUI_3DButtonSprite.buttonMesh.sharedMaterial.color =
+                    xRUI_3DButtonSprite.isOn ? xRUI_3DButtonSprite.xrUIColors.selectColor : xRUI_3DButtonSprite.xrUIColors.normalColor;
+            else
+                xRUI_3DButtonSprite.iconSprite.color =
+                    xRUI_3DButtonSprite.isOn ? xRUI_3DButtonSprite.xrUIColors.selectColor : xRUI_3DButtonSprite.xrUIColors.normalColor;
+
+            if (xRUI_3DButtonSprite.feedbackColor != null)
+                xRUI_3DButtonSprite.feedbackColor.memoryColor = xRUI_3DButtonSprite.buttonMesh.sharedMaterial.color;
+        }
+        else
+        {
+            XRUI_2DButtonSprite xRUI_2DButtonSprite = currentButton as XRUI_2DButtonSprite;
+            if (xRUI_2DButtonSprite)
+            {
+                if (xRUI_2DButtonSprite.backgroundFeedback)
+                    xRUI_2DButtonSprite.backgroundSprite.color =
+                        xRUI_2DButtonSprite.isOn ? xRUI_2DButtonSprite.xrUIColors.selectColor :
+                        xRUI_2DButtonSprite.xrUIColors.normalColor;
+                else
+                    iconSprite.color = xRUI_2DButtonSprite.isOn ? xrUIColors.selectColor : xrUIColors.normalColor;
+            }
+
+        }
+
+        foreach (var button in currentButton.buttonsToDisableOnClickUp)
+        {
+            if (button.isEnabled)
+            {
+                if (button as XRUI_2DButtonBase)
+                    (button as XRUI_2DButtonBase).backgroundSprite.color = xrUIColors.normalColor;
+                else
+                {
+                    (button as XRUI_3DButtonBase).buttonMesh.sharedMaterial.color = xrUIColors.normalColor;
+
+                    XRUI_3DButtonSprite button3dSprite = (button as XRUI_3DButtonSprite);
+                    if (button3dSprite)
+                    {
+                        if (button3dSprite.feedbackColor != null)
+                        {
+                            button3dSprite.feedbackColor.memoryColor = button3dSprite.buttonMesh.sharedMaterial.color;
+                        }
+                    }
+                }
+
+                button.isOn = false;
+            }
+        }
     }
 
     private void RefreshSprite()
@@ -96,6 +170,9 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         iconSprite.sprite = icon;
     }
 
+    /// <summary>
+    /// Set the color of the button mesh after refresh the button sprite
+    /// </summary>
     private void SetColors()
     {
         RefreshSprite();
@@ -119,7 +196,7 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
         }
     }
 
-    private void ConfigureButtonMaterial()
+    protected override void ConfigureButtonMaterial()
     {
         if (buttonMesh == null)
             return;
@@ -132,6 +209,5 @@ public class XRUI_3DButtonSprite : XRUI_ButtonBase
             iconSprite.color = isEnabled ? xrUIColors.normalColor : xrUIColors.disabledColor;
 
         buttonMesh.material = buttonMaterial;
-
     }
 }

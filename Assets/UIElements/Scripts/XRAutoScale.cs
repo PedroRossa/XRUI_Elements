@@ -1,9 +1,7 @@
 ﻿using NaughtyAttributes;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityScript.Steps;
 
 [RequireComponent(typeof(XRBaseInteractable))]
 public class XRAutoScale : MonoBehaviour
